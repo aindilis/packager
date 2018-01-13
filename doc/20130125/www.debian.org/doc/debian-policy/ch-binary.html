@@ -1,0 +1,821 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+<html>
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+<title>Debian Policy Manual - Binary packages</title>
+
+<link href="index.html" rel="start">
+<link href="ch-archive.html" rel="prev">
+<link href="ch-source.html" rel="next">
+<link href="index.html#contents" rel="contents">
+<link href="index.html#copyright" rel="copyright">
+<link href="ch-scope.html" rel="chapter" title="1 About this manual">
+<link href="ch-archive.html" rel="chapter" title="2 The Debian Archive">
+<link href="ch-binary.html" rel="chapter" title="3 Binary packages">
+<link href="ch-source.html" rel="chapter" title="4 Source packages">
+<link href="ch-controlfields.html" rel="chapter" title="5 Control files and their fields">
+<link href="ch-maintainerscripts.html" rel="chapter" title="6 Package maintainer scripts and installation procedure">
+<link href="ch-relationships.html" rel="chapter" title="7 Declaring relationships between packages">
+<link href="ch-sharedlibs.html" rel="chapter" title="8 Shared libraries">
+<link href="ch-opersys.html" rel="chapter" title="9 The Operating System">
+<link href="ch-files.html" rel="chapter" title="10 Files">
+<link href="ch-customized-programs.html" rel="chapter" title="11 Customized programs">
+<link href="ch-docs.html" rel="chapter" title="12 Documentation">
+<link href="ap-pkg-scope.html" rel="appendix" title="A Introduction and scope of these appendices">
+<link href="ap-pkg-binarypkg.html" rel="appendix" title="B Binary packages (from old Packaging Manual)">
+<link href="ap-pkg-sourcepkg.html" rel="appendix" title="C Source packages (from old Packaging Manual)">
+<link href="ap-pkg-controlfields.html" rel="appendix" title="D Control files and their fields (from old Packaging Manual)">
+<link href="ap-pkg-conffiles.html" rel="appendix" title="E Configuration file handling (from old Packaging Manual)">
+<link href="ap-pkg-alternatives.html" rel="appendix" title="F Alternative versions of an interface - update-alternatives (from old Packaging Manual)">
+<link href="ap-pkg-diversions.html" rel="appendix" title="G Diversions - overriding a package's version of a file (from old Packaging Manual)">
+<link href="ch-scope.html#s1.1" rel="section" title="1.1 Scope">
+<link href="ch-scope.html#s1.2" rel="section" title="1.2 New versions of this document">
+<link href="ch-scope.html#s-authors" rel="section" title="1.3 Authors and Maintainers">
+<link href="ch-scope.html#s-related" rel="section" title="1.4 Related documents">
+<link href="ch-scope.html#s-definitions" rel="section" title="1.5 Definitions">
+<link href="ch-archive.html#s-dfsg" rel="section" title="2.1 The Debian Free Software Guidelines">
+<link href="ch-archive.html#s-sections" rel="section" title="2.2 Archive areas">
+<link href="ch-archive.html#s-pkgcopyright" rel="section" title="2.3 Copyright considerations">
+<link href="ch-archive.html#s-subsections" rel="section" title="2.4 Sections">
+<link href="ch-archive.html#s-priorities" rel="section" title="2.5 Priorities">
+<link href="ch-binary.html#s3.1" rel="section" title="3.1 The package name">
+<link href="ch-binary.html#s-versions" rel="section" title="3.2 The version of a package">
+<link href="ch-binary.html#s-maintainer" rel="section" title="3.3 The maintainer of a package">
+<link href="ch-binary.html#s-descriptions" rel="section" title="3.4 The description of a package">
+<link href="ch-binary.html#s-dependencies" rel="section" title="3.5 Dependencies">
+<link href="ch-binary.html#s-virtual_pkg" rel="section" title="3.6 Virtual packages">
+<link href="ch-binary.html#s3.7" rel="section" title="3.7 Base system">
+<link href="ch-binary.html#s3.8" rel="section" title="3.8 Essential packages">
+<link href="ch-binary.html#s-maintscripts" rel="section" title="3.9 Maintainer Scripts">
+<link href="ch-source.html#s-standardsversion" rel="section" title="4.1 Standards conformance">
+<link href="ch-source.html#s-pkg-relations" rel="section" title="4.2 Package relationships">
+<link href="ch-source.html#s4.3" rel="section" title="4.3 Changes to the upstream sources">
+<link href="ch-source.html#s-dpkgchangelog" rel="section" title="4.4 Debian changelog: debian/changelog">
+<link href="ch-source.html#s-dpkgcopyright" rel="section" title="4.5 Copyright: debian/copyright">
+<link href="ch-source.html#s4.6" rel="section" title="4.6 Error trapping in makefiles">
+<link href="ch-source.html#s-timestamps" rel="section" title="4.7 Time Stamps">
+<link href="ch-source.html#s-restrictions" rel="section" title="4.8 Restrictions on objects in source packages">
+<link href="ch-source.html#s-debianrules" rel="section" title="4.9 Main building script: debian/rules">
+<link href="ch-source.html#s-substvars" rel="section" title="4.10 Variable substitutions: debian/substvars">
+<link href="ch-source.html#s-debianwatch" rel="section" title="4.11 Optional upstream source location: debian/watch">
+<link href="ch-source.html#s-debianfiles" rel="section" title="4.12 Generated files list: debian/files">
+<link href="ch-source.html#s-embeddedfiles" rel="section" title="4.13 Convenience copies of code">
+<link href="ch-source.html#s-readmesource" rel="section" title="4.14 Source package handling: debian/README.source">
+<link href="ch-controlfields.html#s-controlsyntax" rel="section" title="5.1 Syntax of control files">
+<link href="ch-controlfields.html#s-sourcecontrolfiles" rel="section" title="5.2 Source package control files -- debian/control">
+<link href="ch-controlfields.html#s-binarycontrolfiles" rel="section" title="5.3 Binary package control files -- DEBIAN/control">
+<link href="ch-controlfields.html#s-debiansourcecontrolfiles" rel="section" title="5.4 Debian source control files -- .dsc">
+<link href="ch-controlfields.html#s-debianchangesfiles" rel="section" title="5.5 Debian changes files -- .changes">
+<link href="ch-controlfields.html#s-controlfieldslist" rel="section" title="5.6 List of fields">
+<link href="ch-controlfields.html#s5.7" rel="section" title="5.7 User-defined fields">
+<link href="ch-maintainerscripts.html#s6.1" rel="section" title="6.1 Introduction to package maintainer scripts">
+<link href="ch-maintainerscripts.html#s-idempotency" rel="section" title="6.2 Maintainer scripts idempotency">
+<link href="ch-maintainerscripts.html#s-controllingterminal" rel="section" title="6.3 Controlling terminal for maintainer scripts">
+<link href="ch-maintainerscripts.html#s-exitstatus" rel="section" title="6.4 Exit status">
+<link href="ch-maintainerscripts.html#s-mscriptsinstact" rel="section" title="6.5 Summary of ways maintainer scripts are called">
+<link href="ch-maintainerscripts.html#s-unpackphase" rel="section" title="6.6 Details of unpack phase of installation or upgrade">
+<link href="ch-maintainerscripts.html#s-configdetails" rel="section" title="6.7 Details of configuration">
+<link href="ch-maintainerscripts.html#s-removedetails" rel="section" title="6.8 Details of removal and/or configuration purging">
+<link href="ch-relationships.html#s-depsyntax" rel="section" title="7.1 Syntax of relationship fields">
+<link href="ch-relationships.html#s-binarydeps" rel="section" title="7.2 Binary Dependencies - Depends, Recommends, Suggests, Enhances, Pre-Depends">
+<link href="ch-relationships.html#s-breaks" rel="section" title="7.3 Packages which break other packages - Breaks">
+<link href="ch-relationships.html#s-conflicts" rel="section" title="7.4 Conflicting binary packages - Conflicts">
+<link href="ch-relationships.html#s-virtual" rel="section" title="7.5 Virtual packages - Provides">
+<link href="ch-relationships.html#s-replaces" rel="section" title="7.6 Overwriting files and replacing packages - Replaces">
+<link href="ch-relationships.html#s-sourcebinarydeps" rel="section" title="7.7 Relationships between source and binary packages - Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep">
+<link href="ch-relationships.html#s-built-using" rel="section" title="7.8 Additional source packages used to build the binary - Built-Using">
+<link href="ch-sharedlibs.html#s-sharedlibs-runtime" rel="section" title="8.1 Run-time shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-support-files" rel="section" title="8.2 Shared library support files">
+<link href="ch-sharedlibs.html#s-sharedlibs-static" rel="section" title="8.3 Static libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-dev" rel="section" title="8.4 Development files">
+<link href="ch-sharedlibs.html#s-sharedlibs-intradeps" rel="section" title="8.5 Dependencies between the packages of the same library">
+<link href="ch-sharedlibs.html#s-sharedlibs-depends" rel="section" title="8.6 Dependencies between the library and other packages">
+<link href="ch-opersys.html#s9.1" rel="section" title="9.1 File system hierarchy">
+<link href="ch-opersys.html#s9.2" rel="section" title="9.2 Users and groups">
+<link href="ch-opersys.html#s-sysvinit" rel="section" title="9.3 System run levels and init.d scripts">
+<link href="ch-opersys.html#s9.4" rel="section" title="9.4 Console messages from init.d scripts">
+<link href="ch-opersys.html#s-cron-jobs" rel="section" title="9.5 Cron jobs">
+<link href="ch-opersys.html#s-menus" rel="section" title="9.6 Menus">
+<link href="ch-opersys.html#s-mime" rel="section" title="9.7 Multimedia handlers">
+<link href="ch-opersys.html#s9.8" rel="section" title="9.8 Keyboard configuration">
+<link href="ch-opersys.html#s9.9" rel="section" title="9.9 Environment variables">
+<link href="ch-opersys.html#s-doc-base" rel="section" title="9.10 Registering Documents using doc-base">
+<link href="ch-opersys.html#s-alternateinit" rel="section" title="9.11 Alternate init systems">
+<link href="ch-files.html#s-binaries" rel="section" title="10.1 Binaries">
+<link href="ch-files.html#s-libraries" rel="section" title="10.2 Libraries">
+<link href="ch-files.html#s10.3" rel="section" title="10.3 Shared libraries">
+<link href="ch-files.html#s-scripts" rel="section" title="10.4 Scripts">
+<link href="ch-files.html#s10.5" rel="section" title="10.5 Symbolic links">
+<link href="ch-files.html#s10.6" rel="section" title="10.6 Device files">
+<link href="ch-files.html#s-config-files" rel="section" title="10.7 Configuration files">
+<link href="ch-files.html#s10.8" rel="section" title="10.8 Log files">
+<link href="ch-files.html#s-permissions-owners" rel="section" title="10.9 Permissions and owners">
+<link href="ch-customized-programs.html#s-arch-spec" rel="section" title="11.1 Architecture specification strings">
+<link href="ch-customized-programs.html#s11.2" rel="section" title="11.2 Daemons">
+<link href="ch-customized-programs.html#s11.3" rel="section" title="11.3 Using pseudo-ttys and modifying wtmp, utmp and lastlog">
+<link href="ch-customized-programs.html#s11.4" rel="section" title="11.4 Editors and pagers">
+<link href="ch-customized-programs.html#s-web-appl" rel="section" title="11.5 Web servers and applications">
+<link href="ch-customized-programs.html#s-mail-transport-agents" rel="section" title="11.6 Mail transport, delivery and user agents">
+<link href="ch-customized-programs.html#s11.7" rel="section" title="11.7 News system configuration">
+<link href="ch-customized-programs.html#s11.8" rel="section" title="11.8 Programs for the X Window System">
+<link href="ch-customized-programs.html#s-perl" rel="section" title="11.9 Perl programs and modules">
+<link href="ch-customized-programs.html#s-emacs" rel="section" title="11.10 Emacs lisp programs">
+<link href="ch-customized-programs.html#s11.11" rel="section" title="11.11 Games">
+<link href="ch-docs.html#s12.1" rel="section" title="12.1 Manual pages">
+<link href="ch-docs.html#s12.2" rel="section" title="12.2 Info documents">
+<link href="ch-docs.html#s12.3" rel="section" title="12.3 Additional documentation">
+<link href="ch-docs.html#s12.4" rel="section" title="12.4 Preferred documentation formats">
+<link href="ch-docs.html#s-copyrightfile" rel="section" title="12.5 Copyright information">
+<link href="ch-docs.html#s12.6" rel="section" title="12.6 Examples">
+<link href="ch-docs.html#s-changelogs" rel="section" title="12.7 Changelog files">
+<link href="ap-pkg-binarypkg.html#s-pkg-bincreating" rel="section" title="B.1 Creating package files - dpkg-deb">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlarea" rel="section" title="B.2 Package control information files">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlfile" rel="section" title="B.3 The main control information file: control">
+<link href="ap-pkg-binarypkg.html#sB.4" rel="section" title="B.4 Time Stamps">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetools" rel="section" title="C.1 Tools for processing source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetree" rel="section" title="C.2 The Debian package source tree">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcearchives" rel="section" title="C.3 Source packages as archives">
+<link href="ap-pkg-sourcepkg.html#sC.4" rel="section" title="C.4 Unpacking a Debian source package without dpkg-source">
+<link href="ap-pkg-controlfields.html#sD.1" rel="section" title="D.1 Syntax of control files">
+<link href="ap-pkg-controlfields.html#sD.2" rel="section" title="D.2 List of fields">
+<link href="ap-pkg-conffiles.html#sE.1" rel="section" title="E.1 Automatic handling of configuration files by dpkg">
+<link href="ap-pkg-conffiles.html#sE.2" rel="section" title="E.2 Fully-featured maintainer script configuration handling">
+<link href="ch-archive.html#s-main" rel="subsection" title="2.2.1 The main archive area">
+<link href="ch-archive.html#s-contrib" rel="subsection" title="2.2.2 The contrib archive area">
+<link href="ch-archive.html#s-non-free" rel="subsection" title="2.2.3 The non-free archive area">
+<link href="ch-binary.html#s3.2.1" rel="subsection" title="3.2.1 Version numbers based on dates">
+<link href="ch-binary.html#s-synopsis" rel="subsection" title="3.4.1 The single line synopsis">
+<link href="ch-binary.html#s-extendeddesc" rel="subsection" title="3.4.2 The extended description">
+<link href="ch-binary.html#s-maintscriptprompt" rel="subsection" title="3.9.1 Prompting in maintainer scripts">
+<link href="ch-source.html#s-debianrules-options" rel="subsection" title="4.9.1 debian/rules and DEB_BUILD_OPTIONS">
+<link href="ch-controlfields.html#s-f-Source" rel="subsection" title="5.6.1 Source">
+<link href="ch-controlfields.html#s-f-Maintainer" rel="subsection" title="5.6.2 Maintainer">
+<link href="ch-controlfields.html#s-f-Uploaders" rel="subsection" title="5.6.3 Uploaders">
+<link href="ch-controlfields.html#s-f-Changed-By" rel="subsection" title="5.6.4 Changed-By">
+<link href="ch-controlfields.html#s-f-Section" rel="subsection" title="5.6.5 Section">
+<link href="ch-controlfields.html#s-f-Priority" rel="subsection" title="5.6.6 Priority">
+<link href="ch-controlfields.html#s-f-Package" rel="subsection" title="5.6.7 Package">
+<link href="ch-controlfields.html#s-f-Architecture" rel="subsection" title="5.6.8 Architecture">
+<link href="ch-controlfields.html#s-f-Essential" rel="subsection" title="5.6.9 Essential">
+<link href="ch-controlfields.html#s5.6.10" rel="subsection" title="5.6.10 Package interrelationship fields: Depends, Pre-Depends, Recommends, Suggests, Breaks, Conflicts, Provides, Replaces, Enhances">
+<link href="ch-controlfields.html#s-f-Standards-Version" rel="subsection" title="5.6.11 Standards-Version">
+<link href="ch-controlfields.html#s-f-Version" rel="subsection" title="5.6.12 Version">
+<link href="ch-controlfields.html#s-f-Description" rel="subsection" title="5.6.13 Description">
+<link href="ch-controlfields.html#s-f-Distribution" rel="subsection" title="5.6.14 Distribution">
+<link href="ch-controlfields.html#s-f-Date" rel="subsection" title="5.6.15 Date">
+<link href="ch-controlfields.html#s-f-Format" rel="subsection" title="5.6.16 Format">
+<link href="ch-controlfields.html#s-f-Urgency" rel="subsection" title="5.6.17 Urgency">
+<link href="ch-controlfields.html#s-f-Changes" rel="subsection" title="5.6.18 Changes">
+<link href="ch-controlfields.html#s-f-Binary" rel="subsection" title="5.6.19 Binary">
+<link href="ch-controlfields.html#s-f-Installed-Size" rel="subsection" title="5.6.20 Installed-Size">
+<link href="ch-controlfields.html#s-f-Files" rel="subsection" title="5.6.21 Files">
+<link href="ch-controlfields.html#s-f-Closes" rel="subsection" title="5.6.22 Closes">
+<link href="ch-controlfields.html#s-f-Homepage" rel="subsection" title="5.6.23 Homepage">
+<link href="ch-controlfields.html#s-f-Checksums" rel="subsection" title="5.6.24 Checksums-Sha1 and Checksums-Sha256">
+<link href="ch-controlfields.html#s-f-DM-Upload-Allowed" rel="subsection" title="5.6.25 DM-Upload-Allowed">
+<link href="ch-controlfields.html#s-f-VCS-fields" rel="subsection" title="5.6.26 Version Control System (VCS) fields">
+<link href="ch-relationships.html#s7.6.1" rel="subsection" title="7.6.1 Overwriting files in other packages">
+<link href="ch-relationships.html#s7.6.2" rel="subsection" title="7.6.2 Replacing whole packages, forcing their removal">
+<link href="ch-sharedlibs.html#s-ldconfig" rel="subsection" title="8.1.1 ldconfig">
+<link href="ch-sharedlibs.html#s-dpkg-shlibdeps" rel="subsection" title="8.6.1 Generating dependencies on shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-updates" rel="subsection" title="8.6.2 Shared library ABI changes">
+<link href="ch-sharedlibs.html#s-sharedlibs-symbols" rel="subsection" title="8.6.3 The symbols system">
+<link href="ch-sharedlibs.html#s-symbols-paths" rel="subsection" title="8.6.3.1 The symbols files present on the system">
+<link href="ch-sharedlibs.html#s-symbols" rel="subsection" title="8.6.3.2 The symbols File Format">
+<link href="ch-sharedlibs.html#s-providing-symbols" rel="subsection" title="8.6.3.3 Providing a symbols file">
+<link href="ch-sharedlibs.html#s-sharedlibs-shlibdeps" rel="subsection" title="8.6.4 The shlibs system">
+<link href="ch-sharedlibs.html#s-shlibs-paths" rel="subsection" title="8.6.4.1 The shlibs files present on the system">
+<link href="ch-sharedlibs.html#s-shlibs" rel="subsection" title="8.6.4.2 The shlibs File Format">
+<link href="ch-sharedlibs.html#s8.6.4.3" rel="subsection" title="8.6.4.3 Providing a shlibs file">
+<link href="ch-opersys.html#s-fhs" rel="subsection" title="9.1.1 File System Structure">
+<link href="ch-opersys.html#s9.1.2" rel="subsection" title="9.1.2 Site-specific programs">
+<link href="ch-opersys.html#s9.1.3" rel="subsection" title="9.1.3 The system-wide mail directory">
+<link href="ch-opersys.html#s-fhs-run" rel="subsection" title="9.1.4 /run and /run/lock">
+<link href="ch-opersys.html#s9.2.1" rel="subsection" title="9.2.1 Introduction">
+<link href="ch-opersys.html#s9.2.2" rel="subsection" title="9.2.2 UID and GID classes">
+<link href="ch-opersys.html#s-/etc/init.d" rel="subsection" title="9.3.1 Introduction">
+<link href="ch-opersys.html#s-writing-init" rel="subsection" title="9.3.2 Writing the scripts">
+<link href="ch-opersys.html#s9.3.3" rel="subsection" title="9.3.3 Interfacing with the initscript system">
+<link href="ch-opersys.html#s9.3.3.1" rel="subsection" title="9.3.3.1 Managing the links">
+<link href="ch-opersys.html#s9.3.3.2" rel="subsection" title="9.3.3.2 Running initscripts">
+<link href="ch-opersys.html#s9.3.4" rel="subsection" title="9.3.4 Boot-time initialization">
+<link href="ch-opersys.html#s9.3.5" rel="subsection" title="9.3.5 Example">
+<link href="ch-opersys.html#s-cron-files" rel="subsection" title="9.5.1 Cron job file names">
+<link href="ch-opersys.html#s-upstart" rel="subsection" title="9.11.1 Event-based boot with upstart">
+<link href="ch-files.html#s10.7.1" rel="subsection" title="10.7.1 Definitions">
+<link href="ch-files.html#s10.7.2" rel="subsection" title="10.7.2 Location">
+<link href="ch-files.html#s10.7.3" rel="subsection" title="10.7.3 Behavior">
+<link href="ch-files.html#s10.7.4" rel="subsection" title="10.7.4 Sharing configuration files">
+<link href="ch-files.html#s10.7.5" rel="subsection" title="10.7.5 User configuration files (&quot;dotfiles&quot;)">
+<link href="ch-files.html#s10.9.1" rel="subsection" title="10.9.1 The use of dpkg-statoverride">
+<link href="ch-customized-programs.html#s-arch-wildcard-spec" rel="subsection" title="11.1.1 Architecture wildcards">
+<link href="ch-customized-programs.html#s11.8.1" rel="subsection" title="11.8.1 Providing X support and package priorities">
+<link href="ch-customized-programs.html#s11.8.2" rel="subsection" title="11.8.2 Packages providing an X server">
+<link href="ch-customized-programs.html#s11.8.3" rel="subsection" title="11.8.3 Packages providing a terminal emulator">
+<link href="ch-customized-programs.html#s11.8.4" rel="subsection" title="11.8.4 Packages providing a window manager">
+<link href="ch-customized-programs.html#s11.8.5" rel="subsection" title="11.8.5 Packages providing fonts">
+<link href="ch-customized-programs.html#s-appdefaults" rel="subsection" title="11.8.6 Application defaults files">
+<link href="ch-customized-programs.html#s11.8.7" rel="subsection" title="11.8.7 Installation directory issues">
+<link href="ch-docs.html#s-copyrightformat" rel="subsection" title="12.5.1 Machine-readable copyright information">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-source" rel="subsection" title="C.1.1 dpkg-source - packs and unpacks Debian source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-buildpackage" rel="subsection" title="C.1.2 dpkg-buildpackage - overall package-building control script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-gencontrol" rel="subsection" title="C.1.3 dpkg-gencontrol - generates binary package control files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-shlibdeps" rel="subsection" title="C.1.4 dpkg-shlibdeps - calculates shared library dependencies">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-distaddfile" rel="subsection" title="C.1.5 dpkg-distaddfile - adds a file to debian/files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-genchanges" rel="subsection" title="C.1.6 dpkg-genchanges - generates a .changes upload control file">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-parsechangelog" rel="subsection" title="C.1.7 dpkg-parsechangelog - produces parsed representation of a changelog">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-architecture" rel="subsection" title="C.1.8 dpkg-architecture - information about the build and host system">
+<link href="ap-pkg-sourcepkg.html#s-pkg-debianrules" rel="subsection" title="C.2.1 debian/rules - the main building script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-srcsubstvars" rel="subsection" title="C.2.2 debian/substvars and variable substitutions">
+<link href="ap-pkg-sourcepkg.html#sC.2.3" rel="subsection" title="C.2.3 debian/files">
+<link href="ap-pkg-sourcepkg.html#sC.2.4" rel="subsection" title="C.2.4 debian/tmp">
+<link href="ap-pkg-sourcepkg.html#sC.4.1" rel="subsection" title="C.4.1 Restrictions on objects in source packages">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Filename" rel="subsection" title="D.2.1 Filename and MSDOS-Filename">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Size" rel="subsection" title="D.2.2 Size and MD5sum">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Status" rel="subsection" title="D.2.3 Status">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Conffiles" rel="subsection" title="D.2.5 Conffiles">
+<link href="ap-pkg-controlfields.html#sD.2.6" rel="subsection" title="D.2.6 Obsolete fields">
+
+</head>
+
+<body>
+
+<p><a name="ch-binary"></a></p>
+<hr>
+
+<p>
+[ <a href="ch-archive.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ 3 ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-source.html">next</a> ]
+</p>
+
+<hr>
+
+<h1>
+Debian Policy Manual
+<br>Chapter 3 - Binary packages
+</h1>
+
+<hr>
+
+<p>
+The Debian distribution is based on the Debian package management system,
+called <code>dpkg</code>.  Thus, all packages in the Debian distribution must
+be provided in the <samp>.deb</samp> file format.
+</p>
+
+<p>
+A <samp>.deb</samp> package contains two sets of files: a set of files to
+install on the system when the package is installed, and a set of files that
+provide additional metadata about the package or which are executed when the
+package is installed or removed.  This second set of files is called
+<em>control information files</em>.  Among those files are the package
+maintainer scripts and <code>control</code>, the <a
+href="ch-controlfields.html#s-binarycontrolfiles">binary package control
+file</a> that contains the control fields for the package.  Other control
+information files include the <a
+href="ch-sharedlibs.html#s-sharedlibs-symbols"><code>symbols</code> file</a> or
+<a href="ch-sharedlibs.html#s-sharedlibs-shlibdeps"><code>shlibs</code>
+file</a> used to store shared library dependency information and the
+<code>conffiles</code> file that lists the package's configuration files
+(described in <a href="ch-files.html#s-config-files">Configuration files,
+Section 10.7</a>).
+</p>
+
+<p>
+There is unfortunately a collision of terminology here between control
+information files and files in the Debian control file format.  Throughout this
+document, a <em>control file</em> refers to a file in the Debian control file
+format.  These files are documented in <a href="ch-controlfields.html">Control
+files and their fields, Chapter 5</a>.  Only files referred to specifically as
+<em>control information files</em> are the files included in the control
+information file member of the <code>.deb</code> file format used by binary
+packages.  Most control information files are not in the Debian control file
+format.
+</p>
+
+<hr>
+
+<h2><a name="s3.1"></a>3.1 The package name</h2>
+
+<p>
+Every package must have a name that's unique within the Debian archive.
+</p>
+
+<p>
+The package name is included in the control field <samp>Package</samp>, the
+format of which is described in <a
+href="ch-controlfields.html#s-f-Package"><samp>Package</samp>, Section
+5.6.7</a>.  The package name is also included as a part of the file name of the
+<samp>.deb</samp> file.
+</p>
+
+<hr>
+
+<h2><a name="s-versions"></a>3.2 The version of a package</h2>
+
+<p>
+Every package has a version number recorded in its <samp>Version</samp> control
+file field, described in <a
+href="ch-controlfields.html#s-f-Version"><samp>Version</samp>, Section
+5.6.12</a>.
+</p>
+
+<p>
+The package management system imposes an ordering on version numbers, so that
+it can tell whether packages are being up- or downgraded and so that package
+system front end applications can tell whether a package it finds available is
+newer than the one installed on the system.  The version number format has the
+most significant parts (as far as comparison is concerned) at the beginning.
+</p>
+
+<p>
+If an upstream package has problematic version numbers they should be converted
+to a sane form for use in the <samp>Version</samp> field.
+</p>
+
+<hr>
+
+<h3><a name="s3.2.1"></a>3.2.1 Version numbers based on dates</h3>
+
+<p>
+In general, Debian packages should use the same version numbers as the upstream
+sources.  However, upstream version numbers based on some date formats
+(sometimes used for development or &quot;snapshot&quot; releases) will not be
+ordered correctly by the package management software.  For example,
+<code>dpkg</code> will consider &quot;96May01&quot; to be greater than
+&quot;96Dec24&quot;.
+</p>
+
+<p>
+To prevent having to use epochs for every new upstream version, the date-based
+portion of any upstream version number should be given in a way that sorts
+correctly: four-digit year first, followed by a two-digit numeric month,
+followed by a two-digit numeric date, possibly with punctuation between the
+components.
+</p>
+
+<p>
+Native Debian packages (i.e., packages which have been written especially for
+Debian) whose version numbers include dates should also follow these rules.  If
+punctuation is desired between the date components, remember that hyphen
+(<samp>-</samp>) cannot be used in native package versions.  Period
+(<samp>.</samp>) is normally a good choice.
+</p>
+
+<hr>
+
+<h2><a name="s-maintainer"></a>3.3 The maintainer of a package</h2>
+
+<p>
+Every package must have a maintainer, except for orphaned packages as described
+below.  The maintainer may be one person or a group of people reachable from a
+common email address, such as a mailing list.  The maintainer is responsible
+for maintaining the Debian packaging files, evaluating and responding
+appropriately to reported bugs, uploading new versions of the package (either
+directly or through a sponsor), ensuring that the package is placed in the
+appropriate archive area and included in Debian releases as appropriate for the
+stability and utility of the package, and requesting removal of the package
+from the Debian distribution if it is no longer useful or maintainable.
+</p>
+
+<p>
+The maintainer must be specified in the <samp>Maintainer</samp> control field
+with their correct name and a working email address.  The email address given
+in the <samp>Maintainer</samp> control field must accept mail from those role
+accounts in Debian used to send automated mails regarding the package.  This
+includes non-spam mail from the bug-tracking system, all mail from the Debian
+archive maintenance software, and other role accounts or automated processes
+that are commonly agreed on by the project.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f7"
+name="fr7">7</a>] If one person or team maintains several packages, they should
+use the same form of their name and email address in the
+<samp>Maintainer</samp> fields of those packages.
+</p>
+
+<p>
+The format of the <samp>Maintainer</samp> control field is described in <a
+href="ch-controlfields.html#s-f-Maintainer"><samp>Maintainer</samp>, Section
+5.6.2</a>.
+</p>
+
+<p>
+If the maintainer of the package is a team of people with a shared email
+address, the <samp>Uploaders</samp> control field must be present and must
+contain at least one human with their personal email address.  See <a
+href="ch-controlfields.html#s-f-Uploaders"><samp>Uploaders</samp>, Section
+5.6.3</a> for the syntax of that field.
+</p>
+
+<p>
+An orphaned package is one with no current maintainer.  Orphaned packages
+should have their <samp>Maintainer</samp> control field set to <samp>Debian QA
+Group &lt;packages@qa.debian.org&gt;</samp>.  These packages are considered
+maintained by the Debian project as a whole until someone else volunteers to
+take over maintenance.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f8" name="fr8">8</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-descriptions"></a>3.4 The description of a package</h2>
+
+<p>
+Every Debian package must have a <samp>Description</samp> control field which
+contains a synopsis and extended description of the package.  Technical
+information about the format of the <samp>Description</samp> field is in <a
+href="ch-controlfields.html#s-f-Description"><samp>Description</samp>, Section
+5.6.13</a>.
+</p>
+
+<p>
+The description should describe the package (the program) to a user (system
+administrator) who has never met it before so that they have enough information
+to decide whether they want to install it.  This description should not just be
+copied verbatim from the program's documentation.
+</p>
+
+<p>
+Put important information first, both in the synopsis and extended description.
+Sometimes only the first part of the synopsis or of the description will be
+displayed.  You can assume that there will usually be a way to see the whole
+extended description.
+</p>
+
+<p>
+The description should also give information about the significant dependencies
+and conflicts between this package and others, so that the user knows why these
+dependencies and conflicts have been declared.
+</p>
+
+<p>
+Instructions for configuring or using the package should not be included (that
+is what installation scripts, manual pages, info files, etc., are for).
+Copyright statements and other administrivia should not be included either
+(that is what the copyright file is for).
+</p>
+
+<hr>
+
+<h3><a name="s-synopsis"></a>3.4.1 The single line synopsis</h3>
+
+<p>
+The single line synopsis should be kept brief - certainly under 80 characters.
+</p>
+
+<p>
+Do not include the package name in the synopsis line.  The display software
+knows how to display this already, and you do not need to state it.  Remember
+that in many situations the user may only see the synopsis line - make it as
+informative as you can.
+</p>
+
+<hr>
+
+<h3><a name="s-extendeddesc"></a>3.4.2 The extended description</h3>
+
+<p>
+Do not try to continue the single line synopsis into the extended description.
+This will not work correctly when the full description is displayed, and makes
+no sense where only the summary (the single line synopsis) is available.
+</p>
+
+<p>
+The extended description should describe what the package does and how it
+relates to the rest of the system (in terms of, for example, which subsystem it
+is which part of).
+</p>
+
+<p>
+The description field needs to make sense to anyone, even people who have no
+idea about any of the things the package deals with.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f9" name="fr9">9</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-dependencies"></a>3.5 Dependencies</h2>
+
+<p>
+Every package must specify the dependency information about other packages that
+are required for the first to work correctly.
+</p>
+
+<p>
+For example, a dependency entry must be provided for any shared libraries
+required by a dynamically-linked executable binary in a package.
+</p>
+
+<p>
+Packages are not required to declare any dependencies they have on other
+packages which are marked <samp>Essential</samp> (see below), and should not do
+so unless they depend on a particular version of that package.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f10" name="fr10">10</a>]
+</p>
+
+<p>
+Sometimes, unpacking one package requires that another package be first
+unpacked <em>and</em> configured.  In this case, the depending package must
+specify this dependency in the <samp>Pre-Depends</samp> control field.
+</p>
+
+<p>
+You should not specify a <samp>Pre-Depends</samp> entry for a package before
+this has been discussed on the <samp>debian-devel</samp> mailing list and a
+consensus about doing that has been reached.
+</p>
+
+<p>
+The format of the package interrelationship control fields is described in <a
+href="ch-relationships.html">Declaring relationships between packages, Chapter
+7</a>.
+</p>
+
+<hr>
+
+<h2><a name="s-virtual_pkg"></a>3.6 Virtual packages</h2>
+
+<p>
+Sometimes, there are several packages which offer more-or-less the same
+functionality.  In this case, it's useful to define a <em>virtual package</em>
+whose name describes that common functionality.  (The virtual packages only
+exist logically, not physically; that's why they are called <em>virtual</em>.)
+The packages with this particular function will then <em>provide</em> the
+virtual package.  Thus, any other package requiring that function can simply
+depend on the virtual package without having to specify all possible packages
+individually.
+</p>
+
+<p>
+All packages should use virtual package names where appropriate, and arrange to
+create new ones if necessary.  They should not use virtual package names
+(except privately, amongst a cooperating group of packages) unless they have
+been agreed upon and appear in the list of virtual package names.  (See also <a
+href="ch-relationships.html#s-virtual">Virtual packages -
+<samp>Provides</samp>, Section 7.5</a>)
+</p>
+
+<p>
+The latest version of the authoritative list of virtual package names can be
+found in the <samp>debian-policy</samp> package.  It is also available from the
+Debian web mirrors at <samp><code><a
+href="http://www.debian.org/doc/packaging-manuals/virtual-package-names-list.txt">/doc/packaging-manuals/virtual-package-names-list.txt</a></code></samp>.
+</p>
+
+<p>
+The procedure for updating the list is described in the preface to the list.
+</p>
+
+<hr>
+
+<h2><a name="s3.7"></a>3.7 Base system</h2>
+
+<p>
+The <samp>base system</samp> is a minimum subset of the Debian system that is
+installed before everything else on a new system.  Only very few packages are
+allowed to form part of the base system, in order to keep the required disk
+usage very small.
+</p>
+
+<p>
+The base system consists of all those packages with priority
+<samp>required</samp> or <samp>important</samp>.  Many of them will be tagged
+<samp>essential</samp> (see below).
+</p>
+
+<hr>
+
+<h2><a name="s3.8"></a>3.8 Essential packages</h2>
+
+<p>
+Essential is defined as the minimal set of functionality that must be available
+and usable on the system at all times, even when packages are in an
+unconfigured (but unpacked) state.  Packages are tagged <samp>essential</samp>
+for a system using the <samp>Essential</samp> control field.  The format of the
+<samp>Essential</samp> control field is described in <a
+href="ch-controlfields.html#s-f-Essential"><samp>Essential</samp>, Section
+5.6.9</a>.
+</p>
+
+<p>
+Since these packages cannot be easily removed (one has to specify an extra
+<em>force option</em> to <code>dpkg</code> to do so), this flag must not be
+used unless absolutely necessary.  A shared library package must not be tagged
+<samp>essential</samp>; dependencies will prevent its premature removal, and we
+need to be able to remove it when it has been superseded.
+</p>
+
+<p>
+Since dpkg will not prevent upgrading of other packages while an
+<samp>essential</samp> package is in an unconfigured state, all
+<samp>essential</samp> packages must supply all of their core functionality
+even when unconfigured.  If the package cannot satisfy this requirement it must
+not be tagged as essential, and any packages depending on this package must
+instead have explicit dependency fields as appropriate.
+</p>
+
+<p>
+Maintainers should take great care in adding any programs, interfaces, or
+functionality to <samp>essential</samp> packages.  Packages may assume that
+functionality provided by <samp>essential</samp> packages is always available
+without declaring explicit dependencies, which means that removing
+functionality from the Essential set is very difficult and is almost never
+done.  Any capability added to an <samp>essential</samp> package therefore
+creates an obligation to support that capability as part of the Essential set
+in perpetuity.
+</p>
+
+<p>
+You must not tag any packages <samp>essential</samp> before this has been
+discussed on the <samp>debian-devel</samp> mailing list and a consensus about
+doing that has been reached.
+</p>
+
+<hr>
+
+<h2><a name="s-maintscripts"></a>3.9 Maintainer Scripts</h2>
+
+<p>
+The package installation scripts should avoid producing output which is
+unnecessary for the user to see and should rely on <code>dpkg</code> to stave
+off boredom on the part of a user installing many packages.  This means,
+amongst other things, using the <samp>--quiet</samp> option on
+<code>install-info</code>.
+</p>
+
+<p>
+Errors which occur during the execution of an installation script must be
+checked and the installation must not continue after an error.
+</p>
+
+<p>
+Note that in general <a href="ch-files.html#s-scripts">Scripts, Section
+10.4</a> applies to package maintainer scripts, too.
+</p>
+
+<p>
+You should not use <code>dpkg-divert</code> on a file belonging to another
+package without consulting the maintainer of that package first.  When adding
+or removing diversions, package maintainer scripts must provide the
+<samp>--package</samp> flag to <code>dpkg-divert</code> and must not use
+<samp>--local</samp>.
+</p>
+
+<p>
+All packages which supply an instance of a common command name (or, in general,
+filename) should generally use <code>update-alternatives</code>, so that they
+may be installed together.  If <code>update-alternatives</code> is not used,
+then each package must use <samp>Conflicts</samp> to ensure that other packages
+are de-installed.  (In this case, it may be appropriate to specify a conflict
+against earlier versions of something that previously did not use
+<code>update-alternatives</code>; this is an exception to the usual rule that
+versioned conflicts should be avoided.)
+</p>
+
+<hr>
+
+<h3><a name="s-maintscriptprompt"></a>3.9.1 Prompting in maintainer scripts</h3>
+
+<p>
+Package maintainer scripts may prompt the user if necessary.  Prompting must be
+done by communicating through a program, such as <code>debconf</code>, which
+conforms to the Debian Configuration Management Specification, version 2 or
+higher.
+</p>
+
+<p>
+Packages which are essential, or which are dependencies of essential packages,
+may fall back on another prompting method if no such interface is available
+when they are executed.
+</p>
+
+<p>
+The Debian Configuration Management Specification is included in the
+<code>debconf_specification</code> files in the <code>debian-policy</code>
+package.  It is also available from the Debian web mirrors at <samp><code><a
+href="http://www.debian.org/doc/packaging-manuals/debconf_specification.html">/doc/packaging-manuals/debconf_specification.html</a></code></samp>.
+</p>
+
+<p>
+Packages which use the Debian Configuration Management Specification may
+contain the additional control information files <code>config</code> and
+<code>templates</code>.  <code>config</code> is an additional maintainer script
+used for package configuration, and <code>templates</code> contains templates
+used for user prompting.  The <code>config</code> script might be run before
+the <code>preinst</code> script and before the package is unpacked or any of
+its dependencies or pre-dependencies are satisfied.  Therefore it must work
+using only the tools present in <em>essential</em> packages.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f11" name="fr11">11</a>]
+</p>
+
+<p>
+Packages which use the Debian Configuration Management Specification must allow
+for translation of their user-visible messages by using a gettext-based system
+such as the one provided by the <code>po-debconf</code> package.
+</p>
+
+<p>
+Packages should try to minimize the amount of prompting they need to do, and
+they should ensure that the user will only ever be asked each question once.
+This means that packages should try to use appropriate shared configuration
+files (such as <code>/etc/papersize</code> and <code>/etc/news/server</code>),
+and shared <code>debconf</code> variables rather than each prompting for their
+own list of required pieces of information.
+</p>
+
+<p>
+It also means that an upgrade should not ask the same questions again, unless
+the user has used <samp>dpkg --purge</samp> to remove the package's
+configuration.  The answers to configuration questions should be stored in an
+appropriate place in <code>/etc</code> so that the user can modify them, and
+how this has been done should be documented.
+</p>
+
+<p>
+If a package has a vitally important piece of information to pass to the user
+(such as &quot;don't run me as I am, you must edit the following configuration
+files first or you risk your system emitting badly-formatted messages&quot;),
+it should display this in the <code>config</code> or <code>postinst</code>
+script and prompt the user to hit return to acknowledge the message.  Copyright
+messages do not count as vitally important (they belong in
+<code>/usr/share/doc/<var>package</var>/copyright</code>); neither do
+instructions on how to use a program (these should be in on-line documentation,
+where all the users can see them).
+</p>
+
+<p>
+Any necessary prompting should almost always be confined to the
+<code>config</code> or <code>postinst</code> script.  If it is done in the
+<code>postinst</code>, it should be protected with a conditional so that
+unnecessary prompting doesn't happen if a package's installation fails and the
+<code>postinst</code> is called with <samp>abort-upgrade</samp>,
+<samp>abort-remove</samp> or <samp>abort-deconfigure</samp>.
+</p>
+
+<hr>
+
+<p>
+[ <a href="ch-archive.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ 3 ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-source.html">next</a> ]
+</p>
+
+<hr>
+
+<p>
+Debian Policy Manual
+</p>
+
+<address>
+version 3.9.4.0, 2012-09-19<br>
+<br>
+<a href="ch-scope.html#s-authors">The Debian Policy Mailing List</a><br>
+<br>
+</address>
+<hr>
+
+</body>
+
+</html>
+

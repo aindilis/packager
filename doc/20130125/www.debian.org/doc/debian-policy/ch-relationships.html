@@ -1,0 +1,1144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+<html>
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+<title>Debian Policy Manual - Declaring relationships between packages</title>
+
+<link href="index.html" rel="start">
+<link href="ch-maintainerscripts.html" rel="prev">
+<link href="ch-sharedlibs.html" rel="next">
+<link href="index.html#contents" rel="contents">
+<link href="index.html#copyright" rel="copyright">
+<link href="ch-scope.html" rel="chapter" title="1 About this manual">
+<link href="ch-archive.html" rel="chapter" title="2 The Debian Archive">
+<link href="ch-binary.html" rel="chapter" title="3 Binary packages">
+<link href="ch-source.html" rel="chapter" title="4 Source packages">
+<link href="ch-controlfields.html" rel="chapter" title="5 Control files and their fields">
+<link href="ch-maintainerscripts.html" rel="chapter" title="6 Package maintainer scripts and installation procedure">
+<link href="ch-relationships.html" rel="chapter" title="7 Declaring relationships between packages">
+<link href="ch-sharedlibs.html" rel="chapter" title="8 Shared libraries">
+<link href="ch-opersys.html" rel="chapter" title="9 The Operating System">
+<link href="ch-files.html" rel="chapter" title="10 Files">
+<link href="ch-customized-programs.html" rel="chapter" title="11 Customized programs">
+<link href="ch-docs.html" rel="chapter" title="12 Documentation">
+<link href="ap-pkg-scope.html" rel="appendix" title="A Introduction and scope of these appendices">
+<link href="ap-pkg-binarypkg.html" rel="appendix" title="B Binary packages (from old Packaging Manual)">
+<link href="ap-pkg-sourcepkg.html" rel="appendix" title="C Source packages (from old Packaging Manual)">
+<link href="ap-pkg-controlfields.html" rel="appendix" title="D Control files and their fields (from old Packaging Manual)">
+<link href="ap-pkg-conffiles.html" rel="appendix" title="E Configuration file handling (from old Packaging Manual)">
+<link href="ap-pkg-alternatives.html" rel="appendix" title="F Alternative versions of an interface - update-alternatives (from old Packaging Manual)">
+<link href="ap-pkg-diversions.html" rel="appendix" title="G Diversions - overriding a package's version of a file (from old Packaging Manual)">
+<link href="ch-scope.html#s1.1" rel="section" title="1.1 Scope">
+<link href="ch-scope.html#s1.2" rel="section" title="1.2 New versions of this document">
+<link href="ch-scope.html#s-authors" rel="section" title="1.3 Authors and Maintainers">
+<link href="ch-scope.html#s-related" rel="section" title="1.4 Related documents">
+<link href="ch-scope.html#s-definitions" rel="section" title="1.5 Definitions">
+<link href="ch-archive.html#s-dfsg" rel="section" title="2.1 The Debian Free Software Guidelines">
+<link href="ch-archive.html#s-sections" rel="section" title="2.2 Archive areas">
+<link href="ch-archive.html#s-pkgcopyright" rel="section" title="2.3 Copyright considerations">
+<link href="ch-archive.html#s-subsections" rel="section" title="2.4 Sections">
+<link href="ch-archive.html#s-priorities" rel="section" title="2.5 Priorities">
+<link href="ch-binary.html#s3.1" rel="section" title="3.1 The package name">
+<link href="ch-binary.html#s-versions" rel="section" title="3.2 The version of a package">
+<link href="ch-binary.html#s-maintainer" rel="section" title="3.3 The maintainer of a package">
+<link href="ch-binary.html#s-descriptions" rel="section" title="3.4 The description of a package">
+<link href="ch-binary.html#s-dependencies" rel="section" title="3.5 Dependencies">
+<link href="ch-binary.html#s-virtual_pkg" rel="section" title="3.6 Virtual packages">
+<link href="ch-binary.html#s3.7" rel="section" title="3.7 Base system">
+<link href="ch-binary.html#s3.8" rel="section" title="3.8 Essential packages">
+<link href="ch-binary.html#s-maintscripts" rel="section" title="3.9 Maintainer Scripts">
+<link href="ch-source.html#s-standardsversion" rel="section" title="4.1 Standards conformance">
+<link href="ch-source.html#s-pkg-relations" rel="section" title="4.2 Package relationships">
+<link href="ch-source.html#s4.3" rel="section" title="4.3 Changes to the upstream sources">
+<link href="ch-source.html#s-dpkgchangelog" rel="section" title="4.4 Debian changelog: debian/changelog">
+<link href="ch-source.html#s-dpkgcopyright" rel="section" title="4.5 Copyright: debian/copyright">
+<link href="ch-source.html#s4.6" rel="section" title="4.6 Error trapping in makefiles">
+<link href="ch-source.html#s-timestamps" rel="section" title="4.7 Time Stamps">
+<link href="ch-source.html#s-restrictions" rel="section" title="4.8 Restrictions on objects in source packages">
+<link href="ch-source.html#s-debianrules" rel="section" title="4.9 Main building script: debian/rules">
+<link href="ch-source.html#s-substvars" rel="section" title="4.10 Variable substitutions: debian/substvars">
+<link href="ch-source.html#s-debianwatch" rel="section" title="4.11 Optional upstream source location: debian/watch">
+<link href="ch-source.html#s-debianfiles" rel="section" title="4.12 Generated files list: debian/files">
+<link href="ch-source.html#s-embeddedfiles" rel="section" title="4.13 Convenience copies of code">
+<link href="ch-source.html#s-readmesource" rel="section" title="4.14 Source package handling: debian/README.source">
+<link href="ch-controlfields.html#s-controlsyntax" rel="section" title="5.1 Syntax of control files">
+<link href="ch-controlfields.html#s-sourcecontrolfiles" rel="section" title="5.2 Source package control files -- debian/control">
+<link href="ch-controlfields.html#s-binarycontrolfiles" rel="section" title="5.3 Binary package control files -- DEBIAN/control">
+<link href="ch-controlfields.html#s-debiansourcecontrolfiles" rel="section" title="5.4 Debian source control files -- .dsc">
+<link href="ch-controlfields.html#s-debianchangesfiles" rel="section" title="5.5 Debian changes files -- .changes">
+<link href="ch-controlfields.html#s-controlfieldslist" rel="section" title="5.6 List of fields">
+<link href="ch-controlfields.html#s5.7" rel="section" title="5.7 User-defined fields">
+<link href="ch-maintainerscripts.html#s6.1" rel="section" title="6.1 Introduction to package maintainer scripts">
+<link href="ch-maintainerscripts.html#s-idempotency" rel="section" title="6.2 Maintainer scripts idempotency">
+<link href="ch-maintainerscripts.html#s-controllingterminal" rel="section" title="6.3 Controlling terminal for maintainer scripts">
+<link href="ch-maintainerscripts.html#s-exitstatus" rel="section" title="6.4 Exit status">
+<link href="ch-maintainerscripts.html#s-mscriptsinstact" rel="section" title="6.5 Summary of ways maintainer scripts are called">
+<link href="ch-maintainerscripts.html#s-unpackphase" rel="section" title="6.6 Details of unpack phase of installation or upgrade">
+<link href="ch-maintainerscripts.html#s-configdetails" rel="section" title="6.7 Details of configuration">
+<link href="ch-maintainerscripts.html#s-removedetails" rel="section" title="6.8 Details of removal and/or configuration purging">
+<link href="ch-relationships.html#s-depsyntax" rel="section" title="7.1 Syntax of relationship fields">
+<link href="ch-relationships.html#s-binarydeps" rel="section" title="7.2 Binary Dependencies - Depends, Recommends, Suggests, Enhances, Pre-Depends">
+<link href="ch-relationships.html#s-breaks" rel="section" title="7.3 Packages which break other packages - Breaks">
+<link href="ch-relationships.html#s-conflicts" rel="section" title="7.4 Conflicting binary packages - Conflicts">
+<link href="ch-relationships.html#s-virtual" rel="section" title="7.5 Virtual packages - Provides">
+<link href="ch-relationships.html#s-replaces" rel="section" title="7.6 Overwriting files and replacing packages - Replaces">
+<link href="ch-relationships.html#s-sourcebinarydeps" rel="section" title="7.7 Relationships between source and binary packages - Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep">
+<link href="ch-relationships.html#s-built-using" rel="section" title="7.8 Additional source packages used to build the binary - Built-Using">
+<link href="ch-sharedlibs.html#s-sharedlibs-runtime" rel="section" title="8.1 Run-time shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-support-files" rel="section" title="8.2 Shared library support files">
+<link href="ch-sharedlibs.html#s-sharedlibs-static" rel="section" title="8.3 Static libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-dev" rel="section" title="8.4 Development files">
+<link href="ch-sharedlibs.html#s-sharedlibs-intradeps" rel="section" title="8.5 Dependencies between the packages of the same library">
+<link href="ch-sharedlibs.html#s-sharedlibs-depends" rel="section" title="8.6 Dependencies between the library and other packages">
+<link href="ch-opersys.html#s9.1" rel="section" title="9.1 File system hierarchy">
+<link href="ch-opersys.html#s9.2" rel="section" title="9.2 Users and groups">
+<link href="ch-opersys.html#s-sysvinit" rel="section" title="9.3 System run levels and init.d scripts">
+<link href="ch-opersys.html#s9.4" rel="section" title="9.4 Console messages from init.d scripts">
+<link href="ch-opersys.html#s-cron-jobs" rel="section" title="9.5 Cron jobs">
+<link href="ch-opersys.html#s-menus" rel="section" title="9.6 Menus">
+<link href="ch-opersys.html#s-mime" rel="section" title="9.7 Multimedia handlers">
+<link href="ch-opersys.html#s9.8" rel="section" title="9.8 Keyboard configuration">
+<link href="ch-opersys.html#s9.9" rel="section" title="9.9 Environment variables">
+<link href="ch-opersys.html#s-doc-base" rel="section" title="9.10 Registering Documents using doc-base">
+<link href="ch-opersys.html#s-alternateinit" rel="section" title="9.11 Alternate init systems">
+<link href="ch-files.html#s-binaries" rel="section" title="10.1 Binaries">
+<link href="ch-files.html#s-libraries" rel="section" title="10.2 Libraries">
+<link href="ch-files.html#s10.3" rel="section" title="10.3 Shared libraries">
+<link href="ch-files.html#s-scripts" rel="section" title="10.4 Scripts">
+<link href="ch-files.html#s10.5" rel="section" title="10.5 Symbolic links">
+<link href="ch-files.html#s10.6" rel="section" title="10.6 Device files">
+<link href="ch-files.html#s-config-files" rel="section" title="10.7 Configuration files">
+<link href="ch-files.html#s10.8" rel="section" title="10.8 Log files">
+<link href="ch-files.html#s-permissions-owners" rel="section" title="10.9 Permissions and owners">
+<link href="ch-customized-programs.html#s-arch-spec" rel="section" title="11.1 Architecture specification strings">
+<link href="ch-customized-programs.html#s11.2" rel="section" title="11.2 Daemons">
+<link href="ch-customized-programs.html#s11.3" rel="section" title="11.3 Using pseudo-ttys and modifying wtmp, utmp and lastlog">
+<link href="ch-customized-programs.html#s11.4" rel="section" title="11.4 Editors and pagers">
+<link href="ch-customized-programs.html#s-web-appl" rel="section" title="11.5 Web servers and applications">
+<link href="ch-customized-programs.html#s-mail-transport-agents" rel="section" title="11.6 Mail transport, delivery and user agents">
+<link href="ch-customized-programs.html#s11.7" rel="section" title="11.7 News system configuration">
+<link href="ch-customized-programs.html#s11.8" rel="section" title="11.8 Programs for the X Window System">
+<link href="ch-customized-programs.html#s-perl" rel="section" title="11.9 Perl programs and modules">
+<link href="ch-customized-programs.html#s-emacs" rel="section" title="11.10 Emacs lisp programs">
+<link href="ch-customized-programs.html#s11.11" rel="section" title="11.11 Games">
+<link href="ch-docs.html#s12.1" rel="section" title="12.1 Manual pages">
+<link href="ch-docs.html#s12.2" rel="section" title="12.2 Info documents">
+<link href="ch-docs.html#s12.3" rel="section" title="12.3 Additional documentation">
+<link href="ch-docs.html#s12.4" rel="section" title="12.4 Preferred documentation formats">
+<link href="ch-docs.html#s-copyrightfile" rel="section" title="12.5 Copyright information">
+<link href="ch-docs.html#s12.6" rel="section" title="12.6 Examples">
+<link href="ch-docs.html#s-changelogs" rel="section" title="12.7 Changelog files">
+<link href="ap-pkg-binarypkg.html#s-pkg-bincreating" rel="section" title="B.1 Creating package files - dpkg-deb">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlarea" rel="section" title="B.2 Package control information files">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlfile" rel="section" title="B.3 The main control information file: control">
+<link href="ap-pkg-binarypkg.html#sB.4" rel="section" title="B.4 Time Stamps">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetools" rel="section" title="C.1 Tools for processing source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetree" rel="section" title="C.2 The Debian package source tree">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcearchives" rel="section" title="C.3 Source packages as archives">
+<link href="ap-pkg-sourcepkg.html#sC.4" rel="section" title="C.4 Unpacking a Debian source package without dpkg-source">
+<link href="ap-pkg-controlfields.html#sD.1" rel="section" title="D.1 Syntax of control files">
+<link href="ap-pkg-controlfields.html#sD.2" rel="section" title="D.2 List of fields">
+<link href="ap-pkg-conffiles.html#sE.1" rel="section" title="E.1 Automatic handling of configuration files by dpkg">
+<link href="ap-pkg-conffiles.html#sE.2" rel="section" title="E.2 Fully-featured maintainer script configuration handling">
+<link href="ch-archive.html#s-main" rel="subsection" title="2.2.1 The main archive area">
+<link href="ch-archive.html#s-contrib" rel="subsection" title="2.2.2 The contrib archive area">
+<link href="ch-archive.html#s-non-free" rel="subsection" title="2.2.3 The non-free archive area">
+<link href="ch-binary.html#s3.2.1" rel="subsection" title="3.2.1 Version numbers based on dates">
+<link href="ch-binary.html#s-synopsis" rel="subsection" title="3.4.1 The single line synopsis">
+<link href="ch-binary.html#s-extendeddesc" rel="subsection" title="3.4.2 The extended description">
+<link href="ch-binary.html#s-maintscriptprompt" rel="subsection" title="3.9.1 Prompting in maintainer scripts">
+<link href="ch-source.html#s-debianrules-options" rel="subsection" title="4.9.1 debian/rules and DEB_BUILD_OPTIONS">
+<link href="ch-controlfields.html#s-f-Source" rel="subsection" title="5.6.1 Source">
+<link href="ch-controlfields.html#s-f-Maintainer" rel="subsection" title="5.6.2 Maintainer">
+<link href="ch-controlfields.html#s-f-Uploaders" rel="subsection" title="5.6.3 Uploaders">
+<link href="ch-controlfields.html#s-f-Changed-By" rel="subsection" title="5.6.4 Changed-By">
+<link href="ch-controlfields.html#s-f-Section" rel="subsection" title="5.6.5 Section">
+<link href="ch-controlfields.html#s-f-Priority" rel="subsection" title="5.6.6 Priority">
+<link href="ch-controlfields.html#s-f-Package" rel="subsection" title="5.6.7 Package">
+<link href="ch-controlfields.html#s-f-Architecture" rel="subsection" title="5.6.8 Architecture">
+<link href="ch-controlfields.html#s-f-Essential" rel="subsection" title="5.6.9 Essential">
+<link href="ch-controlfields.html#s5.6.10" rel="subsection" title="5.6.10 Package interrelationship fields: Depends, Pre-Depends, Recommends, Suggests, Breaks, Conflicts, Provides, Replaces, Enhances">
+<link href="ch-controlfields.html#s-f-Standards-Version" rel="subsection" title="5.6.11 Standards-Version">
+<link href="ch-controlfields.html#s-f-Version" rel="subsection" title="5.6.12 Version">
+<link href="ch-controlfields.html#s-f-Description" rel="subsection" title="5.6.13 Description">
+<link href="ch-controlfields.html#s-f-Distribution" rel="subsection" title="5.6.14 Distribution">
+<link href="ch-controlfields.html#s-f-Date" rel="subsection" title="5.6.15 Date">
+<link href="ch-controlfields.html#s-f-Format" rel="subsection" title="5.6.16 Format">
+<link href="ch-controlfields.html#s-f-Urgency" rel="subsection" title="5.6.17 Urgency">
+<link href="ch-controlfields.html#s-f-Changes" rel="subsection" title="5.6.18 Changes">
+<link href="ch-controlfields.html#s-f-Binary" rel="subsection" title="5.6.19 Binary">
+<link href="ch-controlfields.html#s-f-Installed-Size" rel="subsection" title="5.6.20 Installed-Size">
+<link href="ch-controlfields.html#s-f-Files" rel="subsection" title="5.6.21 Files">
+<link href="ch-controlfields.html#s-f-Closes" rel="subsection" title="5.6.22 Closes">
+<link href="ch-controlfields.html#s-f-Homepage" rel="subsection" title="5.6.23 Homepage">
+<link href="ch-controlfields.html#s-f-Checksums" rel="subsection" title="5.6.24 Checksums-Sha1 and Checksums-Sha256">
+<link href="ch-controlfields.html#s-f-DM-Upload-Allowed" rel="subsection" title="5.6.25 DM-Upload-Allowed">
+<link href="ch-controlfields.html#s-f-VCS-fields" rel="subsection" title="5.6.26 Version Control System (VCS) fields">
+<link href="ch-relationships.html#s7.6.1" rel="subsection" title="7.6.1 Overwriting files in other packages">
+<link href="ch-relationships.html#s7.6.2" rel="subsection" title="7.6.2 Replacing whole packages, forcing their removal">
+<link href="ch-sharedlibs.html#s-ldconfig" rel="subsection" title="8.1.1 ldconfig">
+<link href="ch-sharedlibs.html#s-dpkg-shlibdeps" rel="subsection" title="8.6.1 Generating dependencies on shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-updates" rel="subsection" title="8.6.2 Shared library ABI changes">
+<link href="ch-sharedlibs.html#s-sharedlibs-symbols" rel="subsection" title="8.6.3 The symbols system">
+<link href="ch-sharedlibs.html#s-symbols-paths" rel="subsection" title="8.6.3.1 The symbols files present on the system">
+<link href="ch-sharedlibs.html#s-symbols" rel="subsection" title="8.6.3.2 The symbols File Format">
+<link href="ch-sharedlibs.html#s-providing-symbols" rel="subsection" title="8.6.3.3 Providing a symbols file">
+<link href="ch-sharedlibs.html#s-sharedlibs-shlibdeps" rel="subsection" title="8.6.4 The shlibs system">
+<link href="ch-sharedlibs.html#s-shlibs-paths" rel="subsection" title="8.6.4.1 The shlibs files present on the system">
+<link href="ch-sharedlibs.html#s-shlibs" rel="subsection" title="8.6.4.2 The shlibs File Format">
+<link href="ch-sharedlibs.html#s8.6.4.3" rel="subsection" title="8.6.4.3 Providing a shlibs file">
+<link href="ch-opersys.html#s-fhs" rel="subsection" title="9.1.1 File System Structure">
+<link href="ch-opersys.html#s9.1.2" rel="subsection" title="9.1.2 Site-specific programs">
+<link href="ch-opersys.html#s9.1.3" rel="subsection" title="9.1.3 The system-wide mail directory">
+<link href="ch-opersys.html#s-fhs-run" rel="subsection" title="9.1.4 /run and /run/lock">
+<link href="ch-opersys.html#s9.2.1" rel="subsection" title="9.2.1 Introduction">
+<link href="ch-opersys.html#s9.2.2" rel="subsection" title="9.2.2 UID and GID classes">
+<link href="ch-opersys.html#s-/etc/init.d" rel="subsection" title="9.3.1 Introduction">
+<link href="ch-opersys.html#s-writing-init" rel="subsection" title="9.3.2 Writing the scripts">
+<link href="ch-opersys.html#s9.3.3" rel="subsection" title="9.3.3 Interfacing with the initscript system">
+<link href="ch-opersys.html#s9.3.3.1" rel="subsection" title="9.3.3.1 Managing the links">
+<link href="ch-opersys.html#s9.3.3.2" rel="subsection" title="9.3.3.2 Running initscripts">
+<link href="ch-opersys.html#s9.3.4" rel="subsection" title="9.3.4 Boot-time initialization">
+<link href="ch-opersys.html#s9.3.5" rel="subsection" title="9.3.5 Example">
+<link href="ch-opersys.html#s-cron-files" rel="subsection" title="9.5.1 Cron job file names">
+<link href="ch-opersys.html#s-upstart" rel="subsection" title="9.11.1 Event-based boot with upstart">
+<link href="ch-files.html#s10.7.1" rel="subsection" title="10.7.1 Definitions">
+<link href="ch-files.html#s10.7.2" rel="subsection" title="10.7.2 Location">
+<link href="ch-files.html#s10.7.3" rel="subsection" title="10.7.3 Behavior">
+<link href="ch-files.html#s10.7.4" rel="subsection" title="10.7.4 Sharing configuration files">
+<link href="ch-files.html#s10.7.5" rel="subsection" title="10.7.5 User configuration files (&quot;dotfiles&quot;)">
+<link href="ch-files.html#s10.9.1" rel="subsection" title="10.9.1 The use of dpkg-statoverride">
+<link href="ch-customized-programs.html#s-arch-wildcard-spec" rel="subsection" title="11.1.1 Architecture wildcards">
+<link href="ch-customized-programs.html#s11.8.1" rel="subsection" title="11.8.1 Providing X support and package priorities">
+<link href="ch-customized-programs.html#s11.8.2" rel="subsection" title="11.8.2 Packages providing an X server">
+<link href="ch-customized-programs.html#s11.8.3" rel="subsection" title="11.8.3 Packages providing a terminal emulator">
+<link href="ch-customized-programs.html#s11.8.4" rel="subsection" title="11.8.4 Packages providing a window manager">
+<link href="ch-customized-programs.html#s11.8.5" rel="subsection" title="11.8.5 Packages providing fonts">
+<link href="ch-customized-programs.html#s-appdefaults" rel="subsection" title="11.8.6 Application defaults files">
+<link href="ch-customized-programs.html#s11.8.7" rel="subsection" title="11.8.7 Installation directory issues">
+<link href="ch-docs.html#s-copyrightformat" rel="subsection" title="12.5.1 Machine-readable copyright information">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-source" rel="subsection" title="C.1.1 dpkg-source - packs and unpacks Debian source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-buildpackage" rel="subsection" title="C.1.2 dpkg-buildpackage - overall package-building control script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-gencontrol" rel="subsection" title="C.1.3 dpkg-gencontrol - generates binary package control files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-shlibdeps" rel="subsection" title="C.1.4 dpkg-shlibdeps - calculates shared library dependencies">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-distaddfile" rel="subsection" title="C.1.5 dpkg-distaddfile - adds a file to debian/files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-genchanges" rel="subsection" title="C.1.6 dpkg-genchanges - generates a .changes upload control file">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-parsechangelog" rel="subsection" title="C.1.7 dpkg-parsechangelog - produces parsed representation of a changelog">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-architecture" rel="subsection" title="C.1.8 dpkg-architecture - information about the build and host system">
+<link href="ap-pkg-sourcepkg.html#s-pkg-debianrules" rel="subsection" title="C.2.1 debian/rules - the main building script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-srcsubstvars" rel="subsection" title="C.2.2 debian/substvars and variable substitutions">
+<link href="ap-pkg-sourcepkg.html#sC.2.3" rel="subsection" title="C.2.3 debian/files">
+<link href="ap-pkg-sourcepkg.html#sC.2.4" rel="subsection" title="C.2.4 debian/tmp">
+<link href="ap-pkg-sourcepkg.html#sC.4.1" rel="subsection" title="C.4.1 Restrictions on objects in source packages">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Filename" rel="subsection" title="D.2.1 Filename and MSDOS-Filename">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Size" rel="subsection" title="D.2.2 Size and MD5sum">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Status" rel="subsection" title="D.2.3 Status">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Conffiles" rel="subsection" title="D.2.5 Conffiles">
+<link href="ap-pkg-controlfields.html#sD.2.6" rel="subsection" title="D.2.6 Obsolete fields">
+
+</head>
+
+<body>
+
+<p><a name="ch-relationships"></a></p>
+<hr>
+
+<p>
+[ <a href="ch-maintainerscripts.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ 7 ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-sharedlibs.html">next</a> ]
+</p>
+
+<hr>
+
+<h1>
+Debian Policy Manual
+<br>Chapter 7 - Declaring relationships between packages
+</h1>
+
+<hr>
+
+<h2><a name="s-depsyntax"></a>7.1 Syntax of relationship fields</h2>
+
+<p>
+These fields all have a uniform syntax.  They are a list of package names
+separated by commas.
+</p>
+
+<p>
+In the <samp>Depends</samp>, <samp>Recommends</samp>, <samp>Suggests</samp>,
+<samp>Pre-Depends</samp>, <samp>Build-Depends</samp> and
+<samp>Build-Depends-Indep</samp> control fields of the package, which declare
+dependencies on other packages, the package names listed may also include lists
+of alternative package names, separated by vertical bar (pipe) symbols
+<samp>|</samp>.  In such a case, if any one of the alternative packages is
+installed, that part of the dependency is considered to be satisfied.
+</p>
+
+<p>
+All of the fields except for <samp>Provides</samp> may restrict their
+applicability to particular versions of each named package.  This is done in
+parentheses after each individual package name; the parentheses should contain
+a relation from the list below followed by a version number, in the format
+described in <a href="ch-controlfields.html#s-f-Version"><samp>Version</samp>,
+Section 5.6.12</a>.
+</p>
+
+<p>
+The relations allowed are <samp>&lt;&lt;</samp>, <samp>&lt;=</samp>,
+<samp>=</samp>, <samp>&gt;=</samp> and <samp>&gt;&gt;</samp> for strictly
+earlier, earlier or equal, exactly equal, later or equal and strictly later,
+respectively.  The deprecated forms <samp>&lt;</samp> and <samp>&gt;</samp>
+were confusingly used to mean earlier/later or equal, rather than strictly
+earlier/later, and must not appear in new packages (though <code>dpkg</code>
+still supports them with a warning).
+</p>
+
+<p>
+Whitespace may appear at any point in the version specification subject to the
+rules in <a href="ch-controlfields.html#s-controlsyntax">Syntax of control
+files, Section 5.1</a>, and must appear where it's necessary to disambiguate;
+it is not otherwise significant.  All of the relationship fields can only be
+folded in source package control files.  For consistency and in case of future
+changes to <code>dpkg</code> it is recommended that a single space be used
+after a version relationship and before a version number; it is also
+conventional to put a single space after each comma, on either side of each
+vertical bar, and before each open parenthesis.  When opening a continuation
+line in a relationship field, it is conventional to do so after a comma and
+before the space following that comma.
+</p>
+
+<p>
+For example, a list of dependencies might appear as:
+</p>
+<pre>
+     Package: mutt
+     Version: 1.3.17-1
+     Depends: libc6 (&gt;= 2.2.1), exim | mail-transport-agent
+</pre>
+
+<p>
+Relationships may be restricted to a certain set of architectures.  This is
+indicated in brackets after each individual package name and the optional
+version specification.  The brackets enclose a non-empty list of Debian
+architecture names in the format described in <a
+href="ch-customized-programs.html#s-arch-spec">Architecture specification
+strings, Section 11.1</a>, separated by whitespace.  Exclamation marks may be
+prepended to each of the names.  (It is not permitted for some names to be
+prepended with exclamation marks while others aren't.)
+</p>
+
+<p>
+For build relationship fields (<samp>Build-Depends</samp>,
+<samp>Build-Depends-Indep</samp>, <samp>Build-Conflicts</samp> and
+<samp>Build-Conflicts-Indep</samp>), if the current Debian host architecture is
+not in this list and there are no exclamation marks in the list, or it is in
+the list with a prepended exclamation mark, the package name and the associated
+version specification are ignored completely for the purposes of defining the
+relationships.
+</p>
+
+<p>
+For example:
+</p>
+<pre>
+     Source: glibc
+     Build-Depends-Indep: texinfo
+     Build-Depends: kernel-headers-2.2.10 [!hurd-i386],
+       hurd-dev [hurd-i386], gnumach-dev [hurd-i386]
+</pre>
+
+<p>
+requires <samp>kernel-headers-2.2.10</samp> on all architectures other than
+hurd-i386 and requires <samp>hurd-dev</samp> and <samp>gnumach-dev</samp> only
+on hurd-i386.
+</p>
+
+<p>
+For binary relationship fields and the <samp>Built-Using</samp> field, the
+architecture restriction syntax is only supported in the source package control
+file <code>debian/control</code>.  When the corresponding binary package
+control file is generated, the relationship will either be omitted or included
+without the architecture restriction based on the architecture of the binary
+package.  This means that architecture restrictions must not be used in binary
+relationship fields for architecture-independent packages (<samp>Architecture:
+all</samp>).
+</p>
+
+<p>
+For example:
+</p>
+<pre>
+     Depends: foo [i386], bar [amd64]
+</pre>
+
+<p>
+becomes <samp>Depends: foo</samp> when the package is built on the
+<samp>i386</samp> architecture, <samp>Depends: bar</samp> when the package is
+built on the <samp>amd64</samp> architecture, and omitted entirely in binary
+packages built on all other architectures.
+</p>
+
+<p>
+If the architecture-restricted dependency is part of a set of alternatives
+using <samp>|</samp>, that alternative is ignored completely on architectures
+that do not match the restriction.  For example:
+</p>
+<pre>
+     Build-Depends: foo [!i386] | bar [!amd64]
+</pre>
+
+<p>
+is equivalent to <samp>bar</samp> on the i386 architecture, to <samp>foo</samp>
+on the amd64 architecture, and to <samp>foo | bar</samp> on all other
+architectures.
+</p>
+
+<p>
+Relationships may also be restricted to a certain set of architectures using
+architecture wildcards in the format described in <a
+href="ch-customized-programs.html#s-arch-wildcard-spec">Architecture wildcards,
+Section 11.1.1</a>.  The syntax for declaring such restrictions is the same as
+declaring restrictions using a certain set of architectures without
+architecture wildcards.  For example:
+</p>
+<pre>
+     Build-Depends: foo [linux-any], bar [any-i386], baz [!linux-any]
+</pre>
+
+<p>
+is equivalent to <samp>foo</samp> on architectures using the Linux kernel and
+any cpu, <samp>bar</samp> on architectures using any kernel and an i386 cpu,
+and <samp>baz</samp> on any architecture using a kernel other than Linux.
+</p>
+
+<p>
+Note that the binary package relationship fields such as <samp>Depends</samp>
+appear in one of the binary package sections of the control file, whereas the
+build-time relationships such as <samp>Build-Depends</samp> appear in the
+source package section of the control file (which is the first section).
+</p>
+
+<hr>
+
+<h2><a name="s-binarydeps"></a>7.2 Binary Dependencies - <samp>Depends</samp>, <samp>Recommends</samp>, <samp>Suggests</samp>, <samp>Enhances</samp>, <samp>Pre-Depends</samp></h2>
+
+<p>
+Packages can declare in their control file that they have certain relationships
+to other packages - for example, that they may not be installed at the same
+time as certain other packages, and/or that they depend on the presence of
+others.
+</p>
+
+<p>
+This is done using the <samp>Depends</samp>, <samp>Pre-Depends</samp>,
+<samp>Recommends</samp>, <samp>Suggests</samp>, <samp>Enhances</samp>,
+<samp>Breaks</samp> and <samp>Conflicts</samp> control fields.
+<samp>Breaks</samp> is described in <a href="ch-relationships.html#s-breaks">Packages which break
+other packages - <samp>Breaks</samp>, Section 7.3</a>, and
+<samp>Conflicts</samp> is described in <a href="ch-relationships.html#s-conflicts">Conflicting
+binary packages - <samp>Conflicts</samp>, Section 7.4</a>.  The rest are
+described below.
+</p>
+
+<p>
+These seven fields are used to declare a dependency relationship by one package
+on another.  Except for <samp>Enhances</samp> and <samp>Breaks</samp>, they
+appear in the depending (binary) package's control file.
+(<samp>Enhances</samp> appears in the recommending package's control file, and
+<samp>Breaks</samp> appears in the version of depended-on package which causes
+the named package to break).
+</p>
+
+<p>
+A <samp>Depends</samp> field takes effect <em>only</em> when a package is to be
+configured.  It does not prevent a package being on the system in an
+unconfigured state while its dependencies are unsatisfied, and it is possible
+to replace a package whose dependencies are satisfied and which is properly
+installed with a different version whose dependencies are not and cannot be
+satisfied; when this is done the depending package will be left unconfigured
+(since attempts to configure it will give errors) and will not function
+properly.  If it is necessary, a <samp>Pre-Depends</samp> field can be used,
+which has a partial effect even when a package is being unpacked, as explained
+in detail below.  (The other three dependency fields, <samp>Recommends</samp>,
+<samp>Suggests</samp> and <samp>Enhances</samp>, are only used by the various
+front-ends to <code>dpkg</code> such as <code>apt-get</code>,
+<code>aptitude</code>, and <code>dselect</code>.)
+</p>
+
+<p>
+Since <samp>Depends</samp> only places requirements on the order in which
+packages are configured, packages in an installation run are usually all
+unpacked first and all configured later.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f51"
+name="fr51">51</a>]
+</p>
+
+<p>
+If there is a circular dependency among packages being installed or removed,
+installation or removal order honoring the dependency order is impossible,
+requiring the dependency loop be broken at some point and the dependency
+requirements violated for at least one package.  Packages involved in circular
+dependencies may not be able to rely on their dependencies being configured
+before they themselves are configured, depending on which side of the break of
+the circular dependency loop they happen to be on.  If one of the packages in
+the loop has no <code>postinst</code> script, then the cycle will be broken at
+that package; this ensures that all <code>postinst</code> scripts are run with
+their dependencies properly configured if this is possible.  Otherwise the
+breaking point is arbitrary.  Packages should therefore avoid circular
+dependencies where possible, particularly if they have <code>postinst</code>
+scripts.
+</p>
+
+<p>
+The meaning of the five dependency fields is as follows:
+</p>
+<dl>
+<dt><samp>Depends</samp></dt>
+<dd>
+<p>
+This declares an absolute dependency.  A package will not be configured unless
+all of the packages listed in its <samp>Depends</samp> field have been
+correctly configured (unless there is a circular dependency as described
+above).
+</p>
+
+<p>
+The <samp>Depends</samp> field should be used if the depended-on package is
+required for the depending package to provide a significant amount of
+functionality.
+</p>
+
+<p>
+The <samp>Depends</samp> field should also be used if the <code>postinst</code>
+or <code>prerm</code> scripts require the depended-on package to be unpacked or
+configured in order to run.  In the case of <samp>postinst configure</samp>,
+the depended-on packages will be unpacked and configured first.  (If both
+packages are involved in a dependency loop, this might not work as expected;
+see the explanation a few paragraphs back.) In the case of <code>prerm</code>
+or other <code>postinst</code> actions, the package dependencies will normally
+be at least unpacked, but they may be only &quot;Half-Installed&quot; if a
+previous upgrade of the dependency failed.
+</p>
+
+<p>
+Finally, the <samp>Depends</samp> field should be used if the depended-on
+package is needed by the <code>postrm</code> script to fully clean up after the
+package removal.  There is no guarantee that package dependencies will be
+available when <code>postrm</code> is run, but the depended-on package is more
+likely to be available if the package declares a dependency (particularly in
+the case of <samp>postrm remove</samp>).  The <code>postrm</code> script must
+gracefully skip actions that require a dependency if that dependency isn't
+available.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>Recommends</samp></dt>
+<dd>
+<p>
+This declares a strong, but not absolute, dependency.
+</p>
+
+<p>
+The <samp>Recommends</samp> field should list packages that would be found
+together with this one in all but unusual installations.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>Suggests</samp></dt>
+<dd>
+<p>
+This is used to declare that one package may be more useful with one or more
+others.  Using this field tells the packaging system and the user that the
+listed packages are related to this one and can perhaps enhance its usefulness,
+but that installing this one without them is perfectly reasonable.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>Enhances</samp></dt>
+<dd>
+<p>
+This field is similar to Suggests but works in the opposite direction.  It is
+used to declare that a package can enhance the functionality of another
+package.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>Pre-Depends</samp></dt>
+<dd>
+<p>
+This field is like <samp>Depends</samp>, except that it also forces
+<code>dpkg</code> to complete installation of the packages named before even
+starting the installation of the package which declares the pre-dependency, as
+follows:
+</p>
+
+<p>
+When a package declaring a pre-dependency is about to be <em>unpacked</em> the
+pre-dependency can be satisfied if the depended-on package is either fully
+configured, <em>or even if</em> the depended-on package(s) are only unpacked or
+in the &quot;Half-Configured&quot; state, provided that they have been
+configured correctly at some point in the past (and not removed or partially
+removed since).  In this case, both the previously-configured and currently
+unpacked or &quot;Half-Configured&quot; versions must satisfy any version
+clause in the <samp>Pre-Depends</samp> field.
+</p>
+
+<p>
+When the package declaring a pre-dependency is about to be <em>configured</em>,
+the pre-dependency will be treated as a normal <samp>Depends</samp>.  It will
+be considered satisfied only if the depended-on package has been correctly
+configured.  However, unlike with <samp>Depends</samp>,
+<samp>Pre-Depends</samp> does not permit circular dependencies to be broken.
+If a circular dependency is encountered while attempting to honor
+<samp>Pre-Depends</samp>, the installation will be aborted.
+</p>
+
+<p>
+<samp>Pre-Depends</samp> are also required if the <code>preinst</code> script
+depends on the named package.  It is best to avoid this situation if possible.
+</p>
+
+<p>
+<samp>Pre-Depends</samp> should be used sparingly, preferably only by packages
+whose premature upgrade or installation would hamper the ability of the system
+to continue with any upgrade that might be in progress.
+</p>
+
+<p>
+You should not specify a <samp>Pre-Depends</samp> entry for a package before
+this has been discussed on the <samp>debian-devel</samp> mailing list and a
+consensus about doing that has been reached.  See <a
+href="ch-binary.html#s-dependencies">Dependencies, Section 3.5</a>.
+</p>
+</dd>
+</dl>
+
+<p>
+When selecting which level of dependency to use you should consider how
+important the depended-on package is to the functionality of the one declaring
+the dependency.  Some packages are composed of components of varying degrees of
+importance.  Such a package should list using <samp>Depends</samp> the
+package(s) which are required by the more important components.  The other
+components' requirements may be mentioned as Suggestions or Recommendations, as
+appropriate to the components' relative importance.
+</p>
+
+<hr>
+
+<h2><a name="s-breaks"></a>7.3 Packages which break other packages - <samp>Breaks</samp></h2>
+
+<p>
+When one binary package declares that it breaks another, <code>dpkg</code> will
+refuse to allow the package which declares <samp>Breaks</samp> to be unpacked
+unless the broken package is deconfigured first, and it will refuse to allow
+the broken package to be reconfigured.
+</p>
+
+<p>
+A package will not be regarded as causing breakage merely because its
+configuration files are still installed; it must be at least
+&quot;Half-Installed&quot;.
+</p>
+
+<p>
+A special exception is made for packages which declare that they break their
+own package name or a virtual package which they provide (see below): this does
+not count as a real breakage.
+</p>
+
+<p>
+Normally a <samp>Breaks</samp> entry will have an &quot;earlier than&quot;
+version clause; such a <samp>Breaks</samp> is introduced in the version of an
+(implicit or explicit) dependency which violates an assumption or reveals a bug
+in earlier versions of the broken package, or which takes over a file from
+earlier versions of the package named in <samp>Breaks</samp>.  This use of
+<samp>Breaks</samp> will inform higher-level package management tools that the
+broken package must be upgraded before the new one.
+</p>
+
+<p>
+If the breaking package also overwrites some files from the older package, it
+should use <samp>Replaces</samp> to ensure this goes smoothly.  See <a
+href="ch-relationships.html#s-replaces">Overwriting files and replacing packages -
+<samp>Replaces</samp>, Section 7.6</a> for a full discussion of taking over
+files from other packages, including how to use <samp>Breaks</samp> in those
+cases.
+</p>
+
+<p>
+Many of the cases where <samp>Breaks</samp> should be used were previously
+handled with <samp>Conflicts</samp> because <samp>Breaks</samp> did not yet
+exist.  Many <samp>Conflicts</samp> fields should now be <samp>Breaks</samp>.
+See <a href="ch-relationships.html#s-conflicts">Conflicting binary packages -
+<samp>Conflicts</samp>, Section 7.4</a> for more information about the
+differences.
+</p>
+
+<hr>
+
+<h2><a name="s-conflicts"></a>7.4 Conflicting binary packages - <samp>Conflicts</samp></h2>
+
+<p>
+When one binary package declares a conflict with another using a
+<samp>Conflicts</samp> field, <code>dpkg</code> will refuse to allow them to be
+unpacked on the system at the same time.  This is a stronger restriction than
+<samp>Breaks</samp>, which prevents the broken package from being configured
+while the breaking package is in the &quot;Unpacked&quot; state but allows both
+packages to be unpacked at the same time.
+</p>
+
+<p>
+If one package is to be unpacked, the other must be removed first.  If the
+package being unpacked is marked as replacing (see <a
+href="ch-relationships.html#s-replaces">Overwriting files and replacing packages -
+<samp>Replaces</samp>, Section 7.6</a>, but note that <samp>Breaks</samp>
+should normally be used in this case) the one on the system, or the one on the
+system is marked as deselected, or both packages are marked
+<samp>Essential</samp>, then <code>dpkg</code> will automatically remove the
+package which is causing the conflict.  Otherwise, it will halt the
+installation of the new package with an error.  This mechanism is specifically
+designed to produce an error when the installed package is
+<samp>Essential</samp>, but the new package is not.
+</p>
+
+<p>
+A package will not cause a conflict merely because its configuration files are
+still installed; it must be at least &quot;Half-Installed&quot;.
+</p>
+
+<p>
+A special exception is made for packages which declare a conflict with their
+own package name, or with a virtual package which they provide (see below):
+this does not prevent their installation, and allows a package to conflict with
+others providing a replacement for it.  You use this feature when you want the
+package in question to be the only package providing some feature.
+</p>
+
+<p>
+Normally, <samp>Breaks</samp> should be used instead of <samp>Conflicts</samp>
+since <samp>Conflicts</samp> imposes a stronger restriction on the ordering of
+package installation or upgrade and can make it more difficult for the package
+manager to find a correct solution to an upgrade or installation problem.
+<samp>Breaks</samp> should be used
+</p>
+<ul>
+<li>
+<p>
+when moving a file from one package to another (see <a
+href="ch-relationships.html#s-replaces">Overwriting files and replacing packages -
+<samp>Replaces</samp>, Section 7.6</a>),
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+when splitting a package (a special case of the previous one), or
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+when the breaking package exposes a bug in or interacts badly with particular
+versions of the broken package.
+</p>
+</li>
+</ul>
+
+<p>
+<samp>Conflicts</samp> should be used
+</p>
+<ul>
+<li>
+<p>
+when two packages provide the same file and will continue to do so,
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+in conjunction with <samp>Provides</samp> when only one package providing a
+given virtual facility may be unpacked at a time (see <a
+href="ch-relationships.html#s-virtual">Virtual packages - <samp>Provides</samp>, Section 7.5</a>),
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+in other cases where one must prevent simultaneous installation of two packages
+for reasons that are ongoing (not fixed in a later version of one of the
+packages) or that must prevent both packages from being unpacked at the same
+time, not just configured.
+</p>
+</li>
+</ul>
+
+<p>
+Be aware that adding <samp>Conflicts</samp> is normally not the best solution
+when two packages provide the same files.  Depending on the reason for that
+conflict, using alternatives or renaming the files is often a better approach.
+See, for example, <a href="ch-files.html#s-binaries">Binaries, Section
+10.1</a>.
+</p>
+
+<p>
+Neither <samp>Breaks</samp> nor <samp>Conflicts</samp> should be used unless
+two packages cannot be installed at the same time or installing them both
+causes one of them to be broken or unusable.  Having similar functionality or
+performing the same tasks as another package is not sufficient reason to
+declare <samp>Breaks</samp> or <samp>Conflicts</samp> with that package.
+</p>
+
+<p>
+A <samp>Conflicts</samp> entry may have an &quot;earlier than&quot; version
+clause if the reason for the conflict is corrected in a later version of one of
+the packages.  However, normally the presence of an &quot;earlier than&quot;
+version clause is a sign that <samp>Breaks</samp> should have been used
+instead.  An &quot;earlier than&quot; version clause in <samp>Conflicts</samp>
+prevents <code>dpkg</code> from upgrading or installing the package which
+declares such a conflict until the upgrade or removal of the conflicted-with
+package has been completed, which is a strong restriction.
+</p>
+
+<hr>
+
+<h2><a name="s-virtual"></a>7.5 Virtual packages - <samp>Provides</samp></h2>
+
+<p>
+As well as the names of actual (&quot;concrete&quot;) packages, the package
+relationship fields <samp>Depends</samp>, <samp>Recommends</samp>,
+<samp>Suggests</samp>, <samp>Enhances</samp>, <samp>Pre-Depends</samp>,
+<samp>Breaks</samp>, <samp>Conflicts</samp>, <samp>Build-Depends</samp>,
+<samp>Build-Depends-Indep</samp>, <samp>Build-Conflicts</samp> and
+<samp>Build-Conflicts-Indep</samp> may mention &quot;virtual packages&quot;.
+</p>
+
+<p>
+A <em>virtual package</em> is one which appears in the <samp>Provides</samp>
+control field of another package.  The effect is as if the package(s) which
+provide a particular virtual package name had been listed by name everywhere
+the virtual package name appears.  (See also <a
+href="ch-binary.html#s-virtual_pkg">Virtual packages, Section 3.6</a>)
+</p>
+
+<p>
+If there are both concrete and virtual packages of the same name, then the
+dependency may be satisfied (or the conflict caused) by either the concrete
+package with the name in question or any other concrete package which provides
+the virtual package with the name in question.  This is so that, for example,
+supposing we have
+</p>
+<pre>
+     Package: foo
+     Depends: bar
+</pre>
+
+<p>
+and someone else releases an enhanced version of the <samp>bar</samp> package
+they can say:
+</p>
+<pre>
+     Package: bar-plus
+     Provides: bar
+</pre>
+
+<p>
+and the <samp>bar-plus</samp> package will now also satisfy the dependency for
+the <samp>foo</samp> package.
+</p>
+
+<p>
+If a relationship field has a version number attached, only real packages will
+be considered to see whether the relationship is satisfied (or the prohibition
+violated, for a conflict or breakage).  In other words, if a version number is
+specified, this is a request to ignore all <samp>Provides</samp> for that
+package name and consider only real packages.  The package manager will assume
+that a package providing that virtual package is not of the &quot;right&quot;
+version.  A <samp>Provides</samp> field may not contain version numbers, and
+the version number of the concrete package which provides a particular virtual
+package will not be considered when considering a dependency on or conflict
+with the virtual package name.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f52" name="fr52">52</a>]
+</p>
+
+<p>
+To specify which of a set of real packages should be the default to satisfy a
+particular dependency on a virtual package, list the real package as an
+alternative before the virtual one.
+</p>
+
+<p>
+If the virtual package represents a facility that can only be provided by one
+real package at a time, such as the <code>mail-transport-agent</code> virtual
+package that requires installation of a binary that would conflict with all
+other providers of that virtual package (see <a
+href="ch-customized-programs.html#s-mail-transport-agents">Mail transport,
+delivery and user agents, Section 11.6</a>), all packages providing that
+virtual package should also declare a conflict with it using
+<samp>Conflicts</samp>.  This will ensure that at most one provider of that
+virtual package is unpacked or installed at a time.
+</p>
+
+<hr>
+
+<h2><a name="s-replaces"></a>7.6 Overwriting files and replacing packages - <samp>Replaces</samp></h2>
+
+<p>
+Packages can declare in their control file that they should overwrite files in
+certain other packages, or completely replace other packages.  The
+<samp>Replaces</samp> control field has these two distinct purposes.
+</p>
+
+<hr>
+
+<h3><a name="s7.6.1"></a>7.6.1 Overwriting files in other packages</h3>
+
+<p>
+It is usually an error for a package to contain files which are on the system
+in another package.  However, if the overwriting package declares that it
+<samp>Replaces</samp> the one containing the file being overwritten, then
+<code>dpkg</code> will replace the file from the old package with that from the
+new.  The file will no longer be listed as &quot;owned&quot; by the old package
+and will be taken over by the new package.  Normally, <samp>Breaks</samp>
+should be used in conjunction with <samp>Replaces</samp>.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f53" name="fr53">53</a>]
+</p>
+
+<p>
+For example, if a package <code>foo</code> is split into <code>foo</code> and
+<code>foo-data</code> starting at version 1.2-3, <code>foo-data</code> would
+have the fields
+</p>
+<pre>
+     Replaces: foo (&lt;&lt; 1.2-3)
+     Breaks: foo (&lt;&lt; 1.2-3)
+</pre>
+
+<p>
+in its control file.  The new version of the package <code>foo</code> would
+normally have the field
+</p>
+<pre>
+     Depends: foo-data (&gt;= 1.2-3)
+</pre>
+
+<p>
+(or possibly <samp>Recommends</samp> or even <samp>Suggests</samp> if the files
+moved into <code>foo-data</code> are not required for normal operation).
+</p>
+
+<p>
+If a package is completely replaced in this way, so that <code>dpkg</code> does
+not know of any files it still contains, it is considered to have
+&quot;disappeared&quot;.  It will be marked as not wanted on the system
+(selected for removal) and not installed.  Any <samp>conffile</samp>s details
+noted for the package will be ignored, as they will have been taken over by the
+overwriting package.  The package's <code>postrm</code> script will be run with
+a special argument to allow the package to do any final cleanup required.  See
+<a href="ch-maintainerscripts.html#s-mscriptsinstact">Summary of ways
+maintainer scripts are called, Section 6.5</a>.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f54"
+name="fr54">54</a>]
+</p>
+
+<p>
+For this usage of <samp>Replaces</samp>, virtual packages (see <a
+href="ch-relationships.html#s-virtual">Virtual packages - <samp>Provides</samp>, Section 7.5</a>)
+are not considered when looking at a <samp>Replaces</samp> field.  The packages
+declared as being replaced must be mentioned by their real names.
+</p>
+
+<p>
+This usage of <samp>Replaces</samp> only takes effect when both packages are at
+least partially on the system at once.  It is not relevant if the packages
+conflict unless the conflict has been overridden.
+</p>
+
+<hr>
+
+<h3><a name="s7.6.2"></a>7.6.2 Replacing whole packages, forcing their removal</h3>
+
+<p>
+Second, <samp>Replaces</samp> allows the packaging system to resolve which
+package should be removed when there is a conflict (see <a
+href="ch-relationships.html#s-conflicts">Conflicting binary packages - <samp>Conflicts</samp>,
+Section 7.4</a>).  This usage only takes effect when the two packages
+<em>do</em> conflict, so that the two usages of this field do not interfere
+with each other.
+</p>
+
+<p>
+In this situation, the package declared as being replaced can be a virtual
+package, so for example, all mail transport agents (MTAs) would have the
+following fields in their control files:
+</p>
+<pre>
+     Provides: mail-transport-agent
+     Conflicts: mail-transport-agent
+     Replaces: mail-transport-agent
+</pre>
+
+<p>
+ensuring that only one MTA can be unpacked at any one time.  See <a
+href="ch-relationships.html#s-virtual">Virtual packages - <samp>Provides</samp>, Section 7.5</a> for
+more information about this example.
+</p>
+
+<hr>
+
+<h2><a name="s-sourcebinarydeps"></a>7.7 Relationships between source and binary packages - <samp>Build-Depends</samp>, <samp>Build-Depends-Indep</samp>, <samp>Build-Conflicts</samp>, <samp>Build-Conflicts-Indep</samp></h2>
+
+<p>
+Source packages that require certain binary packages to be installed or absent
+at the time of building the package can declare relationships to those binary
+packages.
+</p>
+
+<p>
+This is done using the <samp>Build-Depends</samp>,
+<samp>Build-Depends-Indep</samp>, <samp>Build-Conflicts</samp> and
+<samp>Build-Conflicts-Indep</samp> control fields.
+</p>
+
+<p>
+Build-dependencies on &quot;build-essential&quot; binary packages can be
+omitted.  Please see <a href="ch-source.html#s-pkg-relations">Package
+relationships, Section 4.2</a> for more information.
+</p>
+
+<p>
+The dependencies and conflicts they define must be satisfied (as defined
+earlier for binary packages) in order to invoke the targets in
+<samp>debian/rules</samp>, as follows:[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f55"
+name="fr55">55</a>]
+</p>
+<dl>
+<dt><samp>clean</samp>, <samp>build-arch</samp>, and <samp>binary-arch</samp></dt>
+<dd>
+<p>
+Only the <samp>Build-Depends</samp> and <samp>Build-Conflicts</samp> fields
+must be satisfied when these targets are invoked.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>build</samp>, <samp>build-indep</samp>, <samp>binary</samp>, and <samp>binary-indep</samp></dt>
+<dd>
+<p>
+The <samp>Build-Depends</samp>, <samp>Build-Conflicts</samp>,
+<samp>Build-Depends-Indep</samp>, and <samp>Build-Conflicts-Indep</samp> fields
+must be satisfied when these targets are invoked.
+</p>
+</dd>
+</dl>
+
+<hr>
+
+<h2><a name="s-built-using"></a>7.8 Additional source packages used to build the binary - <samp>Built-Using</samp></h2>
+
+<p>
+Some binary packages incorporate parts of other packages when built but do not
+have to depend on those packages.  Examples include linking with static
+libraries or incorporating source code from another package during the build.
+In this case, the source packages of those other packages are a required part
+of the complete source (the binary package is not reproducible without them).
+</p>
+
+<p>
+A <samp>Built-Using</samp> field must list the corresponding source package for
+any such binary package incorporated during the build [<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f56" name="fr56">56</a>], including an &quot;exactly
+equal&quot; (&quot;=&quot;) version relation on the version that was used to
+build that binary package[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f57" name="fr57">57</a>].
+</p>
+
+<p>
+A package using the source code from the gcc-4.6-source binary package built
+from the gcc-4.6 source package would have this field in its control file:
+</p>
+<pre>
+     Built-Using: gcc-4.6 (= 4.6.0-11)
+</pre>
+
+<p>
+A package including binaries from grub2 and loadlin would have this field in
+its control file:
+</p>
+<pre>
+     Built-Using: grub2 (= 1.99-9), loadlin (= 1.6e-1)
+</pre>
+
+<hr>
+
+<p>
+[ <a href="ch-maintainerscripts.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ 7 ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-sharedlibs.html">next</a> ]
+</p>
+
+<hr>
+
+<p>
+Debian Policy Manual
+</p>
+
+<address>
+version 3.9.4.0, 2012-09-19<br>
+<br>
+<a href="ch-scope.html#s-authors">The Debian Policy Mailing List</a><br>
+<br>
+</address>
+<hr>
+
+</body>
+
+</html>
+

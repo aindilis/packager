@@ -1,0 +1,279 @@
+\FOT{2}\Node%
+{}\Node%
+{\def\Element%
+{0}}\Node%
+{\def\Element%
+{1}}
+    Packager Codebase
+  \endNode{}\Node%
+{\def\Element%
+{2}}\Node%
+{\def\Element%
+{3}}\Node%
+{\def\Element%
+{4}}Andrew\endNode{}\Node%
+{\def\Element%
+{5}}Dougherty\endNode{}\endNode{}\endNode{}\Node%
+{\def\Element%
+{6}}\endNode{}\Node%
+{\def\Element%
+{7}}\Node%
+{\def\Element%
+{8}}What is Packager\endNode{}\Node%
+{\def\Label%
+{overview}}\Node%
+{\def\Element%
+{10}}
+	The Problem
+      \endNode{}\Node%
+{\def\Element%
+{11}}
+	On the Need to Package Software
+
+	There are many software systems out there that provide what
+	has been termed islands of ability, but these islands must be
+	brought together to create a functioning system.  From a
+	practical point of view, this entails creating software
+	packages for these.  However, there are many good systems for
+	which there are no packages made.
+
+	This is an obvious inefficiency, because the cost in time and
+	expertise for packaging	software is definitely nonzero, so
+	rather than requiring O(N*M) effort to generate N packages for
+	M people, we simply require O(N) effort.
+
+	How to Package Software
+
+	There are not in practice enough people it seems to package
+	all the existing packages, even in terms of creating
+	low-\/quality packages.
+      \endNode{}\endNode{}\Node%
+{\def\Element%
+{12}}\Node%
+{\def\Element%
+{13}}
+	Towards a Solution
+      \endNode{}\Node%
+{\def\Element%
+{14}}
+	Therefore, the ability to automatically generate packages is
+	desired.  This is what Packager solves, it can automatically
+	or semi-\/automatically package software.
+	
+	For practical reasons, we have chosen to go with Debian
+	packages as a starting point, and then either improve the
+	Packager application or simply translate the packages
+	using a tool like Alien or an improvement of it.
+
+	Packager mainly implements a  system to create Debian packages
+	out of arbitrary upstream codebases.
+      \endNode{}\endNode{}\endNode{}\Node%
+{\def\Element%
+{15}}\Node%
+{\def\Element%
+{16}}
+      Packaging Techniques
+    \endNode{}\Node%
+{\def\Element%
+{17}}\Node%
+{\def\Element%
+{18}}
+	The Packaging Process
+      \endNode{}\Node%
+{\def\Element%
+{19}}
+	The packaging process is semi-\/supervised, of course, since the
+	system  does  not begin  with  all  of  the capabilities.   Of
+	course,  given the  domain, the  architecture itself  is under
+	constant elaboration  and the development  of the architecture
+	is considered part of its learning.
+      \endNode{}\Node%
+{\def\Element%
+{20}}
+	Importantly, the packages which are produced by early versions
+	of Packager can later  be used to facilitate capabilities.  An
+	example  of this  might be  that a  system for  annotating and
+	extracting  text files  could  be packaged  with the  current,
+	hand-\/written perl implementation of Packager, and then used to
+	annotate  files  for  extraction  to increase  the  extent  of
+	automation.
+      \endNode{}\Node%
+{\def\Element%
+{21}}
+	In  addition to  "learning"  via programming,  there are  real
+	learning systems employed.  The  first is that any action that
+	the user  takes in excess of  Packager in order  to complete a
+	package must  be formalizeable  as an action.   By documenting
+	the various incompletenesses of Packager, it will be easier to
+	add  features or  train existing  learning methods  to perform
+	certain tasks.
+      \endNode{}\Node%
+{\def\Element%
+{22}}
+	The basic  process is currently Make like.   There are several
+	targets which  relate to stages  of packaging.  Most  of these
+	steps are  performed by existing  packaging assistants, almost
+	all of  which are clearly specified in  the Debian Maintainers
+	Manual.  Incidentally,  we intend to formalize  the process of
+	taking  documents  like the  Debian  Developers' Policies  and
+	mapping the  logic documented therein  into code, so  that, as
+	best practices and online documentation are improved, updating
+	the  code to reflect  this is  an entirely  auditable process.
+	Obviously, the  notion of process is very  important here, but
+	we  have  yet  to  find  an appropriate  system  for  robustly
+	modelling processes (as opposed to simply hard coding them via
+	software).  This remains a  major need.  We have explored many
+	techniques but none have been employed successfully, mainly on
+	account  of  our  own  ignorance  and lack  of  resources  and
+	assistance.  (We have, for instance, looked at AIAI's I-\/DE and
+	I-\/X, Flowdesigner,  ArgoUML, AcmeStudio, OntoEdit,  etc.  Many
+	times we have  not succeeding in getting the  software to even
+	run.  Although this could be  viewed as ineptitude, it is more
+	appropriate  and accurate  to consider  it lack  of resources.
+	For  instance, during  the  aforementioned testing  I had  not
+	eaten in  6 days,  save 2  cans of red  kidney beans  and some
+	hotdogs  one day.  Secondly,  this may  be attributable  to my
+	ignorance of Software  Engineering and Architecture practices.
+	However,  I   feel  that  such   practices  are  prohibitively
+	difficult to  learn, and seek  assistance to do so.   The fact
+	that there are not existing  tools which more or less complete
+	the  process  indicates a  certain  lack  of  rigour in  these
+	approaches.)
+      \endNode{}\Node%
+{\def\Element%
+{23}}
+	So, as the software is  packaged, more cases for more software
+	is elaborated.  A fundamental  problem is that the information
+	does not come  in any standard form, if  at all, and therefore
+	has  to be  estimated.   One instance  of  this is  dependency
+	information.  There are hybrid methods for accomplishing this.
+	First is, every  software package that is added,  the files it
+	contains are  mapped to the desired  metadata.  Therefore, the
+	system  should be able  to look  in appropriate  places, using
+	appropriate features, to extract the desired information.  For
+	instance, the  system should know  to look in readmes,  and to
+	incorporate the names of known systems to approximately filter
+	the readme  file for  dependency information.  In  some cases,
+	not  all the  software  is necessary,  and  so the  annotation
+	language,  which  is   an  ontology,  must  include  relations
+	specifying this.  There are natural kinds of dependencies with
+	Debian (suggets, depends,  recommends, conflicts), etc.  Using
+	other tools like pbuilder and sbuild, it should be possible to
+	do  some   measure  of  automatic   testing  of  dependencies.
+	Integrating  both modes  should  give a  head start.   Lastly,
+	data-\/mining  of dependencies  versus  various features  should
+	allow prediction  of what libraries are needed.   All of these
+	techniques  will  substantially  reduce,  and  in  some  cases
+	eliminate completely,  the effort of  the packaging supervisor
+	to manually  locate software.  Of  course it is also  the case
+	that the  system will be invoked on  each dependency, thereby,
+	automatically   finding   and   packaging   (where   possible)
+	dependencies.    This  information   will  be   used   by  the
+	Machiavelli system in  authoring persuasive letters to authors
+	of software, based on further confidence building tests -\/ such
+	as applying question answering software to questions like "why
+	isn't system X licensed open source", and user given approval,
+	to write  letters to  the authors in  the hopes  of persuading
+	them  to  relicense  their  software, as  well  as  key-\/player
+	network analysis measures to focus efforts on important cases.
+	Incidentally,  the  persuasive   letter  authoring  system  is
+	already completed.
+      \endNode{}\Node%
+{\def\Element%
+{24}}
+	In conclusion, there are variety of special methods which must
+	be  invoked  to  extract  information  necessary  to  creating
+	packages.   The system  attempts  to monitor  the process  and
+	activities of packagers in  order to identify commonalties and
+	areas for improvement.  The system evolves both through manual
+	coding, and automatic learning.  The system interacts with the
+	user, proceeding as far as  possible before asking the user to
+	complete  some task.   I  forgot to  mention  that a  planning
+	process  is  necessary,  and  should  be part  of  the  larger
+	planning  system,  and  therefore  able to  exchange  tactical
+	information  to improve the  overall quality  of automatically
+	maintained development plans.
+      \endNode{}\endNode{}\Node%
+{\def\Element%
+{25}}\Node%
+{\def\Element%
+{26}}
+	Examples of Architectural Components
+      \endNode{}\Node%
+{\def\Element%
+{27}}
+	So  far, here  are some  of  the tools  which have  been
+	incorporated to give Packager its functionality.
+      \endNode{}\Node%
+{\def\Element%
+{28}}
+	Mainly it  is perl code.  We  have done some  UML modelling of
+	the process, mainly the capabilities management.
+      \endNode{}\Node%
+{\def\Element%
+{29}}
+	Without a doubt, the next  few steps will involve semantic web
+	technologies, mainly ontology tools.  The package state should
+	be represented  ontologically.  Therefore, modules  will query
+	the ontology system in order to make decisions.
+      \endNode{}\Node%
+{\def\Element%
+{30}}
+	The process definition is important and we have not settled on
+	what  this will  be.  Neither  have we  found  the information
+	extraction system,  that is  capable of handling  diverse file
+	types (such  as .deb and tgz,  pdf, etc.)  Wow,  that would be
+	powerful,  wouldn't it?!  I'll  have to  look for  that.  Now,
+	here is an example, one  would simply, using the current state
+	of  our technology,  do  this :
+      \endNode{}\Node%
+{\def\Element%
+{31}}
+	radar  search  -\/c  "information  extraction  system,  that  is
+	capable of handling diverse file  types (such as .deb and tgz,
+	pdf, etc.)"
+      \endNode{}\Node%
+{\def\Element%
+{32}}
+	This command  would then begin a  capabilites matching search,
+	by looking at the capabilities already listed in the ontology,
+	and by initiating a new search with this specific criteria.
+      \endNode{}\Node%
+{\def\Element%
+{33}}
+	Lastly, there are numerous  Debian specific tools which do all
+	the real work at  this point, including dput, debmake, dh\char95{}make
+	dpkg-\/buildpackage,     cvs-\/buildpackage,    lintian,    linda,
+	mini-\/dinstall, etc.
+      \endNode{}\endNode{}\Node%
+{\def\Element%
+{34}}\Node%
+{\def\Element%
+{35}}
+	Policy
+      \endNode{}\Node%
+{\def\Element%
+{36}}
+	The  policy of  Packager is  to collect  and  use applications
+	according   to   their   licenses  and/or   specific   written
+	agreements.  A sophisticated license management system will be
+	found-\/or-\/created to ensure that all software, indeed all data,
+	is used in  accordance with its authors wishes.   We intend to
+	formalize  the contents of  licenses so  that we  can formally
+	prove  the  correctness of  the  software  use.  This  license
+	extraction is already done in  a minor capacity, but seeing as
+	this  is   critical,  this  capability   will  be  extensively
+	developed.
+      \endNode{}\Node%
+{\def\Element%
+{37}}
+	Due to  bounded resources, we  are currently employing  a wait
+	and  see  approach.  Our  planning  technology is  essentially
+	unused, i.e. there is not even basic goal dependency analysis.
+	This is a  major problem.  If we got this  done, we would like
+	to then  focus on other  things, like adequately  planning and
+	developing  the essential  software.   So, right  now, we  are
+	simply  going with  an  approach to  create essential  systems
+	mainly by  locating, installing  and testing them,  since this
+	still provides greater code capability.
+      \endNode{}\endNode{}\endNode{}\endNode{}\endNode{}\endFOT{}

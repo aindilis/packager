@@ -1,0 +1,8 @@
+{ENAMEX} {TYPE=PERSON *} {Person} {blue}  {lightskyblue} {1} {<Meta-p>} {}
+{ENAMEX} {TYPE=ORGANIZATION *} {Organization} {gray25}  {turquoise} {1} {<Meta-o>} {}
+{ENAMEX} {TYPE=LOCATION *} {Location} {blue}  {PaleVioletRed} {1} {<Meta-l>} {}
+{TIMEX} {TYPE=DATE *} {Date} {blue}  {pink} {1} {<Meta-d>} {}
+{TIMEX} {TYPE=TIME *} {Time} {blue}  {SpringGreen} {1} {<Meta-t>} {}
+{NUMEX} {TYPE=PERCENT *} {Percent} {blue}  {LightGoldenrod} {1} {<Control-p>} {}
+{NUMEX} {TYPE=MONEY *} {Money} {blue}  {orange} {1} {<Meta-m>} {}
+{Progress} {} {ProgressMarker} {OrangeRed}  {DarkViolet} {1} {} {}

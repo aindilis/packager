@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+
+SYSNAME=
+
+configure: configure-stamp
+
+configure-stamp:
+	touch configure-stamp
+
+build: build-stamp
+
+build-stamp: configure-stamp 
+	touch build-stamp
+
+clean:
+	(find . | grep '~$$' | xargs rm) || true
+
+etags:
+	find . | grep -E '(pm|pl)$$' | etags -
+
+install:
+	cp ${SYSNAME} $(DESTDIR)/usr/bin
+	cp -ar usr/share/$(SYSNAME) $(DESTDIR)/usr/share/${SYSNAME}
+	cp -ar usr/share/doc/$(SYSNAME) $(DESTDIR)/usr/share/doc/${SYSNAME}
+	cp -ar var/lib/$(SYSNAME) $(DESTDIR)/var/lib/${SYSNAME}
+	cp -ar etc/$(SYSNAME) $(DESTDIR)/etc
+	cp etc/cron.d/$(SYSNAME) $(DESTDIR)/etc/cron.d/
+
+.PHONY: build clean install configure

@@ -1,0 +1,65 @@
+You must  install these packages (dput,  mini-dinstall).  Also install
+apache.  Configure the  debian archive used by mini-dinstall  to be in
+/var/www/debian.
+
+Don't remember  how to get key  signitures working so  disable them in
+the  conf files.  Don't  use the  default ~/.mini-dinstall  because it
+doesn't work so good, copy the /etc one and fix it up.
+
+dput -f -c ~/.dput.cf -u <hostname> <package_version>.changes
+
+
+From /usr/share/doc/dput/FAQ
+
+
+   MICRO RECIPE FOR PERSONAL MINI-DINSTALL REPOSITORY
+   The following dput and mini-dinstall configuration works for the
+   mainters of dput. For your convenience we have included a "local"
+   dput target in the stock debian dput.cf which can be used with the
+   mini-dinstall configuration below.
+   For simplicity, we do not use the daemon mode of mini-dinstall. As
+   mini-dinstall has rather flexible configuration options, you might
+   want to consider reading the documentation yourself, but the file
+   file below should work out of the box to implement most simple setup.
+   After copying the configuration file below into your home directory
+   do mkdir -p public_html/debian ; mini-dinstall --batch
+   in your home directory to setup your repository.
+
+   ~/.mini-dinstall.conf:
+   # Adapted Colin's mini-dinstall.conf
+   [DEFAULT]
+   architectures = all, i386
+   archivedir = ~/public_html/debian/
+   use_dnotify = 0
+   verify_sigs = 0
+   extra_keyrings = ~/.gnupg/pubring.gpg
+   mail_on_success = 0
+   archive_style = flat
+   poll_time = 10
+   mail_log_level = NONE
+   [stable]
+   [testing]
+   [unstable]
+
+If you get the error "No  host localhost found in config", then simply
+use local as the host.  Also  update the site to not be ~/public_html,
+but to be /var/www/debian.
+
+Lastly, use this line in /etc/apt/sources.list
+
+deb http://localhost/debian/ unstable/
+
+To upload, use:
+dput -f -c ~/.dput.cf -u local <package>_<version>.changes
+
+Now just make your packages work!
+
+
+If there are any problems with mini-dinstall, like:
+	~ $ mini-dinstall
+	Traceback (most recent call last):
+	  File "/usr/bin/mini-dinstall", line 240, in ?
+	    pid = int(open(lockfilename).read())
+	ValueError: invalid literal for int(): 
+try removing this:
+/var/www/debian/mini-dinstall/mini-dinstall.lock

@@ -1,0 +1,1131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+<html>
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+<title>Debian Policy Manual - Package maintainer scripts and installation procedure</title>
+
+<link href="index.html" rel="start">
+<link href="ch-controlfields.html" rel="prev">
+<link href="ch-relationships.html" rel="next">
+<link href="index.html#contents" rel="contents">
+<link href="index.html#copyright" rel="copyright">
+<link href="ch-scope.html" rel="chapter" title="1 About this manual">
+<link href="ch-archive.html" rel="chapter" title="2 The Debian Archive">
+<link href="ch-binary.html" rel="chapter" title="3 Binary packages">
+<link href="ch-source.html" rel="chapter" title="4 Source packages">
+<link href="ch-controlfields.html" rel="chapter" title="5 Control files and their fields">
+<link href="ch-maintainerscripts.html" rel="chapter" title="6 Package maintainer scripts and installation procedure">
+<link href="ch-relationships.html" rel="chapter" title="7 Declaring relationships between packages">
+<link href="ch-sharedlibs.html" rel="chapter" title="8 Shared libraries">
+<link href="ch-opersys.html" rel="chapter" title="9 The Operating System">
+<link href="ch-files.html" rel="chapter" title="10 Files">
+<link href="ch-customized-programs.html" rel="chapter" title="11 Customized programs">
+<link href="ch-docs.html" rel="chapter" title="12 Documentation">
+<link href="ap-pkg-scope.html" rel="appendix" title="A Introduction and scope of these appendices">
+<link href="ap-pkg-binarypkg.html" rel="appendix" title="B Binary packages (from old Packaging Manual)">
+<link href="ap-pkg-sourcepkg.html" rel="appendix" title="C Source packages (from old Packaging Manual)">
+<link href="ap-pkg-controlfields.html" rel="appendix" title="D Control files and their fields (from old Packaging Manual)">
+<link href="ap-pkg-conffiles.html" rel="appendix" title="E Configuration file handling (from old Packaging Manual)">
+<link href="ap-pkg-alternatives.html" rel="appendix" title="F Alternative versions of an interface - update-alternatives (from old Packaging Manual)">
+<link href="ap-pkg-diversions.html" rel="appendix" title="G Diversions - overriding a package's version of a file (from old Packaging Manual)">
+<link href="ch-scope.html#s1.1" rel="section" title="1.1 Scope">
+<link href="ch-scope.html#s1.2" rel="section" title="1.2 New versions of this document">
+<link href="ch-scope.html#s-authors" rel="section" title="1.3 Authors and Maintainers">
+<link href="ch-scope.html#s-related" rel="section" title="1.4 Related documents">
+<link href="ch-scope.html#s-definitions" rel="section" title="1.5 Definitions">
+<link href="ch-archive.html#s-dfsg" rel="section" title="2.1 The Debian Free Software Guidelines">
+<link href="ch-archive.html#s-sections" rel="section" title="2.2 Archive areas">
+<link href="ch-archive.html#s-pkgcopyright" rel="section" title="2.3 Copyright considerations">
+<link href="ch-archive.html#s-subsections" rel="section" title="2.4 Sections">
+<link href="ch-archive.html#s-priorities" rel="section" title="2.5 Priorities">
+<link href="ch-binary.html#s3.1" rel="section" title="3.1 The package name">
+<link href="ch-binary.html#s-versions" rel="section" title="3.2 The version of a package">
+<link href="ch-binary.html#s-maintainer" rel="section" title="3.3 The maintainer of a package">
+<link href="ch-binary.html#s-descriptions" rel="section" title="3.4 The description of a package">
+<link href="ch-binary.html#s-dependencies" rel="section" title="3.5 Dependencies">
+<link href="ch-binary.html#s-virtual_pkg" rel="section" title="3.6 Virtual packages">
+<link href="ch-binary.html#s3.7" rel="section" title="3.7 Base system">
+<link href="ch-binary.html#s3.8" rel="section" title="3.8 Essential packages">
+<link href="ch-binary.html#s-maintscripts" rel="section" title="3.9 Maintainer Scripts">
+<link href="ch-source.html#s-standardsversion" rel="section" title="4.1 Standards conformance">
+<link href="ch-source.html#s-pkg-relations" rel="section" title="4.2 Package relationships">
+<link href="ch-source.html#s4.3" rel="section" title="4.3 Changes to the upstream sources">
+<link href="ch-source.html#s-dpkgchangelog" rel="section" title="4.4 Debian changelog: debian/changelog">
+<link href="ch-source.html#s-dpkgcopyright" rel="section" title="4.5 Copyright: debian/copyright">
+<link href="ch-source.html#s4.6" rel="section" title="4.6 Error trapping in makefiles">
+<link href="ch-source.html#s-timestamps" rel="section" title="4.7 Time Stamps">
+<link href="ch-source.html#s-restrictions" rel="section" title="4.8 Restrictions on objects in source packages">
+<link href="ch-source.html#s-debianrules" rel="section" title="4.9 Main building script: debian/rules">
+<link href="ch-source.html#s-substvars" rel="section" title="4.10 Variable substitutions: debian/substvars">
+<link href="ch-source.html#s-debianwatch" rel="section" title="4.11 Optional upstream source location: debian/watch">
+<link href="ch-source.html#s-debianfiles" rel="section" title="4.12 Generated files list: debian/files">
+<link href="ch-source.html#s-embeddedfiles" rel="section" title="4.13 Convenience copies of code">
+<link href="ch-source.html#s-readmesource" rel="section" title="4.14 Source package handling: debian/README.source">
+<link href="ch-controlfields.html#s-controlsyntax" rel="section" title="5.1 Syntax of control files">
+<link href="ch-controlfields.html#s-sourcecontrolfiles" rel="section" title="5.2 Source package control files -- debian/control">
+<link href="ch-controlfields.html#s-binarycontrolfiles" rel="section" title="5.3 Binary package control files -- DEBIAN/control">
+<link href="ch-controlfields.html#s-debiansourcecontrolfiles" rel="section" title="5.4 Debian source control files -- .dsc">
+<link href="ch-controlfields.html#s-debianchangesfiles" rel="section" title="5.5 Debian changes files -- .changes">
+<link href="ch-controlfields.html#s-controlfieldslist" rel="section" title="5.6 List of fields">
+<link href="ch-controlfields.html#s5.7" rel="section" title="5.7 User-defined fields">
+<link href="ch-maintainerscripts.html#s6.1" rel="section" title="6.1 Introduction to package maintainer scripts">
+<link href="ch-maintainerscripts.html#s-idempotency" rel="section" title="6.2 Maintainer scripts idempotency">
+<link href="ch-maintainerscripts.html#s-controllingterminal" rel="section" title="6.3 Controlling terminal for maintainer scripts">
+<link href="ch-maintainerscripts.html#s-exitstatus" rel="section" title="6.4 Exit status">
+<link href="ch-maintainerscripts.html#s-mscriptsinstact" rel="section" title="6.5 Summary of ways maintainer scripts are called">
+<link href="ch-maintainerscripts.html#s-unpackphase" rel="section" title="6.6 Details of unpack phase of installation or upgrade">
+<link href="ch-maintainerscripts.html#s-configdetails" rel="section" title="6.7 Details of configuration">
+<link href="ch-maintainerscripts.html#s-removedetails" rel="section" title="6.8 Details of removal and/or configuration purging">
+<link href="ch-relationships.html#s-depsyntax" rel="section" title="7.1 Syntax of relationship fields">
+<link href="ch-relationships.html#s-binarydeps" rel="section" title="7.2 Binary Dependencies - Depends, Recommends, Suggests, Enhances, Pre-Depends">
+<link href="ch-relationships.html#s-breaks" rel="section" title="7.3 Packages which break other packages - Breaks">
+<link href="ch-relationships.html#s-conflicts" rel="section" title="7.4 Conflicting binary packages - Conflicts">
+<link href="ch-relationships.html#s-virtual" rel="section" title="7.5 Virtual packages - Provides">
+<link href="ch-relationships.html#s-replaces" rel="section" title="7.6 Overwriting files and replacing packages - Replaces">
+<link href="ch-relationships.html#s-sourcebinarydeps" rel="section" title="7.7 Relationships between source and binary packages - Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep">
+<link href="ch-relationships.html#s-built-using" rel="section" title="7.8 Additional source packages used to build the binary - Built-Using">
+<link href="ch-sharedlibs.html#s-sharedlibs-runtime" rel="section" title="8.1 Run-time shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-support-files" rel="section" title="8.2 Shared library support files">
+<link href="ch-sharedlibs.html#s-sharedlibs-static" rel="section" title="8.3 Static libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-dev" rel="section" title="8.4 Development files">
+<link href="ch-sharedlibs.html#s-sharedlibs-intradeps" rel="section" title="8.5 Dependencies between the packages of the same library">
+<link href="ch-sharedlibs.html#s-sharedlibs-depends" rel="section" title="8.6 Dependencies between the library and other packages">
+<link href="ch-opersys.html#s9.1" rel="section" title="9.1 File system hierarchy">
+<link href="ch-opersys.html#s9.2" rel="section" title="9.2 Users and groups">
+<link href="ch-opersys.html#s-sysvinit" rel="section" title="9.3 System run levels and init.d scripts">
+<link href="ch-opersys.html#s9.4" rel="section" title="9.4 Console messages from init.d scripts">
+<link href="ch-opersys.html#s-cron-jobs" rel="section" title="9.5 Cron jobs">
+<link href="ch-opersys.html#s-menus" rel="section" title="9.6 Menus">
+<link href="ch-opersys.html#s-mime" rel="section" title="9.7 Multimedia handlers">
+<link href="ch-opersys.html#s9.8" rel="section" title="9.8 Keyboard configuration">
+<link href="ch-opersys.html#s9.9" rel="section" title="9.9 Environment variables">
+<link href="ch-opersys.html#s-doc-base" rel="section" title="9.10 Registering Documents using doc-base">
+<link href="ch-opersys.html#s-alternateinit" rel="section" title="9.11 Alternate init systems">
+<link href="ch-files.html#s-binaries" rel="section" title="10.1 Binaries">
+<link href="ch-files.html#s-libraries" rel="section" title="10.2 Libraries">
+<link href="ch-files.html#s10.3" rel="section" title="10.3 Shared libraries">
+<link href="ch-files.html#s-scripts" rel="section" title="10.4 Scripts">
+<link href="ch-files.html#s10.5" rel="section" title="10.5 Symbolic links">
+<link href="ch-files.html#s10.6" rel="section" title="10.6 Device files">
+<link href="ch-files.html#s-config-files" rel="section" title="10.7 Configuration files">
+<link href="ch-files.html#s10.8" rel="section" title="10.8 Log files">
+<link href="ch-files.html#s-permissions-owners" rel="section" title="10.9 Permissions and owners">
+<link href="ch-customized-programs.html#s-arch-spec" rel="section" title="11.1 Architecture specification strings">
+<link href="ch-customized-programs.html#s11.2" rel="section" title="11.2 Daemons">
+<link href="ch-customized-programs.html#s11.3" rel="section" title="11.3 Using pseudo-ttys and modifying wtmp, utmp and lastlog">
+<link href="ch-customized-programs.html#s11.4" rel="section" title="11.4 Editors and pagers">
+<link href="ch-customized-programs.html#s-web-appl" rel="section" title="11.5 Web servers and applications">
+<link href="ch-customized-programs.html#s-mail-transport-agents" rel="section" title="11.6 Mail transport, delivery and user agents">
+<link href="ch-customized-programs.html#s11.7" rel="section" title="11.7 News system configuration">
+<link href="ch-customized-programs.html#s11.8" rel="section" title="11.8 Programs for the X Window System">
+<link href="ch-customized-programs.html#s-perl" rel="section" title="11.9 Perl programs and modules">
+<link href="ch-customized-programs.html#s-emacs" rel="section" title="11.10 Emacs lisp programs">
+<link href="ch-customized-programs.html#s11.11" rel="section" title="11.11 Games">
+<link href="ch-docs.html#s12.1" rel="section" title="12.1 Manual pages">
+<link href="ch-docs.html#s12.2" rel="section" title="12.2 Info documents">
+<link href="ch-docs.html#s12.3" rel="section" title="12.3 Additional documentation">
+<link href="ch-docs.html#s12.4" rel="section" title="12.4 Preferred documentation formats">
+<link href="ch-docs.html#s-copyrightfile" rel="section" title="12.5 Copyright information">
+<link href="ch-docs.html#s12.6" rel="section" title="12.6 Examples">
+<link href="ch-docs.html#s-changelogs" rel="section" title="12.7 Changelog files">
+<link href="ap-pkg-binarypkg.html#s-pkg-bincreating" rel="section" title="B.1 Creating package files - dpkg-deb">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlarea" rel="section" title="B.2 Package control information files">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlfile" rel="section" title="B.3 The main control information file: control">
+<link href="ap-pkg-binarypkg.html#sB.4" rel="section" title="B.4 Time Stamps">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetools" rel="section" title="C.1 Tools for processing source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetree" rel="section" title="C.2 The Debian package source tree">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcearchives" rel="section" title="C.3 Source packages as archives">
+<link href="ap-pkg-sourcepkg.html#sC.4" rel="section" title="C.4 Unpacking a Debian source package without dpkg-source">
+<link href="ap-pkg-controlfields.html#sD.1" rel="section" title="D.1 Syntax of control files">
+<link href="ap-pkg-controlfields.html#sD.2" rel="section" title="D.2 List of fields">
+<link href="ap-pkg-conffiles.html#sE.1" rel="section" title="E.1 Automatic handling of configuration files by dpkg">
+<link href="ap-pkg-conffiles.html#sE.2" rel="section" title="E.2 Fully-featured maintainer script configuration handling">
+<link href="ch-archive.html#s-main" rel="subsection" title="2.2.1 The main archive area">
+<link href="ch-archive.html#s-contrib" rel="subsection" title="2.2.2 The contrib archive area">
+<link href="ch-archive.html#s-non-free" rel="subsection" title="2.2.3 The non-free archive area">
+<link href="ch-binary.html#s3.2.1" rel="subsection" title="3.2.1 Version numbers based on dates">
+<link href="ch-binary.html#s-synopsis" rel="subsection" title="3.4.1 The single line synopsis">
+<link href="ch-binary.html#s-extendeddesc" rel="subsection" title="3.4.2 The extended description">
+<link href="ch-binary.html#s-maintscriptprompt" rel="subsection" title="3.9.1 Prompting in maintainer scripts">
+<link href="ch-source.html#s-debianrules-options" rel="subsection" title="4.9.1 debian/rules and DEB_BUILD_OPTIONS">
+<link href="ch-controlfields.html#s-f-Source" rel="subsection" title="5.6.1 Source">
+<link href="ch-controlfields.html#s-f-Maintainer" rel="subsection" title="5.6.2 Maintainer">
+<link href="ch-controlfields.html#s-f-Uploaders" rel="subsection" title="5.6.3 Uploaders">
+<link href="ch-controlfields.html#s-f-Changed-By" rel="subsection" title="5.6.4 Changed-By">
+<link href="ch-controlfields.html#s-f-Section" rel="subsection" title="5.6.5 Section">
+<link href="ch-controlfields.html#s-f-Priority" rel="subsection" title="5.6.6 Priority">
+<link href="ch-controlfields.html#s-f-Package" rel="subsection" title="5.6.7 Package">
+<link href="ch-controlfields.html#s-f-Architecture" rel="subsection" title="5.6.8 Architecture">
+<link href="ch-controlfields.html#s-f-Essential" rel="subsection" title="5.6.9 Essential">
+<link href="ch-controlfields.html#s5.6.10" rel="subsection" title="5.6.10 Package interrelationship fields: Depends, Pre-Depends, Recommends, Suggests, Breaks, Conflicts, Provides, Replaces, Enhances">
+<link href="ch-controlfields.html#s-f-Standards-Version" rel="subsection" title="5.6.11 Standards-Version">
+<link href="ch-controlfields.html#s-f-Version" rel="subsection" title="5.6.12 Version">
+<link href="ch-controlfields.html#s-f-Description" rel="subsection" title="5.6.13 Description">
+<link href="ch-controlfields.html#s-f-Distribution" rel="subsection" title="5.6.14 Distribution">
+<link href="ch-controlfields.html#s-f-Date" rel="subsection" title="5.6.15 Date">
+<link href="ch-controlfields.html#s-f-Format" rel="subsection" title="5.6.16 Format">
+<link href="ch-controlfields.html#s-f-Urgency" rel="subsection" title="5.6.17 Urgency">
+<link href="ch-controlfields.html#s-f-Changes" rel="subsection" title="5.6.18 Changes">
+<link href="ch-controlfields.html#s-f-Binary" rel="subsection" title="5.6.19 Binary">
+<link href="ch-controlfields.html#s-f-Installed-Size" rel="subsection" title="5.6.20 Installed-Size">
+<link href="ch-controlfields.html#s-f-Files" rel="subsection" title="5.6.21 Files">
+<link href="ch-controlfields.html#s-f-Closes" rel="subsection" title="5.6.22 Closes">
+<link href="ch-controlfields.html#s-f-Homepage" rel="subsection" title="5.6.23 Homepage">
+<link href="ch-controlfields.html#s-f-Checksums" rel="subsection" title="5.6.24 Checksums-Sha1 and Checksums-Sha256">
+<link href="ch-controlfields.html#s-f-DM-Upload-Allowed" rel="subsection" title="5.6.25 DM-Upload-Allowed">
+<link href="ch-controlfields.html#s-f-VCS-fields" rel="subsection" title="5.6.26 Version Control System (VCS) fields">
+<link href="ch-relationships.html#s7.6.1" rel="subsection" title="7.6.1 Overwriting files in other packages">
+<link href="ch-relationships.html#s7.6.2" rel="subsection" title="7.6.2 Replacing whole packages, forcing their removal">
+<link href="ch-sharedlibs.html#s-ldconfig" rel="subsection" title="8.1.1 ldconfig">
+<link href="ch-sharedlibs.html#s-dpkg-shlibdeps" rel="subsection" title="8.6.1 Generating dependencies on shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-updates" rel="subsection" title="8.6.2 Shared library ABI changes">
+<link href="ch-sharedlibs.html#s-sharedlibs-symbols" rel="subsection" title="8.6.3 The symbols system">
+<link href="ch-sharedlibs.html#s-symbols-paths" rel="subsection" title="8.6.3.1 The symbols files present on the system">
+<link href="ch-sharedlibs.html#s-symbols" rel="subsection" title="8.6.3.2 The symbols File Format">
+<link href="ch-sharedlibs.html#s-providing-symbols" rel="subsection" title="8.6.3.3 Providing a symbols file">
+<link href="ch-sharedlibs.html#s-sharedlibs-shlibdeps" rel="subsection" title="8.6.4 The shlibs system">
+<link href="ch-sharedlibs.html#s-shlibs-paths" rel="subsection" title="8.6.4.1 The shlibs files present on the system">
+<link href="ch-sharedlibs.html#s-shlibs" rel="subsection" title="8.6.4.2 The shlibs File Format">
+<link href="ch-sharedlibs.html#s8.6.4.3" rel="subsection" title="8.6.4.3 Providing a shlibs file">
+<link href="ch-opersys.html#s-fhs" rel="subsection" title="9.1.1 File System Structure">
+<link href="ch-opersys.html#s9.1.2" rel="subsection" title="9.1.2 Site-specific programs">
+<link href="ch-opersys.html#s9.1.3" rel="subsection" title="9.1.3 The system-wide mail directory">
+<link href="ch-opersys.html#s-fhs-run" rel="subsection" title="9.1.4 /run and /run/lock">
+<link href="ch-opersys.html#s9.2.1" rel="subsection" title="9.2.1 Introduction">
+<link href="ch-opersys.html#s9.2.2" rel="subsection" title="9.2.2 UID and GID classes">
+<link href="ch-opersys.html#s-/etc/init.d" rel="subsection" title="9.3.1 Introduction">
+<link href="ch-opersys.html#s-writing-init" rel="subsection" title="9.3.2 Writing the scripts">
+<link href="ch-opersys.html#s9.3.3" rel="subsection" title="9.3.3 Interfacing with the initscript system">
+<link href="ch-opersys.html#s9.3.3.1" rel="subsection" title="9.3.3.1 Managing the links">
+<link href="ch-opersys.html#s9.3.3.2" rel="subsection" title="9.3.3.2 Running initscripts">
+<link href="ch-opersys.html#s9.3.4" rel="subsection" title="9.3.4 Boot-time initialization">
+<link href="ch-opersys.html#s9.3.5" rel="subsection" title="9.3.5 Example">
+<link href="ch-opersys.html#s-cron-files" rel="subsection" title="9.5.1 Cron job file names">
+<link href="ch-opersys.html#s-upstart" rel="subsection" title="9.11.1 Event-based boot with upstart">
+<link href="ch-files.html#s10.7.1" rel="subsection" title="10.7.1 Definitions">
+<link href="ch-files.html#s10.7.2" rel="subsection" title="10.7.2 Location">
+<link href="ch-files.html#s10.7.3" rel="subsection" title="10.7.3 Behavior">
+<link href="ch-files.html#s10.7.4" rel="subsection" title="10.7.4 Sharing configuration files">
+<link href="ch-files.html#s10.7.5" rel="subsection" title="10.7.5 User configuration files (&quot;dotfiles&quot;)">
+<link href="ch-files.html#s10.9.1" rel="subsection" title="10.9.1 The use of dpkg-statoverride">
+<link href="ch-customized-programs.html#s-arch-wildcard-spec" rel="subsection" title="11.1.1 Architecture wildcards">
+<link href="ch-customized-programs.html#s11.8.1" rel="subsection" title="11.8.1 Providing X support and package priorities">
+<link href="ch-customized-programs.html#s11.8.2" rel="subsection" title="11.8.2 Packages providing an X server">
+<link href="ch-customized-programs.html#s11.8.3" rel="subsection" title="11.8.3 Packages providing a terminal emulator">
+<link href="ch-customized-programs.html#s11.8.4" rel="subsection" title="11.8.4 Packages providing a window manager">
+<link href="ch-customized-programs.html#s11.8.5" rel="subsection" title="11.8.5 Packages providing fonts">
+<link href="ch-customized-programs.html#s-appdefaults" rel="subsection" title="11.8.6 Application defaults files">
+<link href="ch-customized-programs.html#s11.8.7" rel="subsection" title="11.8.7 Installation directory issues">
+<link href="ch-docs.html#s-copyrightformat" rel="subsection" title="12.5.1 Machine-readable copyright information">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-source" rel="subsection" title="C.1.1 dpkg-source - packs and unpacks Debian source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-buildpackage" rel="subsection" title="C.1.2 dpkg-buildpackage - overall package-building control script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-gencontrol" rel="subsection" title="C.1.3 dpkg-gencontrol - generates binary package control files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-shlibdeps" rel="subsection" title="C.1.4 dpkg-shlibdeps - calculates shared library dependencies">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-distaddfile" rel="subsection" title="C.1.5 dpkg-distaddfile - adds a file to debian/files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-genchanges" rel="subsection" title="C.1.6 dpkg-genchanges - generates a .changes upload control file">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-parsechangelog" rel="subsection" title="C.1.7 dpkg-parsechangelog - produces parsed representation of a changelog">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-architecture" rel="subsection" title="C.1.8 dpkg-architecture - information about the build and host system">
+<link href="ap-pkg-sourcepkg.html#s-pkg-debianrules" rel="subsection" title="C.2.1 debian/rules - the main building script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-srcsubstvars" rel="subsection" title="C.2.2 debian/substvars and variable substitutions">
+<link href="ap-pkg-sourcepkg.html#sC.2.3" rel="subsection" title="C.2.3 debian/files">
+<link href="ap-pkg-sourcepkg.html#sC.2.4" rel="subsection" title="C.2.4 debian/tmp">
+<link href="ap-pkg-sourcepkg.html#sC.4.1" rel="subsection" title="C.4.1 Restrictions on objects in source packages">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Filename" rel="subsection" title="D.2.1 Filename and MSDOS-Filename">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Size" rel="subsection" title="D.2.2 Size and MD5sum">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Status" rel="subsection" title="D.2.3 Status">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Conffiles" rel="subsection" title="D.2.5 Conffiles">
+<link href="ap-pkg-controlfields.html#sD.2.6" rel="subsection" title="D.2.6 Obsolete fields">
+
+</head>
+
+<body>
+
+<p><a name="ch-maintainerscripts"></a></p>
+<hr>
+
+<p>
+[ <a href="ch-controlfields.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ 6 ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-relationships.html">next</a> ]
+</p>
+
+<hr>
+
+<h1>
+Debian Policy Manual
+<br>Chapter 6 - Package maintainer scripts and installation procedure
+</h1>
+
+<hr>
+
+<h2><a name="s6.1"></a>6.1 Introduction to package maintainer scripts</h2>
+
+<p>
+It is possible to supply scripts as part of a package which the package
+management system will run for you when your package is installed, upgraded or
+removed.
+</p>
+
+<p>
+These scripts are the control information files <code>preinst</code>,
+<code>postinst</code>, <code>prerm</code> and <code>postrm</code>.  They must
+be proper executable files; if they are scripts (which is recommended), they
+must start with the usual <samp>#!</samp> convention.  They should be readable
+and executable by anyone, and must not be world-writable.
+</p>
+
+<p>
+The package management system looks at the exit status from these scripts.  It
+is important that they exit with a non-zero status if there is an error, so
+that the package management system can stop its processing.  For shell scripts
+this means that you <em>almost always</em> need to use <samp>set -e</samp>
+(this is usually true when writing shell scripts, in fact).  It is also
+important, of course, that they exit with a zero status if everything went
+well.
+</p>
+
+<p>
+Additionally, packages interacting with users using <code>debconf</code> in the
+<code>postinst</code> script should install a <code>config</code> script as a
+control information file.  See <a
+href="ch-binary.html#s-maintscriptprompt">Prompting in maintainer scripts,
+Section 3.9.1</a> for details.
+</p>
+
+<p>
+When a package is upgraded a combination of the scripts from the old and new
+packages is called during the upgrade procedure.  If your scripts are going to
+be at all complicated you need to be aware of this, and may need to check the
+arguments to your scripts.
+</p>
+
+<p>
+Broadly speaking the <code>preinst</code> is called before (a particular
+version of) a package is unpacked, and the <code>postinst</code> afterwards;
+the <code>prerm</code> before (a version of) a package is removed and the
+<code>postrm</code> afterwards.
+</p>
+
+<p>
+Programs called from maintainer scripts should not normally have a path
+prepended to them.  Before installation is started, the package management
+system checks to see if the programs <code>ldconfig</code>,
+<code>start-stop-daemon</code>, <code>install-info</code>, and
+<code>update-rc.d</code> can be found via the <samp>PATH</samp> environment
+variable.  Those programs, and any other program that one would expect to be in
+the <samp>PATH</samp>, should thus be invoked without an absolute pathname.
+Maintainer scripts should also not reset the <samp>PATH</samp>, though they
+might choose to modify it by prepending or appending package-specific
+directories.  These considerations really apply to all shell scripts.
+</p>
+
+<hr>
+
+<h2><a name="s-idempotency"></a>6.2 Maintainer scripts idempotency</h2>
+
+<p>
+It is necessary for the error recovery procedures that the scripts be
+idempotent.  This means that if it is run successfully, and then it is called
+again, it doesn't bomb out or cause any harm, but just ensures that everything
+is the way it ought to be.  If the first call failed, or aborted half way
+through for some reason, the second call should merely do the things that were
+left undone the first time, if any, and exit with a success status if
+everything is OK.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f45" name="fr45">45</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-controllingterminal"></a>6.3 Controlling terminal for maintainer scripts</h2>
+
+<p>
+Maintainer scripts are not guaranteed to run with a controlling terminal and
+may not be able to interact with the user.  They must be able to fall back to
+noninteractive behavior if no controlling terminal is available.  Maintainer
+scripts that prompt via a program conforming to the Debian Configuration
+Management Specification (see <a
+href="ch-binary.html#s-maintscriptprompt">Prompting in maintainer scripts,
+Section 3.9.1</a>) may assume that program will handle falling back to
+noninteractive behavior.
+</p>
+
+<p>
+For high-priority prompts without a reasonable default answer, maintainer
+scripts may abort if there is no controlling terminal.  However, this situation
+should be avoided if at all possible, since it prevents automated or unattended
+installs.  In most cases, users will consider this to be a bug in the package.
+</p>
+
+<hr>
+
+<h2><a name="s-exitstatus"></a>6.4 Exit status</h2>
+
+<p>
+Each script must return a zero exit status for success, or a nonzero one for
+failure, since the package management system looks for the exit status of these
+scripts and determines what action to take next based on that datum.
+</p>
+
+<hr>
+
+<h2><a name="s-mscriptsinstact"></a>6.5 Summary of ways maintainer scripts are called</h2>
+
+<p>
+What follows is a summary of all the ways in which maintainer scripts may be
+called along with what facilities those scripts may rely on being available at
+that time.  Script names preceded by <var>new-</var> are the scripts from the
+new version of a package being installed, upgraded to, or downgraded to.
+Script names preceded by <var>old-</var> are the scripts from the old version
+of a package that is being upgraded from or downgraded from.
+</p>
+
+<p>
+The <code>preinst</code> script may be called in the following ways:
+</p>
+<dl>
+<dt><var>new-preinst</var> <samp>install</samp></dt>
+<dt><var>new-preinst</var> <samp>install</samp> <var>old-version</var></dt>
+<dt><var>new-preinst</var> <samp>upgrade</samp> <var>old-version</var></dt>
+<dd>
+<p>
+The package will not yet be unpacked, so the <code>preinst</code> script cannot
+rely on any files included in its package.  Only essential packages and
+pre-dependencies (<samp>Pre-Depends</samp>) may be assumed to be available.
+Pre-dependencies will have been configured at least once, but at the time the
+<code>preinst</code> is called they may only be in an unpacked or
+&quot;Half-Configured&quot; state if a previous version of the pre-dependency
+was completely configured and has not been removed since then.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><var>old-preinst</var> <samp>abort-upgrade</samp> <var>new-version</var></dt>
+<dd>
+<p>
+Called during error handling of an upgrade that failed after unpacking the new
+package because the <samp>postrm upgrade</samp> action failed.  The unpacked
+files may be partly from the new version or partly missing, so the script
+cannot rely on files included in the package.  Package dependencies may not be
+available.  Pre-dependencies will be at least unpacked following the same rules
+as above, except they may be only &quot;Half-Installed&quot; if an upgrade of
+the pre-dependency failed.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f46" name="fr46">46</a>]
+</p>
+</dd>
+</dl>
+
+<p>
+The <code>postinst</code> script may be called in the following ways:
+</p>
+<dl>
+<dt><var>postinst</var> <samp>configure</samp> <var>most-recently-configured-version</var></dt>
+<dd>
+<p>
+The files contained in the package will be unpacked.  All package dependencies
+will at least be unpacked.  If there are no circular dependencies involved, all
+package dependencies will be configured.  For behavior in the case of circular
+dependencies, see the discussion in <a
+href="ch-relationships.html#s-binarydeps">Binary Dependencies -
+<samp>Depends</samp>, <samp>Recommends</samp>, <samp>Suggests</samp>,
+<samp>Enhances</samp>, <samp>Pre-Depends</samp>, Section 7.2</a>.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><var>old-postinst</var> <samp>abort-upgrade</samp> <var>new-version</var></dt>
+<dt><var>conflictor's-postinst</var> <samp>abort-remove</samp> <samp>in-favour</samp> <var>package</var> <var>new-version</var></dt>
+<dt><var>postinst</var> <samp>abort-remove</samp></dt>
+<dt><var>deconfigured's-postinst</var> <samp>abort-deconfigure</samp> <samp>in-favour</samp> <var>failed-install-package</var> <var>version</var> [<samp>removing</samp> <var>conflicting-package</var> <var>version</var>]</dt>
+<dd>
+<p>
+The files contained in the package will be unpacked.  All package dependencies
+will at least be &quot;Half-Installed&quot; and will have previously been
+configured and not removed.  However, dependencies may not be configured or
+even fully unpacked in some error situations.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f47"
+name="fr47">47</a>] The <code>postinst</code> should still attempt any actions
+for which its dependencies are required, since they will normally be available,
+but consider the correct error handling approach if those actions fail.
+Aborting the <code>postinst</code> action if commands or facilities from the
+package dependencies are not available is often the best approach.
+</p>
+</dd>
+</dl>
+
+<p>
+The <code>prerm</code> script may be called in the following ways:
+</p>
+<dl>
+<dt><var>prerm</var> <samp>remove</samp></dt>
+<dt><var>old-prerm</var> <samp>upgrade</samp><var>new-version</var></dt>
+<dt><var>conflictor's-prerm</var> <samp>remove</samp> <samp>in-favour</samp> <var>package</var> <var>new-version</var></dt>
+<dt><var>deconfigured's-prerm</var> <samp>deconfigure</samp> <samp>in-favour</samp> <var>package-being-installed</var> <var>version</var> [<samp>removing</samp> <var>conflicting-package</var> <var>version</var>]</dt>
+<dd>
+<p>
+The package whose <code>prerm</code> is being called will be at least
+&quot;Half-Installed&quot;.  All package dependencies will at least be
+&quot;Half-Installed&quot; and will have previously been configured and not
+removed.  If there was no error, all dependencies will at least be unpacked,
+but these actions may be called in various error states where dependencies are
+only &quot;Half-Installed&quot; due to a partial upgrade.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><var>new-prerm</var> <samp>failed-upgrade</samp> <var>old-version</var></dt>
+<dd>
+<p>
+Called during error handling when <samp>prerm upgrade</samp> fails.  The new
+package will not yet be unpacked, and all the same constraints as for
+<samp>preinst upgrade</samp> apply.
+</p>
+</dd>
+</dl>
+
+<p>
+The <code>postrm</code> script may be called in the following ways:
+</p>
+<dl>
+<dt><var>postrm</var> <samp>remove</samp></dt>
+<dt><var>postrm</var> <samp>purge</samp></dt>
+<dt><var>old-postrm</var> <samp>upgrade</samp> <var>new-version</var></dt>
+<dt><var>disappearer's-postrm</var> <samp>disappear</samp> <var>overwriter</var> <var>overwriter-version</var></dt>
+<dd>
+<p>
+The <code>postrm</code> script is called after the package's files have been
+removed or replaced.  The package whose <code>postrm</code> is being called may
+have previously been deconfigured and only be unpacked, at which point
+subsequent package changes do not consider its dependencies.  Therefore, all
+<code>postrm</code> actions may only rely on essential packages and must
+gracefully skip any actions that require the package's dependencies if those
+dependencies are unavailable.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f48" name="fr48">48</a>]
+</p>
+</dd>
+</dl>
+<dl>
+<dt><var>new-postrm</var> <samp>failed-upgrade</samp> <var>old-version</var></dt>
+<dd>
+<p>
+Called when the old <samp>postrm upgrade</samp> action fails.  The new package
+will be unpacked, but only essential packages and pre-dependencies can be
+relied on.  Pre-dependencies will either be configured or will be
+&quot;Unpacked&quot; or &quot;Half-Configured&quot; but previously had been
+configured and was never removed.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><var>new-postrm</var> <samp>abort-install</samp></dt>
+<dt><var>new-postrm</var> <samp>abort-install</samp> <var>old-version</var></dt>
+<dt><var>new-postrm</var> <samp>abort-upgrade</samp> <var>old-version</var></dt>
+<dd>
+<p>
+Called before unpacking the new package as part of the error handling of
+<code>preinst</code> failures.  May assume the same state as
+<code>preinst</code> can assume.
+</p>
+</dd>
+</dl>
+
+<hr>
+
+<h2><a name="s-unpackphase"></a>6.6 Details of unpack phase of installation or upgrade</h2>
+
+<p>
+The procedure on installation/upgrade/overwrite/disappear (i.e., when running
+<samp>dpkg --unpack</samp>, or the unpack stage of <samp>dpkg --install</samp>)
+is as follows.  In each case, if a major error occurs (unless listed below) the
+actions are, in general, run backwards - this means that the maintainer scripts
+are run with different arguments in reverse order.  These are the &quot;error
+unwind&quot; calls listed below.
+</p>
+<ol type="1" start="1" >
+<li>
+<ol type="1" start="1" >
+<li>
+<p>
+If a version of the package is already installed, call
+</p>
+<pre>
+     <var>old-prerm</var> upgrade <var>new-version</var>
+</pre>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+If the script runs but exits with a non-zero exit status, <code>dpkg</code>
+will attempt:
+</p>
+<pre>
+     <var>new-prerm</var> failed-upgrade <var>old-version</var>
+</pre>
+
+<p>
+If this works, the upgrade continues.  If this does not work, the error unwind:
+</p>
+<pre>
+     <var>old-postinst</var> abort-upgrade <var>new-version</var>
+</pre>
+
+<p>
+If this works, then the old-version is &quot;Installed&quot;, if not, the old
+version is in a &quot;Half-Configured&quot; state.
+</p>
+</li>
+</ol>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+If a &quot;conflicting&quot; package is being removed at the same time, or if
+any package will be broken (due to <samp>Breaks</samp>):
+</p>
+<ol type="1" start="1" >
+<li>
+<p>
+If <samp>--auto-deconfigure</samp> is specified, call, for each package to be
+deconfigured due to <samp>Breaks</samp>:
+</p>
+<pre>
+     <var>deconfigured's-prerm</var> deconfigure \
+       in-favour <var>package-being-installed</var> <var>version</var>
+</pre>
+
+<p>
+Error unwind:
+</p>
+<pre>
+     <var>deconfigured's-postinst</var> abort-deconfigure \
+       in-favour <var>package-being-installed-but-failed</var> <var>version</var>
+</pre>
+
+<p>
+The deconfigured packages are marked as requiring configuration, so that if
+<samp>--install</samp> is used they will be configured again if possible.
+</p>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+If any packages depended on a conflicting package being removed and
+<samp>--auto-deconfigure</samp> is specified, call, for each such package:
+</p>
+<pre>
+     <var>deconfigured's-prerm</var> deconfigure \
+       in-favour <var>package-being-installed</var> <var>version</var> \
+         removing <var>conflicting-package</var> <var>version</var>
+</pre>
+
+<p>
+Error unwind:
+</p>
+<pre>
+     <var>deconfigured's-postinst</var> abort-deconfigure \
+       in-favour <var>package-being-installed-but-failed</var> <var>version</var> \
+         removing <var>conflicting-package</var> <var>version</var>
+</pre>
+
+<p>
+The deconfigured packages are marked as requiring configuration, so that if
+<samp>--install</samp> is used they will be configured again if possible.
+</p>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<p>
+To prepare for removal of each conflicting package, call:
+</p>
+<pre>
+     <var>conflictor's-prerm</var> remove \
+       in-favour <var>package</var> <var>new-version</var>
+</pre>
+
+<p>
+Error unwind:
+</p>
+<pre>
+     <var>conflictor's-postinst</var> abort-remove \
+       in-favour <var>package</var> <var>new-version</var>
+</pre>
+</li>
+</ol>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<ol type="1" start="1" >
+<li>
+<p>
+If the package is being upgraded, call:
+</p>
+<pre>
+     <var>new-preinst</var> upgrade <var>old-version</var>
+</pre>
+
+<p>
+If this fails, we call:
+</p>
+
+<pre>
+     <var>new-postrm</var> abort-upgrade <var>old-version</var>
+</pre>
+<ol type="1" start="1" >
+<li>
+<p>
+If that works, then
+</p>
+
+<pre>
+     <var>old-postinst</var> abort-upgrade <var>new-version</var>
+</pre>
+
+<p>
+is called.  If this works, then the old version is in an &quot;Installed&quot;
+state, or else it is left in an &quot;Unpacked&quot; state.
+</p>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+If it fails, then the old version is left in an &quot;Half-Installed&quot;
+state.
+</p>
+</li>
+</ol>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+Otherwise, if the package had some configuration files from a previous version
+installed (i.e., it is in the &quot;configuration files only&quot; state):
+</p>
+<pre>
+     <var>new-preinst</var> install <var>old-version</var>
+</pre>
+
+<p>
+Error unwind:
+</p>
+
+<pre>
+     <var>new-postrm</var> abort-install <var>old-version</var>
+</pre>
+
+<p>
+If this fails, the package is left in a &quot;Half-Installed&quot; state, which
+requires a reinstall.  If it works, the packages is left in a
+&quot;Config-Files&quot; state.
+</p>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<p>
+Otherwise (i.e., the package was completely purged):
+</p>
+<pre>
+     <var>new-preinst</var> install
+</pre>
+
+<p>
+Error unwind:
+</p>
+<pre>
+     <var>new-postrm</var> abort-install
+</pre>
+
+<p>
+If the error-unwind fails, the package is in a &quot;Half-Installed&quot;
+phase, and requires a reinstall.  If the error unwind works, the package is in
+a not installed state.
+</p>
+</li>
+</ol>
+</li>
+</ol>
+<ol type="1" start="4" >
+<li>
+<p>
+The new package's files are unpacked, overwriting any that may be on the system
+already, for example any from the old version of the same package or from
+another package.  Backups of the old files are kept temporarily, and if
+anything goes wrong the package management system will attempt to put them back
+as part of the error unwind.
+</p>
+
+<p>
+It is an error for a package to contain files which are on the system in
+another package, unless <samp>Replaces</samp> is used (see <a
+href="ch-relationships.html#s-replaces">Overwriting files and replacing
+packages - <samp>Replaces</samp>, Section 7.6</a>).
+</p>
+
+<p>
+It is a more serious error for a package to contain a plain file or other kind
+of non-directory where another package has a directory (again, unless
+<samp>Replaces</samp> is used).  This error can be overridden if desired using
+<samp>--force-overwrite-dir</samp>, but this is not advisable.
+</p>
+
+<p>
+Packages which overwrite each other's files produce behavior which, though
+deterministic, is hard for the system administrator to understand.  It can
+easily lead to &quot;missing&quot; programs if, for example, a package is
+unpacked which overwrites a file from another package, and is then removed
+again.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f49" name="fr49">49</a>]
+</p>
+
+<p>
+A directory will never be replaced by a symbolic link to a directory or vice
+versa; instead, the existing state (symlink or not) will be left alone and
+<code>dpkg</code> will follow the symlink if there is one.
+</p>
+</li>
+</ol>
+<ol type="1" start="5" >
+<li>
+<ol type="1" start="1" >
+<li>
+<p>
+If the package is being upgraded, call
+</p>
+<pre>
+     <var>old-postrm</var> upgrade <var>new-version</var>
+</pre>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+If this fails, <code>dpkg</code> will attempt:
+</p>
+<pre>
+     <var>new-postrm</var> failed-upgrade <var>old-version</var>
+</pre>
+
+<p>
+If this works, installation continues.  If not, Error unwind:
+</p>
+<pre>
+     <var>old-preinst</var> abort-upgrade <var>new-version</var>
+</pre>
+
+<p>
+If this fails, the old version is left in a &quot;Half-Installed&quot; state.
+If it works, dpkg now calls:
+</p>
+<pre>
+     <var>new-postrm</var> abort-upgrade <var>old-version</var>
+</pre>
+
+<p>
+If this fails, the old version is left in a &quot;Half-Installed&quot; state.
+If it works, dpkg now calls:
+</p>
+<pre>
+     <var>old-postinst</var> abort-upgrade <var>new-version</var>
+</pre>
+
+<p>
+If this fails, the old version is in an &quot;Unpacked&quot; state.
+</p>
+</li>
+</ol>
+
+<p>
+This is the point of no return - if <code>dpkg</code> gets this far, it won't
+back off past this point if an error occurs.  This will leave the package in a
+fairly bad state, which will require a successful re-installation to clear up,
+but it's when <code>dpkg</code> starts doing things that are irreversible.
+</p>
+</li>
+</ol>
+<ol type="1" start="6" >
+<li>
+<p>
+Any files which were in the old version of the package but not in the new are
+removed.
+</p>
+</li>
+</ol>
+<ol type="1" start="7" >
+<li>
+<p>
+The new file list replaces the old.
+</p>
+</li>
+</ol>
+<ol type="1" start="8" >
+<li>
+<p>
+The new maintainer scripts replace the old.
+</p>
+</li>
+</ol>
+<ol type="1" start="9" >
+<li>
+<p>
+Any packages all of whose files have been overwritten during the installation,
+and which aren't required for dependencies, are considered to have been
+removed.  For each such package
+</p>
+<ol type="1" start="1" >
+<li>
+<p>
+<code>dpkg</code> calls:
+</p>
+<pre>
+     <var>disappearer's-postrm</var> disappear \
+       <var>overwriter</var> <var>overwriter-version</var>
+</pre>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+The package's maintainer scripts are removed.
+</p>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<p>
+It is noted in the status database as being in a sane state, namely not
+installed (any conffiles it may have are ignored, rather than being removed by
+<code>dpkg</code>).  Note that disappearing packages do not have their prerm
+called, because <code>dpkg</code> doesn't know in advance that the package is
+going to vanish.
+</p>
+</li>
+</ol>
+</li>
+</ol>
+<ol type="1" start="10" >
+<li>
+<p>
+Any files in the package we're unpacking that are also listed in the file lists
+of other packages are removed from those lists.  (This will lobotomize the file
+list of the &quot;conflicting&quot; package if there is one.)
+</p>
+</li>
+</ol>
+<ol type="1" start="11" >
+<li>
+<p>
+The backup files made during installation, above, are deleted.
+</p>
+</li>
+</ol>
+<ol type="1" start="12" >
+<li>
+<p>
+The new package's status is now sane, and recorded as &quot;unpacked&quot;.
+</p>
+
+<p>
+Here is another point of no return - if the conflicting package's removal fails
+we do not unwind the rest of the installation; the conflicting package is left
+in a half-removed limbo.
+</p>
+</li>
+</ol>
+<ol type="1" start="13" >
+<li>
+<p>
+If there was a conflicting package we go and do the removal actions (described
+below), starting with the removal of the conflicting package's files (any that
+are also in the package being unpacked have already been removed from the
+conflicting package's file list, and so do not get removed now).
+</p>
+</li>
+</ol>
+
+<hr>
+
+<h2><a name="s-configdetails"></a>6.7 Details of configuration</h2>
+
+<p>
+When we configure a package (this happens with <samp>dpkg --install</samp> and
+<samp>dpkg --configure</samp>), we first update any <samp>conffile</samp>s and
+then call:
+</p>
+<pre>
+     <var>postinst</var> configure <var>most-recently-configured-version</var>
+</pre>
+
+<p>
+No attempt is made to unwind after errors during configuration.  If the
+configuration fails, the package is in a &quot;Failed Config&quot; state, and
+an error message is generated.
+</p>
+
+<p>
+If there is no most recently configured version <code>dpkg</code> will pass a
+null argument.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f50" name="fr50">50</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-removedetails"></a>6.8 Details of removal and/or configuration purging</h2>
+<ol type="1" start="1" >
+<li>
+<pre>
+     <var>prerm</var> remove
+</pre>
+
+<p>
+If prerm fails during replacement due to conflict
+</p>
+
+<pre>
+     <var>conflictor's-postinst</var> abort-remove \
+       in-favour <var>package</var> <var>new-version</var>
+</pre>
+
+<p>
+Or else we call:
+</p>
+
+<pre>
+     <var>postinst</var> abort-remove
+</pre>
+
+<p>
+If this fails, the package is in a &quot;Half-Configured&quot; state, or else
+it remains &quot;Installed&quot;.
+</p>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+The package's files are removed (except <samp>conffile</samp>s).
+</p>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<pre>
+     <var>postrm</var> remove
+</pre>
+
+<p>
+If it fails, there's no error unwind, and the package is in an
+&quot;Half-Installed&quot; state.
+</p>
+</li>
+</ol>
+<ol type="1" start="4" >
+<li>
+<p>
+All the maintainer scripts except the <code>postrm</code> are removed.
+</p>
+
+<p>
+If we aren't purging the package we stop here.  Note that packages which have
+no <code>postrm</code> and no <samp>conffile</samp>s are automatically purged
+when removed, as there is no difference except for the <code>dpkg</code>
+status.
+</p>
+</li>
+</ol>
+<ol type="1" start="5" >
+<li>
+<p>
+The <samp>conffile</samp>s and any backup files (<samp>~</samp>-files,
+<samp>#*#</samp> files, <samp>%</samp>-files, <samp>.dpkg-{old,new,tmp}</samp>,
+etc.) are removed.
+</p>
+</li>
+</ol>
+<ol type="1" start="6" >
+<li>
+<pre>
+     <var>postrm</var> purge
+</pre>
+
+<p>
+If this fails, the package remains in a &quot;Config-Files&quot; state.
+</p>
+</li>
+</ol>
+<ol type="1" start="7" >
+<li>
+<p>
+The package's file list is removed.
+</p>
+</li>
+</ol>
+
+<hr>
+
+<p>
+[ <a href="ch-controlfields.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ 6 ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-relationships.html">next</a> ]
+</p>
+
+<hr>
+
+<p>
+Debian Policy Manual
+</p>
+
+<address>
+version 3.9.4.0, 2012-09-19<br>
+<br>
+<a href="ch-scope.html#s-authors">The Debian Policy Mailing List</a><br>
+<br>
+</address>
+<hr>
+
+</body>
+
+</html>
+

@@ -1,0 +1,183 @@
+sub Generate {
+  my ($self,%args) = (shift,@_);
+  my $directory = $self->Location;
+  my $file = Choose(split /\n/, `ls $directory`);
+  $self->Archive($file);
+  my $commands = [["tar.gz", "tar -tzf", '//', 'tar -xzf'],
+		  ["tar.bz2","tar -tjf", '//', 'tar -xjf'],
+		  ["zip", "unzip -l", 's/\s*(\S+\s+){3}(.*)/$2/', 'unzip'],
+		  ["gz", "gunzip -l", 's/\s*(\S+\s+){3}(.*)/$2/', 'gunzip']];
+  my $virgin = 1;
+  my $i = 0;
+  while ($i < scalar @$commands) {
+    my $pattern = $commands->[$i][0];
+    my $command = $commands->[$i][1];
+    my $regex = $commands->[$i][2];
+    my $extractcom = $commands->[$i][3];
+    if ($file =~ /\.${pattern}$/) {
+      if ($virgin) {
+	$virgin = 0;
+	$self->Issue(Command => "$command $directory/$file",
+		     Regex => $regex,
+		     Extractcom => $extractcom);
+      }
+    }
+    ++$i;
+  }
+}
+
+sub Issue {
+  my ($self,%args) = (shift,@_);
+  my $command = $args{Command};
+  my $regex = $args{Regex};
+  my $extractcom = $args{Extractcom};
+  print "<<<$command>>>\n<<<$regex>>>\n";
+  my @results = split /\n/,`$command`;
+  map { $_ =~ eval $regex } @results;
+  my @files = grep(/(license|copyright|copying)/i,@results);
+  #my @files = grep(/README/,@results);
+  #push @files, grep(/\.p(s|df)$/,@results);
+  @files = sort {length($a) <=> length($b)} @files;
+  if (@files) {
+    $self->Extract($extractcom,@files);
+  }
+}
+
+sub Extract {
+  my ($self,$extractcom,@files) = (shift,shift,@_);
+  # extract  the contents from  the archive  to a  temporary location,
+  # then summarize these, and choose the best
+  system "rm -rf /tmp/packager";
+  system "mkdir /tmp/packager";
+  print "<<<cd /tmp/packager && unzip ".$self->Directory."/".$self->Archive." ".$self->PrintList(@files).">>>\n\n\n";
+  system "cd /tmp/packager && $extractcom ".$self->Directory."/".$self->Archive." ".$self->PrintList(@files);
+  foreach my $file (split /\n/,`find /tmp/packager`) {
+    if (-f $file) {
+      $self->SummarizeFile(File => $file);
+    }
+  }
+}
+
+sub SummarizeFile {
+  my ($self,%args) = (shift,@_);
+  my $file = $args{File};
+  my $text;
+  my $type = `file $file`;
+  if ($file =~ /\.ps$/) {
+    $text = `pstotext $file`;
+  } elsif ($file =~ /\.pdf$/) {
+    $text = `pdftotext $file`;
+  } else {
+    $text = `cat $file`;
+  }
+  my $summary = summarize( $text, maxlength => 1000);  # 500-byte summary
+  print "<<<$summary>>>\n";
+}
+
+# This module  attempts to automatically create a  package from source
+# by  applying  various heuristics.   For  instance, it  automatically
+# generates package  names, short  and long descriptions,  depends and
+# suggests, debian specific documentation, using various methods, such
+# as locating documentation and  running extraction and summarisers on
+# the documentation.
+
+# create package name
+$software_name = "";
+$package_name = `echo $ARGV[0] | ./create-name-from-archive.pl`;
+print $package_name;
+
+# extract documentation
+$documentation_corpus = "";
+
+# generate descriptions
+# file:///usr/share/doc/developers-reference/ch-best-pkging-practices.en.html#s-bpp-desc-basics
+
+$longdesc = 
+    answer_question($documentation_corpus, 
+		    "What does $software_name do?") .
+    answer_question($documentation_corpus, 
+		    "What task does $software_name help the user accomplish?");
+print $longdesc;
+
+# upstream authors
+# file:///usr/share/doc/developers-reference/ch-best-pkging-practices.en.html#s-bpp-upstream-info
+
+# system "ispell -d american -g debian/control"
+
+sub answer_question {
+    return "";
+}
+
+# Location: http://www.linuks.mine.nu/irc/debian-packaging/                                                                                
+# Debian Packaging
+
+# 22/02/2003, Gürkan Sengün
+
+# Introduction
+# We will package mguesser for Debian. Knowledge about Makefiles, configure and shell scripting or C programming can be very useful. Man
+# and the manpages are also very useful. Also have a look at help2man. I want to guide you packaging mguesser from the beginning to the
+# end. Enjoy your stay.
+
+# What you will need
+# A development environment, some utilities and debhelper which we will install like this:
+
+# apt-get install binutils cpp cpio dpkg-dev file gcc make patch \
+#                 dh-make debhelper devscripts fakeroot lintian \
+#                 debian-policy developers-reference \
+#                 man-db manpages reportbug
+# (or build-essential lintian debhelper dh-make devscripts fakeroot)
+
+# Setting up the environment, see www.linuks.mine.nu/conf/. Of course you fill in your email address and your full name and choose your
+# favourite editor, these settings is what I use:
+# export DEBEMAIL="gurkan@linuks.mine.nu"
+# export DEBFULLNAME="Gurkan Sengun"
+# export EDITOR=mcedit
+
+# Choosing software you want to package for Debian
+# For this course I have chosen mguesser, as I packaged it already and it is not too hard (single binary) to get you started. This should
+# give you an idea what it is like. For Debian the package
+
+# must be DFSG compliant
+# must have some public download place (usually http or ftp)
+# naming should be software-maj.min.tar.gz and unpacks into software-maj.min/
+
+# Packaging the software
+# First you need to get the source of the software. Then put it in some directory, I have it in /home/tar/dd/. There you unpack the
+# software, usually
+
+# tar xzvf software-2.1.tar.gz
+# cd software-2.1/
+# dh_make
+
+# dh_make will make a directory called debian/ with a few files in it. Now your task is to fill them. I usually start with control, then
+# edit copyright. There is also changelog, rules, dirs and more. In rules you will find alot of dh_* commands, they are all from
+# debhelper. Each of them has a manpage, please refer to man debhelper for details, as well as the Debian New Maintainers' Guide.
+
+# Read more about the Debian Policy Manual. Updating the debian/changelog is done with dch or debchange (it is the same).
+
+# When you think the thing is ready you can start building the package
+
+# dpkg-buildpackage -rfakeroot -uc -us
+
+# When things are built you should check the package using
+# lintian -vi mguesser_0.2-1_i386.changes
+
+# If that says all is right (no Warnings or Errors). You can install it with
+# sudo dpkg -i mguesser_0.2-1_i386.deb
+
+# You must check if the program works. Also make sure the manpage is working.
+
+# From what I experienced I will most likely to have go through this several times.
+
+# Never forget reportbug, it will be your friend. When you package something from http://www.debian.org/devel/wnpp/requested you can
+# close the bug too with <number>-done@bugs.debian.org. If you don't know what to package check orphaned packages.
+
+# Also helpful is looking at how other packages are packaged
+
+# apt-get source package
+
+# And talking with upstream is important, contact them by email.
+
+# My debian/ directory for mguesser. Here is my Makefile changes.
+
+1;

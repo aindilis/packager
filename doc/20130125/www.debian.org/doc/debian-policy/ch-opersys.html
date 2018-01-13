@@ -1,0 +1,1838 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+<html>
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+<title>Debian Policy Manual - The Operating System</title>
+
+<link href="index.html" rel="start">
+<link href="ch-sharedlibs.html" rel="prev">
+<link href="ch-files.html" rel="next">
+<link href="index.html#contents" rel="contents">
+<link href="index.html#copyright" rel="copyright">
+<link href="ch-scope.html" rel="chapter" title="1 About this manual">
+<link href="ch-archive.html" rel="chapter" title="2 The Debian Archive">
+<link href="ch-binary.html" rel="chapter" title="3 Binary packages">
+<link href="ch-source.html" rel="chapter" title="4 Source packages">
+<link href="ch-controlfields.html" rel="chapter" title="5 Control files and their fields">
+<link href="ch-maintainerscripts.html" rel="chapter" title="6 Package maintainer scripts and installation procedure">
+<link href="ch-relationships.html" rel="chapter" title="7 Declaring relationships between packages">
+<link href="ch-sharedlibs.html" rel="chapter" title="8 Shared libraries">
+<link href="ch-opersys.html" rel="chapter" title="9 The Operating System">
+<link href="ch-files.html" rel="chapter" title="10 Files">
+<link href="ch-customized-programs.html" rel="chapter" title="11 Customized programs">
+<link href="ch-docs.html" rel="chapter" title="12 Documentation">
+<link href="ap-pkg-scope.html" rel="appendix" title="A Introduction and scope of these appendices">
+<link href="ap-pkg-binarypkg.html" rel="appendix" title="B Binary packages (from old Packaging Manual)">
+<link href="ap-pkg-sourcepkg.html" rel="appendix" title="C Source packages (from old Packaging Manual)">
+<link href="ap-pkg-controlfields.html" rel="appendix" title="D Control files and their fields (from old Packaging Manual)">
+<link href="ap-pkg-conffiles.html" rel="appendix" title="E Configuration file handling (from old Packaging Manual)">
+<link href="ap-pkg-alternatives.html" rel="appendix" title="F Alternative versions of an interface - update-alternatives (from old Packaging Manual)">
+<link href="ap-pkg-diversions.html" rel="appendix" title="G Diversions - overriding a package's version of a file (from old Packaging Manual)">
+<link href="ch-scope.html#s1.1" rel="section" title="1.1 Scope">
+<link href="ch-scope.html#s1.2" rel="section" title="1.2 New versions of this document">
+<link href="ch-scope.html#s-authors" rel="section" title="1.3 Authors and Maintainers">
+<link href="ch-scope.html#s-related" rel="section" title="1.4 Related documents">
+<link href="ch-scope.html#s-definitions" rel="section" title="1.5 Definitions">
+<link href="ch-archive.html#s-dfsg" rel="section" title="2.1 The Debian Free Software Guidelines">
+<link href="ch-archive.html#s-sections" rel="section" title="2.2 Archive areas">
+<link href="ch-archive.html#s-pkgcopyright" rel="section" title="2.3 Copyright considerations">
+<link href="ch-archive.html#s-subsections" rel="section" title="2.4 Sections">
+<link href="ch-archive.html#s-priorities" rel="section" title="2.5 Priorities">
+<link href="ch-binary.html#s3.1" rel="section" title="3.1 The package name">
+<link href="ch-binary.html#s-versions" rel="section" title="3.2 The version of a package">
+<link href="ch-binary.html#s-maintainer" rel="section" title="3.3 The maintainer of a package">
+<link href="ch-binary.html#s-descriptions" rel="section" title="3.4 The description of a package">
+<link href="ch-binary.html#s-dependencies" rel="section" title="3.5 Dependencies">
+<link href="ch-binary.html#s-virtual_pkg" rel="section" title="3.6 Virtual packages">
+<link href="ch-binary.html#s3.7" rel="section" title="3.7 Base system">
+<link href="ch-binary.html#s3.8" rel="section" title="3.8 Essential packages">
+<link href="ch-binary.html#s-maintscripts" rel="section" title="3.9 Maintainer Scripts">
+<link href="ch-source.html#s-standardsversion" rel="section" title="4.1 Standards conformance">
+<link href="ch-source.html#s-pkg-relations" rel="section" title="4.2 Package relationships">
+<link href="ch-source.html#s4.3" rel="section" title="4.3 Changes to the upstream sources">
+<link href="ch-source.html#s-dpkgchangelog" rel="section" title="4.4 Debian changelog: debian/changelog">
+<link href="ch-source.html#s-dpkgcopyright" rel="section" title="4.5 Copyright: debian/copyright">
+<link href="ch-source.html#s4.6" rel="section" title="4.6 Error trapping in makefiles">
+<link href="ch-source.html#s-timestamps" rel="section" title="4.7 Time Stamps">
+<link href="ch-source.html#s-restrictions" rel="section" title="4.8 Restrictions on objects in source packages">
+<link href="ch-source.html#s-debianrules" rel="section" title="4.9 Main building script: debian/rules">
+<link href="ch-source.html#s-substvars" rel="section" title="4.10 Variable substitutions: debian/substvars">
+<link href="ch-source.html#s-debianwatch" rel="section" title="4.11 Optional upstream source location: debian/watch">
+<link href="ch-source.html#s-debianfiles" rel="section" title="4.12 Generated files list: debian/files">
+<link href="ch-source.html#s-embeddedfiles" rel="section" title="4.13 Convenience copies of code">
+<link href="ch-source.html#s-readmesource" rel="section" title="4.14 Source package handling: debian/README.source">
+<link href="ch-controlfields.html#s-controlsyntax" rel="section" title="5.1 Syntax of control files">
+<link href="ch-controlfields.html#s-sourcecontrolfiles" rel="section" title="5.2 Source package control files -- debian/control">
+<link href="ch-controlfields.html#s-binarycontrolfiles" rel="section" title="5.3 Binary package control files -- DEBIAN/control">
+<link href="ch-controlfields.html#s-debiansourcecontrolfiles" rel="section" title="5.4 Debian source control files -- .dsc">
+<link href="ch-controlfields.html#s-debianchangesfiles" rel="section" title="5.5 Debian changes files -- .changes">
+<link href="ch-controlfields.html#s-controlfieldslist" rel="section" title="5.6 List of fields">
+<link href="ch-controlfields.html#s5.7" rel="section" title="5.7 User-defined fields">
+<link href="ch-maintainerscripts.html#s6.1" rel="section" title="6.1 Introduction to package maintainer scripts">
+<link href="ch-maintainerscripts.html#s-idempotency" rel="section" title="6.2 Maintainer scripts idempotency">
+<link href="ch-maintainerscripts.html#s-controllingterminal" rel="section" title="6.3 Controlling terminal for maintainer scripts">
+<link href="ch-maintainerscripts.html#s-exitstatus" rel="section" title="6.4 Exit status">
+<link href="ch-maintainerscripts.html#s-mscriptsinstact" rel="section" title="6.5 Summary of ways maintainer scripts are called">
+<link href="ch-maintainerscripts.html#s-unpackphase" rel="section" title="6.6 Details of unpack phase of installation or upgrade">
+<link href="ch-maintainerscripts.html#s-configdetails" rel="section" title="6.7 Details of configuration">
+<link href="ch-maintainerscripts.html#s-removedetails" rel="section" title="6.8 Details of removal and/or configuration purging">
+<link href="ch-relationships.html#s-depsyntax" rel="section" title="7.1 Syntax of relationship fields">
+<link href="ch-relationships.html#s-binarydeps" rel="section" title="7.2 Binary Dependencies - Depends, Recommends, Suggests, Enhances, Pre-Depends">
+<link href="ch-relationships.html#s-breaks" rel="section" title="7.3 Packages which break other packages - Breaks">
+<link href="ch-relationships.html#s-conflicts" rel="section" title="7.4 Conflicting binary packages - Conflicts">
+<link href="ch-relationships.html#s-virtual" rel="section" title="7.5 Virtual packages - Provides">
+<link href="ch-relationships.html#s-replaces" rel="section" title="7.6 Overwriting files and replacing packages - Replaces">
+<link href="ch-relationships.html#s-sourcebinarydeps" rel="section" title="7.7 Relationships between source and binary packages - Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep">
+<link href="ch-relationships.html#s-built-using" rel="section" title="7.8 Additional source packages used to build the binary - Built-Using">
+<link href="ch-sharedlibs.html#s-sharedlibs-runtime" rel="section" title="8.1 Run-time shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-support-files" rel="section" title="8.2 Shared library support files">
+<link href="ch-sharedlibs.html#s-sharedlibs-static" rel="section" title="8.3 Static libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-dev" rel="section" title="8.4 Development files">
+<link href="ch-sharedlibs.html#s-sharedlibs-intradeps" rel="section" title="8.5 Dependencies between the packages of the same library">
+<link href="ch-sharedlibs.html#s-sharedlibs-depends" rel="section" title="8.6 Dependencies between the library and other packages">
+<link href="ch-opersys.html#s9.1" rel="section" title="9.1 File system hierarchy">
+<link href="ch-opersys.html#s9.2" rel="section" title="9.2 Users and groups">
+<link href="ch-opersys.html#s-sysvinit" rel="section" title="9.3 System run levels and init.d scripts">
+<link href="ch-opersys.html#s9.4" rel="section" title="9.4 Console messages from init.d scripts">
+<link href="ch-opersys.html#s-cron-jobs" rel="section" title="9.5 Cron jobs">
+<link href="ch-opersys.html#s-menus" rel="section" title="9.6 Menus">
+<link href="ch-opersys.html#s-mime" rel="section" title="9.7 Multimedia handlers">
+<link href="ch-opersys.html#s9.8" rel="section" title="9.8 Keyboard configuration">
+<link href="ch-opersys.html#s9.9" rel="section" title="9.9 Environment variables">
+<link href="ch-opersys.html#s-doc-base" rel="section" title="9.10 Registering Documents using doc-base">
+<link href="ch-opersys.html#s-alternateinit" rel="section" title="9.11 Alternate init systems">
+<link href="ch-files.html#s-binaries" rel="section" title="10.1 Binaries">
+<link href="ch-files.html#s-libraries" rel="section" title="10.2 Libraries">
+<link href="ch-files.html#s10.3" rel="section" title="10.3 Shared libraries">
+<link href="ch-files.html#s-scripts" rel="section" title="10.4 Scripts">
+<link href="ch-files.html#s10.5" rel="section" title="10.5 Symbolic links">
+<link href="ch-files.html#s10.6" rel="section" title="10.6 Device files">
+<link href="ch-files.html#s-config-files" rel="section" title="10.7 Configuration files">
+<link href="ch-files.html#s10.8" rel="section" title="10.8 Log files">
+<link href="ch-files.html#s-permissions-owners" rel="section" title="10.9 Permissions and owners">
+<link href="ch-customized-programs.html#s-arch-spec" rel="section" title="11.1 Architecture specification strings">
+<link href="ch-customized-programs.html#s11.2" rel="section" title="11.2 Daemons">
+<link href="ch-customized-programs.html#s11.3" rel="section" title="11.3 Using pseudo-ttys and modifying wtmp, utmp and lastlog">
+<link href="ch-customized-programs.html#s11.4" rel="section" title="11.4 Editors and pagers">
+<link href="ch-customized-programs.html#s-web-appl" rel="section" title="11.5 Web servers and applications">
+<link href="ch-customized-programs.html#s-mail-transport-agents" rel="section" title="11.6 Mail transport, delivery and user agents">
+<link href="ch-customized-programs.html#s11.7" rel="section" title="11.7 News system configuration">
+<link href="ch-customized-programs.html#s11.8" rel="section" title="11.8 Programs for the X Window System">
+<link href="ch-customized-programs.html#s-perl" rel="section" title="11.9 Perl programs and modules">
+<link href="ch-customized-programs.html#s-emacs" rel="section" title="11.10 Emacs lisp programs">
+<link href="ch-customized-programs.html#s11.11" rel="section" title="11.11 Games">
+<link href="ch-docs.html#s12.1" rel="section" title="12.1 Manual pages">
+<link href="ch-docs.html#s12.2" rel="section" title="12.2 Info documents">
+<link href="ch-docs.html#s12.3" rel="section" title="12.3 Additional documentation">
+<link href="ch-docs.html#s12.4" rel="section" title="12.4 Preferred documentation formats">
+<link href="ch-docs.html#s-copyrightfile" rel="section" title="12.5 Copyright information">
+<link href="ch-docs.html#s12.6" rel="section" title="12.6 Examples">
+<link href="ch-docs.html#s-changelogs" rel="section" title="12.7 Changelog files">
+<link href="ap-pkg-binarypkg.html#s-pkg-bincreating" rel="section" title="B.1 Creating package files - dpkg-deb">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlarea" rel="section" title="B.2 Package control information files">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlfile" rel="section" title="B.3 The main control information file: control">
+<link href="ap-pkg-binarypkg.html#sB.4" rel="section" title="B.4 Time Stamps">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetools" rel="section" title="C.1 Tools for processing source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetree" rel="section" title="C.2 The Debian package source tree">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcearchives" rel="section" title="C.3 Source packages as archives">
+<link href="ap-pkg-sourcepkg.html#sC.4" rel="section" title="C.4 Unpacking a Debian source package without dpkg-source">
+<link href="ap-pkg-controlfields.html#sD.1" rel="section" title="D.1 Syntax of control files">
+<link href="ap-pkg-controlfields.html#sD.2" rel="section" title="D.2 List of fields">
+<link href="ap-pkg-conffiles.html#sE.1" rel="section" title="E.1 Automatic handling of configuration files by dpkg">
+<link href="ap-pkg-conffiles.html#sE.2" rel="section" title="E.2 Fully-featured maintainer script configuration handling">
+<link href="ch-archive.html#s-main" rel="subsection" title="2.2.1 The main archive area">
+<link href="ch-archive.html#s-contrib" rel="subsection" title="2.2.2 The contrib archive area">
+<link href="ch-archive.html#s-non-free" rel="subsection" title="2.2.3 The non-free archive area">
+<link href="ch-binary.html#s3.2.1" rel="subsection" title="3.2.1 Version numbers based on dates">
+<link href="ch-binary.html#s-synopsis" rel="subsection" title="3.4.1 The single line synopsis">
+<link href="ch-binary.html#s-extendeddesc" rel="subsection" title="3.4.2 The extended description">
+<link href="ch-binary.html#s-maintscriptprompt" rel="subsection" title="3.9.1 Prompting in maintainer scripts">
+<link href="ch-source.html#s-debianrules-options" rel="subsection" title="4.9.1 debian/rules and DEB_BUILD_OPTIONS">
+<link href="ch-controlfields.html#s-f-Source" rel="subsection" title="5.6.1 Source">
+<link href="ch-controlfields.html#s-f-Maintainer" rel="subsection" title="5.6.2 Maintainer">
+<link href="ch-controlfields.html#s-f-Uploaders" rel="subsection" title="5.6.3 Uploaders">
+<link href="ch-controlfields.html#s-f-Changed-By" rel="subsection" title="5.6.4 Changed-By">
+<link href="ch-controlfields.html#s-f-Section" rel="subsection" title="5.6.5 Section">
+<link href="ch-controlfields.html#s-f-Priority" rel="subsection" title="5.6.6 Priority">
+<link href="ch-controlfields.html#s-f-Package" rel="subsection" title="5.6.7 Package">
+<link href="ch-controlfields.html#s-f-Architecture" rel="subsection" title="5.6.8 Architecture">
+<link href="ch-controlfields.html#s-f-Essential" rel="subsection" title="5.6.9 Essential">
+<link href="ch-controlfields.html#s5.6.10" rel="subsection" title="5.6.10 Package interrelationship fields: Depends, Pre-Depends, Recommends, Suggests, Breaks, Conflicts, Provides, Replaces, Enhances">
+<link href="ch-controlfields.html#s-f-Standards-Version" rel="subsection" title="5.6.11 Standards-Version">
+<link href="ch-controlfields.html#s-f-Version" rel="subsection" title="5.6.12 Version">
+<link href="ch-controlfields.html#s-f-Description" rel="subsection" title="5.6.13 Description">
+<link href="ch-controlfields.html#s-f-Distribution" rel="subsection" title="5.6.14 Distribution">
+<link href="ch-controlfields.html#s-f-Date" rel="subsection" title="5.6.15 Date">
+<link href="ch-controlfields.html#s-f-Format" rel="subsection" title="5.6.16 Format">
+<link href="ch-controlfields.html#s-f-Urgency" rel="subsection" title="5.6.17 Urgency">
+<link href="ch-controlfields.html#s-f-Changes" rel="subsection" title="5.6.18 Changes">
+<link href="ch-controlfields.html#s-f-Binary" rel="subsection" title="5.6.19 Binary">
+<link href="ch-controlfields.html#s-f-Installed-Size" rel="subsection" title="5.6.20 Installed-Size">
+<link href="ch-controlfields.html#s-f-Files" rel="subsection" title="5.6.21 Files">
+<link href="ch-controlfields.html#s-f-Closes" rel="subsection" title="5.6.22 Closes">
+<link href="ch-controlfields.html#s-f-Homepage" rel="subsection" title="5.6.23 Homepage">
+<link href="ch-controlfields.html#s-f-Checksums" rel="subsection" title="5.6.24 Checksums-Sha1 and Checksums-Sha256">
+<link href="ch-controlfields.html#s-f-DM-Upload-Allowed" rel="subsection" title="5.6.25 DM-Upload-Allowed">
+<link href="ch-controlfields.html#s-f-VCS-fields" rel="subsection" title="5.6.26 Version Control System (VCS) fields">
+<link href="ch-relationships.html#s7.6.1" rel="subsection" title="7.6.1 Overwriting files in other packages">
+<link href="ch-relationships.html#s7.6.2" rel="subsection" title="7.6.2 Replacing whole packages, forcing their removal">
+<link href="ch-sharedlibs.html#s-ldconfig" rel="subsection" title="8.1.1 ldconfig">
+<link href="ch-sharedlibs.html#s-dpkg-shlibdeps" rel="subsection" title="8.6.1 Generating dependencies on shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-updates" rel="subsection" title="8.6.2 Shared library ABI changes">
+<link href="ch-sharedlibs.html#s-sharedlibs-symbols" rel="subsection" title="8.6.3 The symbols system">
+<link href="ch-sharedlibs.html#s-symbols-paths" rel="subsection" title="8.6.3.1 The symbols files present on the system">
+<link href="ch-sharedlibs.html#s-symbols" rel="subsection" title="8.6.3.2 The symbols File Format">
+<link href="ch-sharedlibs.html#s-providing-symbols" rel="subsection" title="8.6.3.3 Providing a symbols file">
+<link href="ch-sharedlibs.html#s-sharedlibs-shlibdeps" rel="subsection" title="8.6.4 The shlibs system">
+<link href="ch-sharedlibs.html#s-shlibs-paths" rel="subsection" title="8.6.4.1 The shlibs files present on the system">
+<link href="ch-sharedlibs.html#s-shlibs" rel="subsection" title="8.6.4.2 The shlibs File Format">
+<link href="ch-sharedlibs.html#s8.6.4.3" rel="subsection" title="8.6.4.3 Providing a shlibs file">
+<link href="ch-opersys.html#s-fhs" rel="subsection" title="9.1.1 File System Structure">
+<link href="ch-opersys.html#s9.1.2" rel="subsection" title="9.1.2 Site-specific programs">
+<link href="ch-opersys.html#s9.1.3" rel="subsection" title="9.1.3 The system-wide mail directory">
+<link href="ch-opersys.html#s-fhs-run" rel="subsection" title="9.1.4 /run and /run/lock">
+<link href="ch-opersys.html#s9.2.1" rel="subsection" title="9.2.1 Introduction">
+<link href="ch-opersys.html#s9.2.2" rel="subsection" title="9.2.2 UID and GID classes">
+<link href="ch-opersys.html#s-/etc/init.d" rel="subsection" title="9.3.1 Introduction">
+<link href="ch-opersys.html#s-writing-init" rel="subsection" title="9.3.2 Writing the scripts">
+<link href="ch-opersys.html#s9.3.3" rel="subsection" title="9.3.3 Interfacing with the initscript system">
+<link href="ch-opersys.html#s9.3.3.1" rel="subsection" title="9.3.3.1 Managing the links">
+<link href="ch-opersys.html#s9.3.3.2" rel="subsection" title="9.3.3.2 Running initscripts">
+<link href="ch-opersys.html#s9.3.4" rel="subsection" title="9.3.4 Boot-time initialization">
+<link href="ch-opersys.html#s9.3.5" rel="subsection" title="9.3.5 Example">
+<link href="ch-opersys.html#s-cron-files" rel="subsection" title="9.5.1 Cron job file names">
+<link href="ch-opersys.html#s-upstart" rel="subsection" title="9.11.1 Event-based boot with upstart">
+<link href="ch-files.html#s10.7.1" rel="subsection" title="10.7.1 Definitions">
+<link href="ch-files.html#s10.7.2" rel="subsection" title="10.7.2 Location">
+<link href="ch-files.html#s10.7.3" rel="subsection" title="10.7.3 Behavior">
+<link href="ch-files.html#s10.7.4" rel="subsection" title="10.7.4 Sharing configuration files">
+<link href="ch-files.html#s10.7.5" rel="subsection" title="10.7.5 User configuration files (&quot;dotfiles&quot;)">
+<link href="ch-files.html#s10.9.1" rel="subsection" title="10.9.1 The use of dpkg-statoverride">
+<link href="ch-customized-programs.html#s-arch-wildcard-spec" rel="subsection" title="11.1.1 Architecture wildcards">
+<link href="ch-customized-programs.html#s11.8.1" rel="subsection" title="11.8.1 Providing X support and package priorities">
+<link href="ch-customized-programs.html#s11.8.2" rel="subsection" title="11.8.2 Packages providing an X server">
+<link href="ch-customized-programs.html#s11.8.3" rel="subsection" title="11.8.3 Packages providing a terminal emulator">
+<link href="ch-customized-programs.html#s11.8.4" rel="subsection" title="11.8.4 Packages providing a window manager">
+<link href="ch-customized-programs.html#s11.8.5" rel="subsection" title="11.8.5 Packages providing fonts">
+<link href="ch-customized-programs.html#s-appdefaults" rel="subsection" title="11.8.6 Application defaults files">
+<link href="ch-customized-programs.html#s11.8.7" rel="subsection" title="11.8.7 Installation directory issues">
+<link href="ch-docs.html#s-copyrightformat" rel="subsection" title="12.5.1 Machine-readable copyright information">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-source" rel="subsection" title="C.1.1 dpkg-source - packs and unpacks Debian source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-buildpackage" rel="subsection" title="C.1.2 dpkg-buildpackage - overall package-building control script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-gencontrol" rel="subsection" title="C.1.3 dpkg-gencontrol - generates binary package control files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-shlibdeps" rel="subsection" title="C.1.4 dpkg-shlibdeps - calculates shared library dependencies">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-distaddfile" rel="subsection" title="C.1.5 dpkg-distaddfile - adds a file to debian/files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-genchanges" rel="subsection" title="C.1.6 dpkg-genchanges - generates a .changes upload control file">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-parsechangelog" rel="subsection" title="C.1.7 dpkg-parsechangelog - produces parsed representation of a changelog">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-architecture" rel="subsection" title="C.1.8 dpkg-architecture - information about the build and host system">
+<link href="ap-pkg-sourcepkg.html#s-pkg-debianrules" rel="subsection" title="C.2.1 debian/rules - the main building script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-srcsubstvars" rel="subsection" title="C.2.2 debian/substvars and variable substitutions">
+<link href="ap-pkg-sourcepkg.html#sC.2.3" rel="subsection" title="C.2.3 debian/files">
+<link href="ap-pkg-sourcepkg.html#sC.2.4" rel="subsection" title="C.2.4 debian/tmp">
+<link href="ap-pkg-sourcepkg.html#sC.4.1" rel="subsection" title="C.4.1 Restrictions on objects in source packages">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Filename" rel="subsection" title="D.2.1 Filename and MSDOS-Filename">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Size" rel="subsection" title="D.2.2 Size and MD5sum">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Status" rel="subsection" title="D.2.3 Status">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Conffiles" rel="subsection" title="D.2.5 Conffiles">
+<link href="ap-pkg-controlfields.html#sD.2.6" rel="subsection" title="D.2.6 Obsolete fields">
+
+</head>
+
+<body>
+
+<p><a name="ch-opersys"></a></p>
+<hr>
+
+<p>
+[ <a href="ch-sharedlibs.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ 9 ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-files.html">next</a> ]
+</p>
+
+<hr>
+
+<h1>
+Debian Policy Manual
+<br>Chapter 9 - The Operating System
+</h1>
+
+<hr>
+
+<h2><a name="s9.1"></a>9.1 File system hierarchy</h2>
+
+<hr>
+
+<h3><a name="s-fhs"></a>9.1.1 File System Structure</h3>
+
+<p>
+The location of all files and directories must comply with the Filesystem
+Hierarchy Standard (FHS), version 2.3, with the exceptions noted below, and
+except where doing so would violate other terms of Debian Policy.  The
+following exceptions to the FHS apply:
+</p>
+<ol type="1" start="1" >
+<li>
+<p>
+The optional rules related to user specific configuration files for
+applications are stored in the user's home directory are relaxed.  It is
+recommended that such files start with the '<samp>.</samp>' character (a
+&quot;dot file&quot;), and if an application needs to create more than one dot
+file then the preferred placement is in a subdirectory with a name starting
+with a '.'  character, (a &quot;dot directory&quot;).  In this case it is
+recommended the configuration files not start with the '.'  character.
+</p>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+The requirement for amd64 to use <code>/lib64</code> for 64 bit binaries is
+removed.
+</p>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<p>
+The requirement for object files, internal binaries, and libraries, including
+<code>libc.so.*</code>, to be located directly under <code>/lib{,32}</code> and
+<code>/usr/lib{,32}</code> is amended, permitting files to instead be installed
+to <code>/lib/<var>triplet</var></code> and
+<code>/usr/lib/<var>triplet</var></code>, where <samp><var>triplet</var></samp>
+is the value returned by <samp>dpkg-architecture -qDEB_HOST_MULTIARCH</samp>
+for the architecture of the package.  Packages may <em>not</em> install files
+to any <var>triplet</var> path other than the one matching the architecture of
+that package; for instance, an <samp>Architecture: amd64</samp> package
+containing 32-bit x86 libraries may not install these libraries to
+<code>/usr/lib/i386-linux-gnu</code>.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f78"
+name="fr78">78</a>]
+</p>
+
+<p>
+Applications may also use a single subdirectory under
+<code>/usr/lib/<var>triplet</var></code>.
+</p>
+
+<p>
+The execution time linker/loader, ld*, must still be made available in the
+existing location under /lib or /lib64 since this is part of the ELF ABI for
+the architecture.
+</p>
+</li>
+</ol>
+<ol type="1" start="4" >
+<li>
+<p>
+The requirement that <code>/usr/local/share/man</code> be
+&quot;synonymous&quot; with <code>/usr/local/man</code> is relaxed to a
+recommendation
+</p>
+</li>
+</ol>
+<ol type="1" start="5" >
+<li>
+<p>
+The requirement that windowmanagers with a single configuration file call it
+<code>system.*wmrc</code> is removed, as is the restriction that the window
+manager subdirectory be named identically to the window manager name itself.
+</p>
+</li>
+</ol>
+<ol type="1" start="6" >
+<li>
+<p>
+The requirement that boot manager configuration files live in
+<code>/etc</code>, or at least are symlinked there, is relaxed to a
+recommendation.
+</p>
+</li>
+</ol>
+<ol type="1" start="7" >
+<li>
+<p>
+The additional directory <code>/run</code> in the root file system is allowed.
+<code>/run</code> replaces <code>/var/run</code>, and the subdirectory
+<code>/run/lock</code> replaces <code>/var/lock</code>, with the
+<code>/var</code> directories replaced by symlinks for backwards compatibility.
+<code>/run</code> and <code>/run/lock</code> must follow all of the
+requirements in the FHS for <code>/var/run</code> and <code>/var/lock</code>,
+respectively, such as file naming conventions, file format requirements, or the
+requirement that files be cleared during the boot process.  Files and
+directories residing in <code>/run</code> should be stored on a temporary file
+system.
+</p>
+
+<p>
+Packages must not assume the <code>/run</code> directory exists or is usable
+without a dependency on <samp>initscripts (&gt;= 2.88dsf-13.3)</samp> until the
+stable release of Debian supports <code>/run</code>.
+</p>
+</li>
+</ol>
+<ol type="1" start="8" >
+<li>
+<p>
+The following directories in the root filesystem are additionally allowed:
+<code>/sys</code> and <code>/selinux</code>.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f79"
+name="fr79">79</a>]
+</p>
+</li>
+</ol>
+<ol type="1" start="9" >
+<li>
+<p>
+On GNU/Hurd systems, the following additional directories are allowed in the
+root filesystem: <code>/hurd</code> and <code>/servers</code>.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f80" name="fr80">80</a>]
+</p>
+</li>
+</ol>
+
+<p>
+The version of this document referred here can be found in the
+<samp>debian-policy</samp> package or on <code><a
+href="http://www.debian.org/doc/packaging-manuals/fhs/">FHS (Debian
+copy)</a></code> alongside this manual (or, if you have the
+<code>debian-policy</code> installed, you can try <code><a
+href="file:///usr/share/doc/debian-policy/fhs/">FHS (local copy)</a></code>).
+The latest version, which may be a more recent version, may be found on
+<code><a href="http://www.pathname.com/fhs/">FHS (upstream)</a></code>.
+Specific questions about following the standard may be asked on the
+<samp>debian-devel</samp> mailing list, or referred to the FHS mailing list
+(see the <code><a href="http://www.pathname.com/fhs/">FHS web site</a></code>
+for more information).
+</p>
+
+<hr>
+
+<h3><a name="s9.1.2"></a>9.1.2 Site-specific programs</h3>
+
+<p>
+As mandated by the FHS, packages must not place any files in
+<code>/usr/local</code>, either by putting them in the file system archive to
+be unpacked by <code>dpkg</code> or by manipulating them in their maintainer
+scripts.
+</p>
+
+<p>
+However, the package may create empty directories below <code>/usr/local</code>
+so that the system administrator knows where to place site-specific files.
+These are not directories <em>in</em> <code>/usr/local</code>, but are children
+of directories in <code>/usr/local</code>.  These directories
+(<code>/usr/local/*/dir/</code>) should be removed on package removal if they
+are empty.
+</p>
+
+<p>
+Note that this applies only to directories <em>below</em>
+<code>/usr/local</code>, not <em>in</em> <code>/usr/local</code>.  Packages
+must not create sub-directories in the directory <code>/usr/local</code>
+itself, except those listed in FHS, section 4.5.  However, you may create
+directories below them as you wish.  You must not remove any of the directories
+listed in 4.5, even if you created them.
+</p>
+
+<p>
+Since <code>/usr/local</code> can be mounted read-only from a remote server,
+these directories must be created and removed by the <code>postinst</code> and
+<code>prerm</code> maintainer scripts and not be included in the
+<code>.deb</code> archive.  These scripts must not fail if either of these
+operations fail.
+</p>
+
+<p>
+For example, the <samp>emacsen-common</samp> package could contain something
+like
+</p>
+<pre>
+     if [ ! -e /usr/local/share/emacs ]; then
+       if mkdir /usr/local/share/emacs 2&gt;/dev/null; then
+         if chown root:staff /usr/local/share/emacs; then
+           chmod 2775 /usr/local/share/emacs || true
+         fi
+       fi
+     fi
+</pre>
+
+<p>
+in its <code>postinst</code> script, and
+</p>
+<pre>
+     rmdir /usr/local/share/emacs/site-lisp 2&gt;/dev/null || true
+     rmdir /usr/local/share/emacs 2&gt;/dev/null || true
+</pre>
+
+<p>
+in the <code>prerm</code> script.  (Note that this form is used to ensure that
+if the script is interrupted, the directory <code>/usr/local/share/emacs</code>
+will still be removed.)
+</p>
+
+<p>
+If you do create a directory in <code>/usr/local</code> for local additions to
+a package, you should ensure that settings in <code>/usr/local</code> take
+precedence over the equivalents in <code>/usr</code>.
+</p>
+
+<p>
+However, because <code>/usr/local</code> and its contents are for exclusive use
+of the local administrator, a package must not rely on the presence or absence
+of files or directories in <code>/usr/local</code> for normal operation.
+</p>
+
+<p>
+The <code>/usr/local</code> directory itself and all the subdirectories created
+by the package should (by default) have permissions 2775 (group-writable and
+set-group-id) and be owned by <samp>root:staff</samp>.
+</p>
+
+<hr>
+
+<h3><a name="s9.1.3"></a>9.1.3 The system-wide mail directory</h3>
+
+<p>
+The system-wide mail directory is <code>/var/mail</code>.  This directory is
+part of the base system and should not be owned by any particular mail agents.
+The use of the old location <code>/var/spool/mail</code> is deprecated, even
+though the spool may still be physically located there.
+</p>
+
+<hr>
+
+<h3><a name="s-fhs-run"></a>9.1.4 <code>/run</code> and <code>/run/lock</code></h3>
+
+<p>
+The directory <code>/run</code> is cleared at boot, normally by being a mount
+point for a temporary file system.  Packages therefore must not assume that any
+files or directories under <code>/run</code> other than <code>/run/lock</code>
+exist unless the package has arranged to create those files or directories
+since the last reboot.  Normally, this is done by the package via an init
+script.  See <a href="ch-opersys.html#s-writing-init">Writing the scripts, Section 9.3.2</a>
+for more information.
+</p>
+
+<p>
+Packages must not include files or directories under <code>/run</code>, or
+under the older <code>/var/run</code> and <code>/var/lock</code> paths.  The
+latter paths will normally be symlinks or other redirections to
+<code>/run</code> for backwards compatibility.
+</p>
+
+<hr>
+
+<h2><a name="s9.2"></a>9.2 Users and groups</h2>
+
+<hr>
+
+<h3><a name="s9.2.1"></a>9.2.1 Introduction</h3>
+
+<p>
+The Debian system can be configured to use either plain or shadow passwords.
+</p>
+
+<p>
+Some user ids (UIDs) and group ids (GIDs) are reserved globally for use by
+certain packages.  Because some packages need to include files which are owned
+by these users or groups, or need the ids compiled into binaries, these ids
+must be used on any Debian system only for the purpose for which they are
+allocated.  This is a serious restriction, and we should avoid getting in the
+way of local administration policies.  In particular, many sites allocate users
+and/or local system groups starting at 100.
+</p>
+
+<p>
+Apart from this we should have dynamically allocated ids, which should by
+default be arranged in some sensible order, but the behavior should be
+configurable.
+</p>
+
+<p>
+Packages other than <samp>base-passwd</samp> must not modify
+<code>/etc/passwd</code>, <code>/etc/shadow</code>, <code>/etc/group</code> or
+<code>/etc/gshadow</code>.
+</p>
+
+<hr>
+
+<h3><a name="s9.2.2"></a>9.2.2 UID and GID classes</h3>
+
+<p>
+The UID and GID numbers are divided into classes as follows:
+</p>
+<dl>
+<dt>0-99:</dt>
+<dd>
+<p>
+Globally allocated by the Debian project, the same on every Debian system.
+These ids will appear in the <code>passwd</code> and <code>group</code> files
+of all Debian systems, new ids in this range being added automatically as the
+<samp>base-passwd</samp> package is updated.
+</p>
+
+<p>
+Packages which need a single statically allocated uid or gid should use one of
+these; their maintainers should ask the <samp>base-passwd</samp> maintainer for
+ids.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>100-999:</dt>
+<dd>
+<p>
+Dynamically allocated system users and groups.  Packages which need a user or
+group, but can have this user or group allocated dynamically and differently on
+each system, should use <samp>adduser --system</samp> to create the group
+and/or user.  <code>adduser</code> will check for the existence of the user or
+group, and if necessary choose an unused id based on the ranges specified in
+<code>adduser.conf</code>.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>1000-59999:</dt>
+<dd>
+<p>
+Dynamically allocated user accounts.  By default <code>adduser</code> will
+choose UIDs and GIDs for user accounts in this range, though
+<code>adduser.conf</code> may be used to modify this behavior.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>60000-64999:</dt>
+<dd>
+<p>
+Globally allocated by the Debian project, but only created on demand.  The ids
+are allocated centrally and statically, but the actual accounts are only
+created on users' systems on demand.
+</p>
+
+<p>
+These ids are for packages which are obscure or which require many
+statically-allocated ids.  These packages should check for and create the
+accounts in <code>/etc/passwd</code> or <code>/etc/group</code> (using
+<code>adduser</code> if it has this facility) if necessary.  Packages which are
+likely to require further allocations should have a &quot;hole&quot; left after
+them in the allocation, to give them room to grow.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>65000-65533:</dt>
+<dd>
+<p>
+Reserved.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>65534:</dt>
+<dd>
+<p>
+User <samp>nobody</samp>.  The corresponding gid refers to the group
+<samp>nogroup</samp>.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>65535:</dt>
+<dd>
+<p>
+<samp>(uid_t)(-1) == (gid_t)(-1)</samp> <em>must not</em> be used, because it
+is the error return sentinel value.
+</p>
+</dd>
+</dl>
+
+<hr>
+
+<h2><a name="s-sysvinit"></a>9.3 System run levels and <code>init.d</code> scripts</h2>
+
+<hr>
+
+<h3><a name="s-/etc/init.d"></a>9.3.1 Introduction</h3>
+
+<p>
+The <code>/etc/init.d</code> directory contains the scripts executed by
+<code>init</code> at boot time and when the init state (or
+&quot;runlevel&quot;) is changed (see <code>init(8)</code>).
+</p>
+
+<p>
+There are at least two different, yet functionally equivalent, ways of handling
+these scripts.  For the sake of simplicity, this document describes only the
+symbolic link method.  However, it must not be assumed by maintainer scripts
+that this method is being used, and any automated manipulation of the various
+runlevel behaviors by maintainer scripts must be performed using
+<code>update-rc.d</code> as described below and not by manually installing or
+removing symlinks.  For information on the implementation details of the other
+method, implemented in the <samp>file-rc</samp> package, please refer to the
+documentation of that package.
+</p>
+
+<p>
+These scripts are referenced by symbolic links in the
+<code>/etc/rc<var>n</var>.d</code> directories.  When changing runlevels,
+<code>init</code> looks in the directory <code>/etc/rc<var>n</var>.d</code> for
+the scripts it should execute, where <samp><var>n</var></samp> is the runlevel
+that is being changed to, or <samp>S</samp> for the boot-up scripts.
+</p>
+
+<p>
+The names of the links all have the form
+<code>S<var>mm</var><var>script</var></code> or
+<code>K<var>mm</var><var>script</var></code> where <var>mm</var> is a two-digit
+number and <var>script</var> is the name of the script (this should be the same
+as the name of the actual script in <code>/etc/init.d</code>).
+</p>
+
+<p>
+When <code>init</code> changes runlevel first the targets of the links whose
+names start with a <samp>K</samp> are executed, each with the single argument
+<samp>stop</samp>, followed by the scripts prefixed with an <samp>S</samp>,
+each with the single argument <samp>start</samp>.  (The links are those in the
+<code>/etc/rc<var>n</var>.d</code> directory corresponding to the new
+runlevel.) The <samp>K</samp> links are responsible for killing services and
+the <samp>S</samp> link for starting services upon entering the runlevel.
+</p>
+
+<p>
+For example, if we are changing from runlevel 2 to runlevel 3, init will first
+execute all of the <samp>K</samp> prefixed scripts it finds in
+<code>/etc/rc3.d</code>, and then all of the <samp>S</samp> prefixed scripts in
+that directory.  The links starting with <samp>K</samp> will cause the
+referred-to file to be executed with an argument of <samp>stop</samp>, and the
+<samp>S</samp> links with an argument of <samp>start</samp>.
+</p>
+
+<p>
+The two-digit number <var>mm</var> is used to determine the order in which to
+run the scripts: low-numbered links have their scripts run first.  For example,
+the <samp>K20</samp> scripts will be executed before the <samp>K30</samp>
+scripts.  This is used when a certain service must be started before another.
+For example, the name server <code>bind</code> might need to be started before
+the news server <code>inn</code> so that <code>inn</code> can set up its access
+lists.  In this case, the script that starts <code>bind</code> would have a
+lower number than the script that starts <code>inn</code> so that it runs
+first:
+</p>
+<pre>
+     /etc/rc2.d/S17bind
+     /etc/rc2.d/S70inn
+</pre>
+
+<p>
+The two runlevels 0 (halt) and 6 (reboot) are slightly different.  In these
+runlevels, the links with an <samp>S</samp> prefix are still called after those
+with a <samp>K</samp> prefix, but they too are called with the single argument
+<samp>stop</samp>.
+</p>
+
+<hr>
+
+<h3><a name="s-writing-init"></a>9.3.2 Writing the scripts</h3>
+
+<p>
+Packages that include daemons for system services should place scripts in
+<code>/etc/init.d</code> to start or stop services at boot time or during a
+change of runlevel.  These scripts should be named
+<code>/etc/init.d/<var>package</var></code>, and they should accept one
+argument, saying what to do:
+</p>
+<dl>
+<dt><samp>start</samp></dt>
+<dd>
+<p>
+start the service,
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>stop</samp></dt>
+<dd>
+<p>
+stop the service,
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>restart</samp></dt>
+<dd>
+<p>
+stop and restart the service if it's already running, otherwise start the
+service
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>reload</samp></dt>
+<dd>
+<p>
+cause the configuration of the service to be reloaded without actually stopping
+and restarting the service,
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>force-reload</samp></dt>
+<dd>
+<p>
+cause the configuration to be reloaded if the service supports this, otherwise
+restart the service.
+</p>
+</dd>
+</dl>
+
+<p>
+The <samp>start</samp>, <samp>stop</samp>, <samp>restart</samp>, and
+<samp>force-reload</samp> options should be supported by all scripts in
+<code>/etc/init.d</code>, the <samp>reload</samp> option is optional.
+</p>
+
+<p>
+The <code>init.d</code> scripts must ensure that they will behave sensibly
+(i.e., returning success and not starting multiple copies of a service) if
+invoked with <samp>start</samp> when the service is already running, or with
+<samp>stop</samp> when it isn't, and that they don't kill unfortunately-named
+user processes.  The best way to achieve this is usually to use
+<code>start-stop-daemon</code> with the <samp>--oknodo</samp> option.
+</p>
+
+<p>
+Be careful of using <samp>set -e</samp> in <code>init.d</code> scripts.
+Writing correct <code>init.d</code> scripts requires accepting various error
+exit statuses when daemons are already running or already stopped without
+aborting the <code>init.d</code> script, and common <code>init.d</code>
+function libraries are not safe to call with <samp>set -e</samp> in effect[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f81" name="fr81">81</a>].  For <samp>init.d</samp>
+scripts, it's often easier to not use <samp>set -e</samp> and instead check the
+result of each command separately.
+</p>
+
+<p>
+If a service reloads its configuration automatically (as in the case of
+<code>cron</code>, for example), the <samp>reload</samp> option of the
+<code>init.d</code> script should behave as if the configuration has been
+reloaded successfully.
+</p>
+
+<p>
+The <code>/etc/init.d</code> scripts must be treated as configuration files,
+either (if they are present in the package, that is, in the .deb file) by
+marking them as <samp>conffile</samp>s, or, (if they do not exist in the .deb)
+by managing them correctly in the maintainer scripts (see <a
+href="ch-files.html#s-config-files">Configuration files, Section 10.7</a>).
+This is important since we want to give the local system administrator the
+chance to adapt the scripts to the local system, e.g., to disable a service
+without de-installing the package, or to specify some special command line
+options when starting a service, while making sure their changes aren't lost
+during the next package upgrade.
+</p>
+
+<p>
+These scripts should not fail obscurely when the configuration files remain but
+the package has been removed, as configuration files remain on the system after
+the package has been removed.  Only when <code>dpkg</code> is executed with the
+<samp>--purge</samp> option will configuration files be removed.  In
+particular, as the <code>/etc/init.d/<var>package</var></code> script itself is
+usually a <samp>conffile</samp>, it will remain on the system if the package is
+removed but not purged.  Therefore, you should include a <samp>test</samp>
+statement at the top of the script, like this:
+</p>
+<pre>
+     test -f <var>program-executed-later-in-script</var> || exit 0
+</pre>
+
+<p>
+Often there are some variables in the <code>init.d</code> scripts whose values
+control the behavior of the scripts, and which a system administrator is likely
+to want to change.  As the scripts themselves are frequently
+<samp>conffile</samp>s, modifying them requires that the administrator merge in
+their changes each time the package is upgraded and the <samp>conffile</samp>
+changes.  To ease the burden on the system administrator, such configurable
+values should not be placed directly in the script.  Instead, they should be
+placed in a file in <code>/etc/default</code>, which typically will have the
+same base name as the <code>init.d</code> script.  This extra file should be
+sourced by the script when the script runs.  It must contain only variable
+settings and comments in SUSv3 <code>sh</code> format.  It may either be a
+<samp>conffile</samp> or a configuration file maintained by the package
+maintainer scripts.  See <a href="ch-files.html#s-config-files">Configuration
+files, Section 10.7</a> for more details.
+</p>
+
+<p>
+To ensure that vital configurable values are always available, the
+<code>init.d</code> script should set default values for each of the shell
+variables it uses, either before sourcing the <code>/etc/default/</code> file
+or afterwards using something like the <samp>: ${VAR:=default}</samp> syntax.
+Also, the <code>init.d</code> script must behave sensibly and not fail if the
+<code>/etc/default</code> file is deleted.
+</p>
+
+<p>
+Files and directories under <code>/run</code>, including ones referred to via
+the compatibility paths <code>/var/run</code> and <code>/var/lock</code>, are
+normally stored on a temporary filesystem and are normally not persistent
+across a reboot.  The <code>init.d</code> scripts must handle this correctly.
+This will typically mean creating any required subdirectories dynamically when
+the <code>init.d</code> script is run.  See <a
+href="ch-opersys.html#s-fhs-run"><code>/run</code> and <code>/run/lock</code>, Section
+9.1.4</a> for more information.
+</p>
+
+<hr>
+
+<h3><a name="s9.3.3"></a>9.3.3 Interfacing with the initscript system</h3>
+
+<p>
+Maintainers should use the abstraction layer provided by the
+<code>update-rc.d</code> and <code>invoke-rc.d</code> programs to deal with
+initscripts in their packages' scripts such as <code>postinst</code>,
+<code>prerm</code> and <code>postrm</code>.
+</p>
+
+<p>
+Directly managing the /etc/rc?.d links and directly invoking the
+<code>/etc/init.d/</code> initscripts should be done only by packages providing
+the initscript subsystem (such as <code>sysv-rc</code> and
+<code>file-rc</code>).
+</p>
+
+<hr>
+
+<h4><a name="s9.3.3.1"></a>9.3.3.1 Managing the links</h4>
+
+<p>
+The program <code>update-rc.d</code> is provided for package maintainers to
+arrange for the proper creation and removal of
+<code>/etc/rc<var>n</var>.d</code> symbolic links, or their functional
+equivalent if another method is being used.  This may be used by maintainers in
+their packages' <code>postinst</code> and <code>postrm</code> scripts.
+</p>
+
+<p>
+You must not include any <code>/etc/rc<var>n</var>.d</code> symbolic links in
+the actual archive or manually create or remove the symbolic links in
+maintainer scripts; you must use the <code>update-rc.d</code> program instead.
+(The former will fail if an alternative method of maintaining runlevel
+information is being used.) You must not include the
+<code>/etc/rc<var>n</var>.d</code> directories themselves in the archive
+either.  (Only the <samp>sysvinit</samp> package may do so.)
+</p>
+
+<p>
+By default <code>update-rc.d</code> will start services in each of the
+multi-user state runlevels (2, 3, 4, and 5) and stop them in the halt runlevel
+(0), the single-user runlevel (1) and the reboot runlevel (6).  The system
+administrator will have the opportunity to customize runlevels by simply
+adding, moving, or removing the symbolic links in
+<code>/etc/rc<var>n</var>.d</code> if symbolic links are being used, or by
+modifying <code>/etc/runlevel.conf</code> if the <samp>file-rc</samp> method is
+being used.
+</p>
+
+<p>
+To get the default behavior for your package, put in your <code>postinst</code>
+script
+</p>
+<pre>
+     		update-rc.d <var>package</var> defaults
+</pre>
+
+<p>
+and in your <code>postrm</code>
+</p>
+<pre>
+     		if [ &quot;$1&quot; = purge ]; then
+     		update-rc.d <var>package</var> remove
+     		fi
+</pre>
+
+<p>
+.  Note that if your package changes runlevels or priority, you may have to
+remove and recreate the links, since otherwise the old links may persist.
+Refer to the documentation of <code>update-rc.d</code>.
+</p>
+
+<p>
+This will use a default sequence number of 20.  If it does not matter when or
+in which order the <code>init.d</code> script is run, use this default.  If it
+does, then you should talk to the maintainer of the <code>sysvinit</code>
+package or post to <samp>debian-devel</samp>, and they will help you choose a
+number.
+</p>
+
+<p>
+For more information about using <samp>update-rc.d</samp>, please consult its
+man page <code>update-rc.d(8)</code>.
+</p>
+
+<hr>
+
+<h4><a name="s9.3.3.2"></a>9.3.3.2 Running initscripts</h4>
+
+<p>
+The program <code>invoke-rc.d</code> is provided to make it easier for package
+maintainers to properly invoke an initscript, obeying runlevel and other
+locally-defined constraints that might limit a package's right to start, stop
+and otherwise manage services.  This program may be used by maintainers in
+their packages' scripts.
+</p>
+
+<p>
+The package maintainer scripts must use <code>invoke-rc.d</code> to invoke the
+<code>/etc/init.d/*</code> initscripts, instead of calling them directly.
+</p>
+
+<p>
+By default, <code>invoke-rc.d</code> will pass any action requests (start,
+stop, reload, restart...) to the <code>/etc/init.d</code> script, filtering out
+requests to start or restart a service out of its intended runlevels.
+</p>
+
+<p>
+Most packages will simply need to change:
+</p>
+<pre>
+     /etc/init.d/&lt;package&gt;
+     	      &lt;action&gt;
+</pre>
+
+<p>
+in their <code>postinst</code> and <code>prerm</code> scripts to:
+</p>
+<pre>
+     	if which invoke-rc.d &gt;/dev/null 2&gt;&amp;1; then
+     		invoke-rc.d <var>package</var> &lt;action&gt;
+     	else
+     		/etc/init.d/<var>package</var> &lt;action&gt;
+     	fi
+</pre>
+
+<p>
+A package should register its initscript services using
+<code>update-rc.d</code> before it tries to invoke them using
+<code>invoke-rc.d</code>.  Invocation of unregistered services may fail.
+</p>
+
+<p>
+For more information about using <code>invoke-rc.d</code>, please consult its
+man page <code>invoke-rc.d(8)</code>.
+</p>
+
+<hr>
+
+<h3><a name="s9.3.4"></a>9.3.4 Boot-time initialization</h3>
+
+<p>
+There used to be another directory, <code>/etc/rc.boot</code>, which contained
+scripts which were run once per machine boot.  This has been deprecated in
+favour of links from <code>/etc/rcS.d</code> to files in
+<code>/etc/init.d</code> as described in <a href="ch-opersys.html#s-/etc/init.d">Introduction,
+Section 9.3.1</a>.  Packages must not place files in <code>/etc/rc.boot</code>.
+</p>
+
+<hr>
+
+<h3><a name="s9.3.5"></a>9.3.5 Example</h3>
+
+<p>
+An example on which you can base your <code>/etc/init.d</code> scripts is found
+in <code>/etc/init.d/skeleton</code>.
+</p>
+
+<hr>
+
+<h2><a name="s9.4"></a>9.4 Console messages from <code>init.d</code> scripts</h2>
+
+<p>
+This section describes the formats to be used for messages written to standard
+output by the <code>/etc/init.d</code> scripts.  The intent is to improve the
+consistency of Debian's startup and shutdown look and feel.  For this reason,
+please look very carefully at the details.  We want the messages to have the
+same format in terms of wording, spaces, punctuation and case of letters.
+</p>
+
+<p>
+Here is a list of overall rules that should be used for messages generated by
+<code>/etc/init.d</code> scripts.
+</p>
+<ul>
+<li>
+<p>
+The message should fit in one line (fewer than 80 characters), start with a
+capital letter and end with a period (<samp>.</samp>) and line feed
+(<samp>&quot;\n&quot;</samp>).
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+If the script is performing some time consuming task in the background (not
+merely starting or stopping a program, for instance), an ellipsis (three dots:
+<samp>...</samp>) should be output to the screen, with no leading or tailing
+whitespace or line feeds.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+The messages should appear as if the computer is telling the user what it is
+doing (politely :-), but should not mention &quot;it&quot; directly.  For
+example, instead of:
+</p>
+<pre>
+     I'm starting network daemons: nfsd mountd.
+</pre>
+
+<p>
+the message should say
+</p>
+<pre>
+     Starting network daemons: nfsd mountd.
+</pre>
+</li>
+</ul>
+
+<p>
+<samp>init.d</samp> script should use the following standard message formats
+for the situations enumerated below.
+</p>
+<ul>
+<li>
+<p>
+When daemons are started
+</p>
+
+<p>
+If the script starts one or more daemons, the output should look like this (a
+single line, no leading spaces):
+</p>
+<pre>
+     Starting <var>description</var>: <var>daemon-1</var> ... <var>daemon-n</var>.
+</pre>
+
+<p>
+The <var>description</var> should describe the subsystem the daemon or set of
+daemons are part of, while <var>daemon-1</var> up to <var>daemon-n</var> denote
+each daemon's name (typically the file name of the program).
+</p>
+
+<p>
+For example, the output of <code>/etc/init.d/lpd</code> would look like:
+</p>
+<pre>
+     Starting printer spooler: lpd.
+</pre>
+
+<p>
+This can be achieved by saying
+</p>
+<pre>
+     echo -n &quot;Starting printer spooler: lpd&quot;
+     start-stop-daemon --start --quiet --exec /usr/sbin/lpd
+     echo &quot;.&quot;
+</pre>
+
+<p>
+in the script.  If there are more than one daemon to start, the output should
+look like this:
+</p>
+<pre>
+     echo -n &quot;Starting remote file system services:&quot;
+     echo -n &quot; nfsd&quot;; start-stop-daemon --start --quiet nfsd
+     echo -n &quot; mountd&quot;; start-stop-daemon --start --quiet mountd
+     echo -n &quot; ugidd&quot;; start-stop-daemon --start --quiet ugidd
+     echo &quot;.&quot;
+</pre>
+
+<p>
+This makes it possible for the user to see what is happening and when the final
+daemon has been started.  Care should be taken in the placement of white
+spaces: in the example above the system administrators can easily comment out a
+line if they don't want to start a specific daemon, while the displayed message
+still looks good.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+When a system parameter is being set
+</p>
+
+<p>
+If you have to set up different system parameters during the system boot, you
+should use this format:
+</p>
+<pre>
+     Setting <var>parameter</var> to &quot;<var>value</var>&quot;.
+</pre>
+
+<p>
+You can use a statement such as the following to get the quotes right:
+</p>
+<pre>
+     echo &quot;Setting DNS domainname to \&quot;$domainname\&quot;.&quot;
+</pre>
+
+<p>
+Note that the same symbol (<samp>&quot;</samp>) is used for the left and right
+quotation marks.  A grave accent (<samp>`</samp>) is not a quote character;
+neither is an apostrophe (<samp>'</samp>).
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+When a daemon is stopped or restarted
+</p>
+
+<p>
+When you stop or restart a daemon, you should issue a message identical to the
+startup message, except that <samp>Starting</samp> is replaced with
+<samp>Stopping</samp> or <samp>Restarting</samp> respectively.
+</p>
+
+<p>
+For example, stopping the printer daemon will look like this:
+</p>
+<pre>
+     Stopping printer spooler: lpd.
+</pre>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+When something is executed
+</p>
+
+<p>
+There are several examples where you have to run a program at system startup or
+shutdown to perform a specific task, for example, setting the system's clock
+using <code>netdate</code> or killing all processes when the system shuts down.
+Your message should look like this:
+</p>
+<pre>
+     Doing something very useful...done.
+</pre>
+
+<p>
+You should print the <samp>done.</samp> immediately after the job has been
+completed, so that the user is informed why they have to wait.  You can get
+this behavior by saying
+</p>
+<pre>
+     echo -n &quot;Doing something very useful...&quot;
+     do_something
+     echo &quot;done.&quot;
+</pre>
+
+<p>
+in your script.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+When the configuration is reloaded
+</p>
+
+<p>
+When a daemon is forced to reload its configuration files you should use the
+following format:
+</p>
+<pre>
+     Reloading <var>description</var> configuration...done.
+</pre>
+
+<p>
+where <var>description</var> is the same as in the daemon starting message.
+</p>
+</li>
+</ul>
+
+<hr>
+
+<h2><a name="s-cron-jobs"></a>9.5 Cron jobs</h2>
+
+<p>
+Packages must not modify the configuration file <code>/etc/crontab</code>, and
+they must not modify the files in <code>/var/spool/cron/crontabs</code>.
+</p>
+
+<p>
+If a package wants to install a job that has to be executed via cron, it should
+place a file named as specified in <a href="ch-opersys.html#s-cron-files">Cron job file names,
+Section 9.5.1</a> into one or more of the following directories:
+</p>
+<pre>
+     /etc/cron.hourly
+     /etc/cron.daily
+     /etc/cron.weekly
+     /etc/cron.monthly
+</pre>
+
+<p>
+As these directory names imply, the files within them are executed on an
+hourly, daily, weekly, or monthly basis, respectively.  The exact times are
+listed in <code>/etc/crontab</code>.
+</p>
+
+<p>
+All files installed in any of these directories must be scripts (e.g., shell
+scripts or Perl scripts) so that they can easily be modified by the local
+system administrator.  In addition, they must be treated as configuration
+files.
+</p>
+
+<p>
+If a certain job has to be executed at some other frequency or at a specific
+time, the package should install a file in <code>/etc/cron.d</code> with a name
+as specified in <a href="ch-opersys.html#s-cron-files">Cron job file names, Section 9.5.1</a>.
+This file uses the same syntax as <code>/etc/crontab</code> and is processed by
+<code>cron</code> automatically.  The file must also be treated as a
+configuration file.  (Note that entries in the <code>/etc/cron.d</code>
+directory are not handled by <code>anacron</code>.  Thus, you should only use
+this directory for jobs which may be skipped if the system is not running.)
+</p>
+
+<p>
+Unlike <code>crontab</code> files described in the IEEE Std 1003.1-2008
+(POSIX.1) available from <code><a
+href="http://www.opengroup.org/onlinepubs/9699919799/">The Open
+Group</a></code>, the files in <code>/etc/cron.d</code> and the file
+<code>/etc/crontab</code> have seven fields; namely:
+</p>
+<ol type="1" start="1" >
+<li>
+<p>
+Minute [0,59]
+</p>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+Hour [0,23]
+</p>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<p>
+Day of the month [1,31]
+</p>
+</li>
+</ol>
+<ol type="1" start="4" >
+<li>
+<p>
+Month of the year [1,12]
+</p>
+</li>
+</ol>
+<ol type="1" start="5" >
+<li>
+<p>
+Day of the week ([0,6] with 0=Sunday)
+</p>
+</li>
+</ol>
+<ol type="1" start="6" >
+<li>
+<p>
+Username
+</p>
+</li>
+</ol>
+<ol type="1" start="7" >
+<li>
+<p>
+Command to be run
+</p>
+</li>
+</ol>
+
+<p>
+Ranges of numbers are allowed.  Ranges are two numbers separated with a hyphen.
+The specified range is inclusive.  Lists are allowed.  A list is a set of
+numbers (or ranges) separated by commas.  Step values can be used in
+conjunction with ranges.
+</p>
+
+<p>
+The scripts or <samp>crontab</samp> entries in these directories should check
+if all necessary programs are installed before they try to execute them.
+Otherwise, problems will arise when a package was removed but not purged since
+configuration files are kept on the system in this situation.
+</p>
+
+<p>
+Any <samp>cron</samp> daemon must provide <code>/usr/bin/crontab</code> and
+support normal <samp>crontab</samp> entries as specified in POSIX.  The daemon
+must also support names for days and months, ranges, and step values.  It has
+to support <code>/etc/crontab</code>, and correctly execute the scripts in
+<code>/etc/cron.d</code>.  The daemon must also correctly execute scripts in
+<code>/etc/cron.{hourly,daily,weekly,monthly}</code>.
+</p>
+
+<hr>
+
+<h3><a name="s-cron-files"></a>9.5.1 Cron job file names</h3>
+
+<p>
+The file name of a cron job file should normally match the name of the package
+from which it comes.
+</p>
+
+<p>
+If a package supplies multiple cron job files files in the same directory, the
+file names should all start with the name of the package (possibly modified as
+described below) followed by a hyphen (<samp>-</samp>) and a suitable suffix.
+</p>
+
+<p>
+A cron job file name must not include any period or plus characters
+(<samp>.</samp> or <samp>+</samp>) characters as this will cause cron to ignore
+the file.  Underscores (<samp>_</samp>) should be used instead of
+<samp>.</samp> and <samp>+</samp> characters.
+</p>
+
+<hr>
+
+<h2><a name="s-menus"></a>9.6 Menus</h2>
+
+<p>
+The Debian <samp>menu</samp> package provides a standard interface between
+packages providing applications and <em>menu programs</em> (either X window
+managers or text-based menu programs such as <code>pdmenu</code>).
+</p>
+
+<p>
+All packages that provide applications that need not be passed any special
+command line arguments for normal operation should register a menu entry for
+those applications, so that users of the <samp>menu</samp> package will
+automatically get menu entries in their window managers, as well in shells like
+<samp>pdmenu</samp>.
+</p>
+
+<p>
+Menu entries should follow the current menu policy.
+</p>
+
+<p>
+The menu policy can be found in the <samp>menu-policy</samp> files in the
+<samp>debian-policy</samp> package.  It is also available from the Debian web
+mirrors at <samp><code><a
+href="http://www.debian.org/doc/packaging-manuals/menu-policy/">/doc/packaging-manuals/menu-policy/</a></code></samp>.
+</p>
+
+<p>
+Please also refer to the <em>Debian Menu System</em> documentation that comes
+with the <code>menu</code> package for information about how to register your
+applications.
+</p>
+
+<hr>
+
+<h2><a name="s-mime"></a>9.7 Multimedia handlers</h2>
+
+<p>
+MIME (Multipurpose Internet Mail Extensions, RFCs 2045-2049) is a mechanism for
+encoding files and data streams and providing meta-information about them, in
+particular their type (e.g.  audio or video) and format (e.g.  PNG, HTML, MP3).
+</p>
+
+<p>
+Registration of MIME type handlers allows programs like mail user agents and
+web browsers to invoke these handlers to view, edit or display MIME types they
+don't support directly.
+</p>
+
+<p>
+Packages which provide programs to view/show/play, compose, edit or print MIME
+types should register them as such by placing a file in <code>mailcap(5)</code>
+format (RFC 1524) in the directory <code>/usr/lib/mime/packages/</code>.  The
+file name should be the binary package's name.
+</p>
+
+<p>
+The <code>mime-support</code> package provides the <code>update-mime</code>
+program, which integrates these registrations in the <code>/etc/mailcap</code>
+file, using dpkg triggers[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f82" name="fr82">82</a>].
+Packages using this facility <em>should not</em> depend on, recommend, or
+suggest <code>mime-support</code>.
+</p>
+
+<hr>
+
+<h2><a name="s9.8"></a>9.8 Keyboard configuration</h2>
+
+<p>
+To achieve a consistent keyboard configuration so that all applications
+interpret a keyboard event the same way, all programs in the Debian
+distribution must be configured to comply with the following guidelines.
+</p>
+
+<p>
+The following keys must have the specified interpretations:
+</p>
+<dl>
+<dt><samp>&lt;--</samp></dt>
+<dd>
+<p>
+delete the character to the left of the cursor
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>Delete</samp></dt>
+<dd>
+<p>
+delete the character to the right of the cursor
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>Control+H</samp></dt>
+<dd>
+<p>
+emacs: the help prefix
+</p>
+</dd>
+</dl>
+
+<p>
+The interpretation of any keyboard events should be independent of the terminal
+that is used, be it a virtual console, an X terminal emulator, an rlogin/telnet
+session, etc.
+</p>
+
+<p>
+The following list explains how the different programs should be set up to
+achieve this:
+</p>
+<ul>
+<li>
+<p>
+<samp>&lt;--</samp> generates <samp>KB_BackSpace</samp> in X.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<samp>Delete</samp> generates <samp>KB_Delete</samp> in X.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+X translations are set up to make <samp>KB_Backspace</samp> generate ASCII DEL,
+and to make <samp>KB_Delete</samp> generate <samp>ESC [ 3 ~</samp> (this is the
+vt220 escape code for the &quot;delete character&quot; key).  This must be done
+by loading the X resources using <code>xrdb</code> on all local X displays, not
+using the application defaults, so that the translation resources used
+correspond to the <code>xmodmap</code> settings.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+The Linux console is configured to make <samp>&lt;--</samp> generate DEL, and
+<samp>Delete</samp> generate <samp>ESC [ 3 ~</samp>.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+X applications are configured so that <samp>&lt;</samp> deletes left, and
+<samp>Delete</samp> deletes right.  Motif applications already work like this.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+Terminals should have <samp>stty erase ^?</samp> .
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+The <samp>xterm</samp> terminfo entry should have <samp>ESC [ 3 ~</samp> for
+<samp>kdch1</samp>, just as for <samp>TERM=linux</samp> and
+<samp>TERM=vt220</samp>.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+Emacs is programmed to map <samp>KB_Backspace</samp> or the <samp>stty
+erase</samp> character to <samp>delete-backward-char</samp>, and
+<samp>KB_Delete</samp> or <samp>kdch1</samp> to
+<samp>delete-forward-char</samp>, and <samp>^H</samp> to <samp>help</samp> as
+always.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+Other applications use the <samp>stty erase</samp> character and
+<samp>kdch1</samp> for the two delete keys, with ASCII DEL being &quot;delete
+previous character&quot; and <samp>kdch1</samp> being &quot;delete character
+under cursor&quot;.
+</p>
+</li>
+</ul>
+
+<p>
+This will solve the problem except for the following cases:
+</p>
+<ul>
+<li>
+<p>
+Some terminals have a <samp>&lt;--</samp> key that cannot be made to produce
+anything except <samp>^H</samp>.  On these terminals Emacs help will be
+unavailable on <samp>^H</samp> (assuming that the <samp>stty erase</samp>
+character takes precedence in Emacs, and has been set correctly).  <samp>M-x
+help</samp> or <samp>F1</samp> (if available) can be used instead.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+Some operating systems use <samp>^H</samp> for <samp>stty erase</samp>.
+However, modern telnet versions and all rlogin versions propagate
+<samp>stty</samp> settings, and almost all UNIX versions honour <samp>stty
+erase</samp>.  Where the <samp>stty</samp> settings are not propagated
+correctly, things can be made to work by using <samp>stty</samp> manually.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+Some systems (including previous Debian versions) use <code>xmodmap</code> to
+arrange for both <samp>&lt;--</samp> and <samp>Delete</samp> to generate
+<samp>KB_Delete</samp>.  We can change the behavior of their X clients using
+the same X resources that we use to do it for our own clients, or configure our
+clients using their resources when things are the other way around.  On
+displays configured like this <samp>Delete</samp> will not work, but
+<samp>&lt;--</samp> will.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+Some operating systems have different <samp>kdch1</samp> settings in their
+<samp>terminfo</samp> database for <samp>xterm</samp> and others.  On these
+systems the <samp>Delete</samp> key will not work correctly when you log in
+from a system conforming to our policy, but <samp>&lt;--</samp> will.
+</p>
+</li>
+</ul>
+
+<hr>
+
+<h2><a name="s9.9"></a>9.9 Environment variables</h2>
+
+<p>
+A program must not depend on environment variables to get reasonable defaults.
+(That's because these environment variables would have to be set in a
+system-wide configuration file like <code>/etc/profile</code>, which is not
+supported by all shells.)
+</p>
+
+<p>
+If a program usually depends on environment variables for its configuration,
+the program should be changed to fall back to a reasonable default
+configuration if these environment variables are not present.  If this cannot
+be done easily (e.g., if the source code of a non-free program is not
+available), the program must be replaced by a small &quot;wrapper&quot; shell
+script which sets the environment variables if they are not already defined,
+and calls the original program.
+</p>
+
+<p>
+Here is an example of a wrapper script for this purpose:
+</p>
+<pre>
+     #!/bin/sh
+     BAR=${BAR:-/var/lib/fubar}
+     export BAR
+     exec /usr/lib/foo/foo &quot;$@&quot;
+</pre>
+
+<p>
+Furthermore, as <code>/etc/profile</code> is a configuration file of the
+<code>base-files</code> package, other packages must not put any environment
+variables or other commands into that file.
+</p>
+
+<hr>
+
+<h2><a name="s-doc-base"></a>9.10 Registering Documents using doc-base</h2>
+
+<p>
+The <code>doc-base</code> package implements a flexible mechanism for handling
+and presenting documentation.  The recommended practice is for every Debian
+package that provides online documentation (other than just manual pages) to
+register these documents with <code>doc-base</code> by installing a
+<code>doc-base</code> control file in <code>/usr/share/doc-base/</code>.
+</p>
+
+<p>
+Please refer to the documentation that comes with the <code>doc-base</code>
+package for information and details.
+</p>
+
+<hr>
+
+<h2><a name="s-alternateinit"></a>9.11 Alternate init systems</h2>
+
+<p>
+A number of other init systems are available now in Debian that can be used in
+place of <code>sysvinit</code>.  Alternative init implementations must support
+running SysV init scripts as described at <a href="ch-opersys.html#s-sysvinit">System run
+levels and <code>init.d</code> scripts, Section 9.3</a> for compatibility.
+</p>
+
+<p>
+Packages may integrate with these replacement init systems by providing
+implementation-specific configuration information about how and when to start a
+service or in what order to run certain tasks at boot time.  However, any
+package integrating with other init systems must also be backwards-compatible
+with <code>sysvinit</code> by providing a SysV-style init script with the same
+name as and equivalent functionality to any init-specific job, as this is the
+only start-up configuration method guaranteed to be supported by all init
+implementations.  An exception to this rule is scripts or jobs provided by the
+init implementation itself; such jobs may be required for an
+implementation-specific equivalent of the <code>/etc/rcS.d/</code> scripts and
+may not have a one-to-one correspondence with the init scripts.
+</p>
+
+<hr>
+
+<h3><a name="s-upstart"></a>9.11.1 Event-based boot with upstart</h3>
+
+<p>
+Packages may integrate with the <code>upstart</code> event-based boot system by
+installing job files in the <code>/etc/init</code> directory.  SysV init
+scripts for which an equivalent upstart job is available must query the output
+of the command <code>initctl version</code> for the string <samp>upstart</samp>
+and avoid running in favor of the native upstart job, using a test such as
+this:
+</p>
+<pre>
+     if [ &quot;$1&quot; = start ] &amp;&amp; which initctl &gt;/dev/null &amp;&amp; initctl version | grep -q upstart
+     then
+     	exit 1
+     fi
+</pre>
+
+<p>
+Because packages shipping upstart jobs may be installed on systems that are not
+using upstart, maintainer scripts must still use the common
+<code>update-rc.d</code> and <code>invoke-rc.d</code> interfaces for
+configuring runlevels and for starting and stopping services.  These maintainer
+scripts must not call the upstart <code>start</code>, <code>restart</code>,
+<code>reload</code>, or <code>stop</code> interfaces directly.  Instead,
+implementations of <code>invoke-rc.d</code> must detect when upstart is running
+and when an upstart job with the same name as an init script is present, and
+perform the requested action using the upstart job instead of the init script.
+</p>
+
+<p>
+Dependency-based boot managers for SysV init scripts, such as
+<code>startpar</code>, may avoid running a given init script entirely when an
+equivalent upstart job is present, to avoid unnecessary forking of no-op init
+scripts.  In this case, the boot manager should integrate with upstart to
+detect when the upstart job in question is started or stopped to know when the
+dependency has been satisfied.
+</p>
+
+<hr>
+
+<p>
+[ <a href="ch-sharedlibs.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ 9 ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-files.html">next</a> ]
+</p>
+
+<hr>
+
+<p>
+Debian Policy Manual
+</p>
+
+<address>
+version 3.9.4.0, 2012-09-19<br>
+<br>
+<a href="ch-scope.html#s-authors">The Debian Policy Mailing List</a><br>
+<br>
+</address>
+<hr>
+
+</body>
+
+</html>
+

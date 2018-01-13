@@ -1,0 +1,15 @@
+./Packager/CodeBases.pm:	if (exists $codebase->Releases->{$version}) {
+./Packager/CodeBases.pm:	  $codebase->AddRelease(Release => Packager::Release->new(CodeBase => $codebase,
+./Packager/CodeBases.pm:    my $name = $codebase->Name;
+./Packager/CodeBases.pm:      push @matches, $codebase->Name;
+./Packager/CodeBases.pm~:	if (exists $codebase->Releases->{$version}) {
+./Packager/CodeBases.pm~:	  $codebase->AddRelease(Release => Packager::Release->new(CodeBase => $codebase,
+./Packager/CodeBases.pm~:    my $name = $codebase->Name;
+./Packager/CodeBases.pm~:      push @matches, $codebase->Name;
+grep: ./data: No such file or directory
+./Packager.pm:      my $release = $codebase->SelectRelease;
+./Packager.pm:	$codebase->Releases->{$release}->SelectAction;
+./Packager.pm~:      my $release = $codebase->SelectRelease;
+./Packager.pm~:	$codebase->Releases->{$release}->SelectAction;
+./scripts/classify-files-for-makefile.pl~:  my $loc = $codebase->{Releases}->{$codebase->LatestRelease}->Location;
+./scripts/classify-files-for-makefile.pl:  my $loc = $codebase->{Releases}->{$codebase->LatestRelease}->Location;

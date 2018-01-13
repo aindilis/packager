@@ -1,0 +1,8 @@
+[services]
+fqdn = 173.165.36.102
+login = vagrant
+method = scp
+ssh_config_options = IdentityFile /root/.ssh/services_id_rsa
+incoming = /var/lib/myfrdcsa/packages/debian/mini-dinstall/incoming
+allow_unsigned_uploads = 1
+# post_upload_command = mini-dinstall --batch

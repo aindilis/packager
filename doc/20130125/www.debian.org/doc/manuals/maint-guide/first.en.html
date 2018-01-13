@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 2. First steps</title><link rel="stylesheet" href="maint-guide.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /><link rel="home" href="index.en.html" title="Debian New Maintainers' Guide" /><link rel="up" href="index.en.html" title="Debian New Maintainers' Guide" /><link rel="prev" href="start.en.html" title="Chapter 1. Getting started The Right Way" /><link rel="next" href="modify.en.html" title="Chapter 3. Modifying the source" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 2. First steps</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="start.en.html"><img src="http://www.debian.org/doc/manuals/maint-guide/images/prev.gif" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="modify.en.html"><img src="images/next.gif" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="first"></a>Chapter 2. First steps</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="first.en.html#workflow">2.1. Debian package building workflow</a></span></dt><dt><span class="section"><a href="first.en.html#choose">2.2. Choose your program</a></span></dt><dt><span class="section"><a href="first.en.html#getit">2.3. Get the program, and try it out</a></span></dt><dt><span class="section"><a href="first.en.html#simplemake">2.4. Simple build systems</a></span></dt><dt><span class="section"><a href="first.en.html#portable">2.5. Popular portable build systems</a></span></dt><dt><span class="section"><a href="first.en.html#namever">2.6. Package name and version</a></span></dt><dt><span class="section"><a href="first.en.html#dh-make">2.7. Setting up <span class="command"><strong>dh_make</strong></span></a></span></dt><dt><span class="section"><a href="first.en.html#non-native-dh-make">2.8. Initial non-native Debian package</a></span></dt><dt><span class="section"><a href="first.en.html#native-dh-make">2.9. Initial native Debian package</a></span></dt></dl></div><p>
+Let's start by creating a package of your own (or, even better,
+adopting an existing one).
+</p><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="workflow"></a>2.1. Debian package building workflow</h2></div></div></div><p>
+If you are making a Debian package with an upstream program, the
+typical workflow of Debian package building involves generating several
+specifically named files for each step as follows.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Get a copy of the upstream software, usually in a compressed tar format.</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><code class="literal"><em class="replaceable"><code>package</code></em>-<em class="replaceable"><code>version</code></em>.tar.gz</code></li></ul></div></li><li class="listitem"><p>
+Add Debian-specific packaging modifications to the upstream program under the
+<code class="filename">debian</code> directory, and create a non-native source package
+(that is, the set of input files used for Debian package building) in
+<code class="literal">3.0 (quilt)</code> format.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><code class="literal"><em class="replaceable"><code>package</code></em>_<em class="replaceable"><code>version</code></em>.orig.tar.gz</code></li><li class="listitem"><code class="literal"><em class="replaceable"><code>package</code></em>_<em class="replaceable"><code>version</code></em>-<em class="replaceable"><code>revision</code></em>.debian.tar.gz</code><sup>[<a id="idp290224" href="first.en.html#ftn.idp290224" class="footnote">4</a>]</sup></li><li class="listitem"><code class="literal"><em class="replaceable"><code>package</code></em>_<em class="replaceable"><code>version</code></em>-<em class="replaceable"><code>revision</code></em>.dsc</code></li></ul></div></li><li class="listitem"><p>
+Build Debian binary packages, which are ordinary installable package files in <code class="literal">.deb</code> format (or <code class="literal">.udeb</code> format, used by the Debian Installer) from the Debian source package.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><code class="literal"><em class="replaceable"><code>package</code></em>_<em class="replaceable"><code>version</code></em>-<em class="replaceable"><code>revision</code></em>_<em class="replaceable"><code>arch</code></em>.deb</code></li></ul></div></li></ul></div><p>
+Please note that the character separating
+<code class="literal"><em class="replaceable"><code>package</code></em></code> and
+<code class="literal"><em class="replaceable"><code>version</code></em></code> was changed from
+<code class="literal">-</code> (hyphen) in the tarball name to
+<code class="literal">_</code> (underscore) in the Debian package filenames.
+</p><p>
+In the file names above, replace
+the <code class="literal"><em class="replaceable"><code>package</code></em></code> part with the <span class="strong"><strong>package name</strong></span>,
+the <code class="literal"><em class="replaceable"><code>version</code></em></code> part with the <span class="strong"><strong>upstream version</strong></span>,
+the <code class="literal"><em class="replaceable"><code>revision</code></em></code> part with the <span class="strong"><strong>Debian revision</strong></span>,
+and the <code class="literal"><em class="replaceable"><code>arch</code></em></code> part with the <span class="strong"><strong>package architecture</strong></span>,
+as defined in the Debian Policy Manual.
+<sup>[<a id="idp307344" href="first.en.html#ftn.idp307344" class="footnote">5</a>]</sup>
+</p><p>
+If instead you are making a Debian-specific package with no upstream, the
+typical workflow of Debian package building is simpler.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+Create a native Debian source package in the <code class="literal">3.0 (native)</code>
+format using a single compressed tar file in which all files are included.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><code class="literal"><em class="replaceable"><code>package</code></em>_<em class="replaceable"><code>version</code></em>.tar.gz</code></li><li class="listitem"><code class="literal"><em class="replaceable"><code>package</code></em>_<em class="replaceable"><code>version</code></em>.dsc</code></li></ul></div></li><li class="listitem"><p>
+Build Debian binary packages from the native Debian source package.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><code class="literal"><em class="replaceable"><code>package</code></em>_<em class="replaceable"><code>version</code></em>_<em class="replaceable"><code>arch</code></em>.deb</code></li></ul></div></li></ul></div><p>
+Each step of this outline is explained with detailed examples in later sections.
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="choose"></a>2.2. Choose your program</h2></div></div></div><p>
+You have probably chosen the package you want to create.  The first thing you
+need to do is check if the package is in the distribution archive already by
+using the following.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>the <span class="command"><strong>aptitude</strong></span> command</p></li><li class="listitem"><p>the <a class="ulink" href="http://www.debian.org/distrib/packages" target="_top">Debian packages</a> web page</p></li><li class="listitem"><p>the <a class="ulink" href="http://packages.qa.debian.org/common/index.html" target="_top">Debian Package Tracking System</a> web page</p></li></ul></div><p>
+If the package already exists, well, install it!  :-) If it happens to be
+<span class="strong"><strong>orphaned</strong></span> (that is, if its
+maintainer is set to <a class="ulink" href="http://qa.debian.org/" target="_top">Debian QA Group</a>),
+you may be able to pick it up if it's still available.  You may also
+adopt a package whose maintainer has filed a Request for Adoption
+(<span class="strong"><strong>RFA</strong></span>).<sup>[<a id="idp329376" href="first.en.html#ftn.idp329376" class="footnote">6</a>]</sup>
+</p><p>
+There are several package ownership status resources.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p> <a class="ulink" href="http://www.debian.org/devel/wnpp/" target="_top">Work-Needing and Prospective Packages</a> </p></li><li class="listitem"><p> <a class="ulink" href="http://bugs.debian.org/wnpp" target="_top">Debian Bug report logs: Bugs in pseudo-package <code class="systemitem">wnpp</code> in <code class="literal">unstable</code></a> </p></li><li class="listitem"><p> <a class="ulink" href="http://wnpp.debian.net/" target="_top">Debian Packages that Need Lovin'</a> </p></li><li class="listitem"><p> <a class="ulink" href="http://members.hellug.gr/serzan/wnpp/" target="_top">Browse <code class="systemitem">wnpp</code> bugs based on debtags</a> </p></li></ul></div><p>
+As a side note, it's important to point out that Debian already has packages
+for most kinds of programs, and the number of packages already in the Debian
+archive is much larger than that of contributors with upload rights.  Thus,
+contributions to packages already in the archive are far more appreciated (and
+more likely to receive sponsorship) by other developers <sup>[<a id="idp340240" href="first.en.html#ftn.idp340240" class="footnote">7</a>]</sup>.  You can contribute in various ways.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+taking over orphaned, yet actively used, packages
+</p></li><li class="listitem"><p>
+joining <a class="ulink" href="http://wiki.debian.org/Teams" target="_top">packaging teams</a>
+</p></li><li class="listitem"><p>
+triaging bugs of very popular packages
+</p></li><li class="listitem"><p>
+preparing <a class="ulink" href="http://www.debian.org/doc/developers-reference/pkgs.html#nmu-qa-upload" target="_top">QA or NMU uploads</a>
+</p></li></ul></div><p>
+If you are able to adopt the package, get the sources (with something like
+<code class="literal">apt-get source <em class="replaceable"><code>packagename</code></em></code>) and
+examine them.  This document unfortunately doesn't include comprehensive
+information about adopting packages.  Thankfully you shouldn't have a hard time
+figuring out how the package works since someone has already done the initial
+setup for you.  Keep reading, though; a lot of the advice below will still be
+applicable for your case.
+</p><p>
+If the package is new, and you decide you'd like to see it in Debian, proceed
+as follows:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+First, you must know that the program works, and have tried it for some time to
+confirm its usefulness.
+</p></li><li class="listitem"><p>
+You must check that no one else is already working on the package on the
+<a class="ulink" href="http://www.debian.org/devel/wnpp/" target="_top">Work-Needing and Prospective Packages</a> site.  
+If no one else is working on it, file an ITP (Intent
+To Package) bug report to the <code class="systemitem">wnpp</code>
+pseudo-package using <span class="command"><strong>reportbug</strong></span>.  If someone's already on it,
+contact them if you feel you need to.  If not - find another interesting
+program that nobody is maintaining.
+</p></li><li class="listitem"><p>
+The software <span class="strong"><strong>must have a license</strong></span>.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>
+For the <code class="literal">main</code> section, Debian Policy requires it
+<span class="strong"><strong>to be fully compliant with the Debian Free Software
+Guidelines</strong></span> (<a class="ulink" href="http://www.debian.org/social_contract#guidelines" target="_top">DFSG</a>)
+and <span class="strong"><strong>not to require a package outside of
+<code class="literal">main</code></strong></span> for compilation or execution.  This
+is the desired case.
+</p></li><li class="listitem"><p>
+For the <code class="literal">contrib</code> section, it must comply with the
+DFSG but it may require a package outside of <code class="literal">main</code> for
+compilation or execution.
+</p></li><li class="listitem"><p>
+For the <code class="literal">non-free</code> section, it may be non-compliant
+with the DFSG but it <span class="strong"><strong>must be distributable</strong></span>.
+</p></li><li class="listitem"><p>
+If you are unsure about where it should go, post the license text on 
+<a class="ulink" href="http://lists.debian.org/debian-legal/" target="_top">debian-legal@lists.debian.org</a>
+and ask for advice.
+</p></li></ul></div></li><li class="listitem"><p>
+The program should <span class="strong"><strong>not</strong></span> introduce security
+and maintenance concerns to the Debian system.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>
+The program should be well documented and its code needs to be understandable
+(i.e.  not obfuscated).
+</p></li><li class="listitem"><p>
+You should contact the program's author(s) to check if they agree with packaging it
+and are amicable to Debian.  It is important to be able to consult with the author(s)
+in case of any problems with the program, so don't try to package
+unmaintained software.
+</p></li><li class="listitem"><p>
+The program certainly should <span class="strong"><strong>not</strong></span> run setuid
+root, or even better, it shouldn't need to be setuid or setgid to anything.
+</p></li><li class="listitem"><p>
+The program should not be a daemon, or go in an
+<code class="filename">*/sbin</code> directory, or open a port as root.
+</p></li></ul></div></li></ul></div><p>
+Of course, the last one is just a safety measures, and intended to save you from
+enraging users if you do something wrong in some setuid daemon...  When you gain
+more experience in packaging, you'll be able to package such software.
+</p><p>
+As a new maintainer, you are encouraged to get some experience in packaging
+with easier packages and discouraged from creating complicated packages.  
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Simple packages</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>single binary package, arch = all (collection of data such as wallpaper graphics)</p></li><li class="listitem"><p>single binary package, arch = all (executables written in an interpreted language such as POSIX shell)</p></li></ul></div></li><li class="listitem"><p>Intermediate complexity packages</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>single binary package, arch = any (ELF binary executables compiled from languages such as C and C++)</p></li><li class="listitem"><p>multiple binary packages, arch = any + all (packages for ELF binary executables + documentation)</p></li><li class="listitem"><p>upstream source in a format other than <code class="filename">tar.gz</code> or <code class="filename">tar.bz2</code></p></li><li class="listitem"><p>upstream source containing undistributable contents</p></li></ul></div></li><li class="listitem"><p>High complexity packages</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>interpreter module package used by other packages</p></li><li class="listitem"><p>generic ELF library package used by other packages</p></li><li class="listitem"><p>multiple binary packages including an ELF library package</p></li><li class="listitem"><p>source package with multiple upstream sources</p></li><li class="listitem"><p>kernel module packages</p></li><li class="listitem"><p>kernel patch packages</p></li><li class="listitem"><p>any package with non-trivial maintainer scripts</p></li></ul></div></li></ul></div><p>
+Packaging high complexity packages is not too hard, but it requires a bit more
+knowledge. You should seek specific guidance for every complex feature. For
+example, some languages have their own sub-policy documents:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p><a class="ulink" href="http://www.debian.org/doc/packaging-manuals/perl-policy/" target="_top">Perl policy</a></p></li><li class="listitem"><p><a class="ulink" href="http://www.debian.org/doc/packaging-manuals/python-policy/" target="_top">Python policy</a></p></li><li class="listitem"><p><a class="ulink" href="http://www.debian.org/doc/packaging-manuals/java-policy/" target="_top">Java policy</a></p></li></ul></div><p>
+There is another old Latin saying: <span class="emphasis"><em>fabricando fit faber</em></span>
+(practice makes perfect).  It is <span class="emphasis"><em>highly</em></span> recommended to
+practice and experiment with all the steps of Debian packaging with simple packages
+while reading this tutorial.  A trivial upstream tarball
+<code class="filename">hello-sh-1.0.tar.gz</code> created as followings may offer
+a good starting point.<sup>[<a id="idp389376" href="first.en.html#ftn.idp389376" class="footnote">8</a>]</sup>
+</p><pre class="screen">
+$ mkdir -p hello-sh/hello-sh-1.0; cd hello-sh/hello-sh-1.0
+$ cat &gt; hello &lt;&lt;EOF
+#!/bin/sh
+# (C) 2011 Foo Bar, GPL2+
+echo "Hello!"
+EOF
+$ chmod 755 hello
+$ cd ..
+$ tar -cvzf hello-sh-1.0.tar.gz hello-sh-1.0
+</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="getit"></a>2.3. Get the program, and try it out</h2></div></div></div><p>
+So the first thing to do is to find and download the original source code.
+Presumably you already have the source file that you picked up at the
+author's homepage.  Sources for free Unix programs usually come in
+<span class="command"><strong>tar</strong></span>+<span class="command"><strong>gzip</strong></span> format with the extension
+<code class="filename">.tar.gz</code>,
+<span class="command"><strong>tar</strong></span>+<span class="command"><strong>bzip2</strong></span> format with the extension
+<code class="filename">.tar.bz2</code>, or
+<span class="command"><strong>tar</strong></span>+<span class="command"><strong>xz</strong></span> format with the extension
+<code class="filename">.tar.xz</code>.  These usually contain a directory called
+<code class="filename"><em class="replaceable"><code>package</code></em>-<em class="replaceable"><code>version</code></em></code>
+with all the sources inside.
+</p><p>
+If the latest version of the source is available through a VCS such as Git,
+Subversion, or CVS, you need to get it with <code class="literal">git
+clone</code>, <code class="literal">svn co</code>, or <code class="literal">cvs co</code> and
+repack it into <span class="command"><strong>tar</strong></span>+<span class="command"><strong>gzip</strong></span> format yourself
+by using the <code class="literal">--exclude-vcs</code> option.
+</p><p>
+If your program's source comes as some other sort of archive (for instance, the
+filename ends in <code class="filename">.Z</code> or
+<code class="filename">.zip</code><sup>[<a id="idp404944" href="first.en.html#ftn.idp404944" class="footnote">9</a>]</sup>), you should also unpack it with the
+appropriate tools and repack it.
+</p><p>
+If your program's source comes with some contents which do not comply with
+DFSG, you should also unpack it to remove such contents and repack it with a
+modified upstream version containing <code class="literal">dfsg</code>.
+</p><p>
+As an example, I'll use a program called <span class="command"><strong>gentoo</strong></span>, a GTK+
+file manager.
+<sup>[<a id="idp408112" href="first.en.html#ftn.idp408112" class="footnote">10</a>]</sup>
+</p><p>
+Create a subdirectory under your home directory named
+<code class="filename">debian</code> or <code class="filename">deb</code> or anything you find
+appropriate (e.g.  just <code class="filename">~/gentoo</code> would do fine in this
+case).  Place the downloaded archive in it, and extract it (with <code class="literal">tar
+xzf gentoo-0.9.12.tar.gz</code>).  Make sure there are no warning
+messages, even <span class="emphasis"><em>irrelevant</em></span> ones, because other
+people's unpacking tools may or may not ignore these anomalies, so they
+may have problems unpacking them.  Your shell command line may look
+something like this:
+</p><pre class="screen">
+$ mkdir ~/gentoo ; cd ~/gentoo
+$ wget http://<em class="replaceable"><code>www.example.org</code></em>/gentoo-0.9.12.tar.gz
+$ tar xvzf gentoo-0.9.12.tar.gz
+$ ls -F
+gentoo-0.9.12/
+gentoo-0.9.12.tar.gz
+</pre><p>
+Now you have another subdirectory, called <code class="filename">gentoo-0.9.12</code>.
+Change to that directory and <span class="emphasis"><em>thoroughly</em></span> read the provided
+documentation.  Usually there are files named <code class="filename">README*</code>,
+<code class="filename">INSTALL*</code>, <code class="filename">*.lsm</code> or
+<code class="filename">*.html</code>.  You must find instructions on how to
+compile and install the program (most probably they'll assume you want to
+install to the <code class="filename">/usr/local/bin</code> directory; you won't be doing
+that, but more on that later in <a class="xref" href="modify.en.html#destdir" title="3.3. Installation of files to their destination">Section 3.3, “Installation of files to their destination”</a>).
+</p><p>
+You should start packaging with a completely clean (pristine) source directory,
+or simply with freshly unpacked sources.
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="simplemake"></a>2.4. Simple build systems</h2></div></div></div><p>
+Simple programs usually come with a <code class="filename">Makefile</code> and can
+be compiled just by invoking <code class="literal">make</code>.<sup>[<a id="idp420672" href="first.en.html#ftn.idp420672" class="footnote">11</a>]</sup> Some of them support
+<code class="literal">make check</code>, which runs included self-tests.  Installation
+to the destination directories is usually done with <code class="literal">make
+install</code>.
+</p><p>
+Now try to compile and run your program, to make sure it works properly and
+doesn't break something else while it's installing or running.
+</p><p>
+Also, you can usually run <code class="literal">make clean</code> (or better
+<code class="literal">make distclean</code>) to clean up the build directory.  Sometimes
+there's even a <code class="literal">make uninstall</code> which can be used to remove
+all the installed files.
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="portable"></a>2.5. Popular portable build systems</h2></div></div></div><p>
+A lot of free software programs are written in the <a class="ulink" href="http://en.wikipedia.org/wiki/C_(programming_language)" target="_top">C</a> and
+<a class="ulink" href="http://en.wikipedia.org/wiki/C++" target="_top">C++</a> languages.  Many of these use Autotools or 
+CMake to make them portable across different platforms.  These build tools need 
+to be used to generate the <code class="filename">Makefile</code> and other
+required source files first.  Then, such programs are built using the usual
+<code class="literal">make; make install</code>.
+</p><p>
+<a class="ulink" href="http://en.wikipedia.org/wiki/GNU_build_system" target="_top">Autotools</a> is the GNU build
+system comprising <a class="ulink" href="http://en.wikipedia.org/wiki/Autoconf" target="_top">Autoconf</a>,
+<a class="ulink" href="http://en.wikipedia.org/wiki/Automake" target="_top">Automake</a>,
+<a class="ulink" href="http://en.wikipedia.org/wiki/GNU_Libtool" target="_top">Libtool</a>, and
+<a class="ulink" href="http://en.wikipedia.org/wiki/GNU_gettext" target="_top">gettext</a>.  You can recognize
+such sources by the <code class="filename">configure.ac</code>,
+<code class="filename">Makefile.am</code>, and <code class="filename">Makefile.in</code> files.
+<sup>[<a id="idp434976" href="first.en.html#ftn.idp434976" class="footnote">12</a>]</sup>
+</p><p>
+The first step of the Autotools workflow is usually that upstream runs
+<code class="literal">autoreconf -i -f</code> in the source directory and
+distributes the generated files along with the source.
+</p><pre class="screen">
+configure.ac-----+-&gt; autoreconf -+-&gt; configure
+Makefile.am -----+        |      +-&gt; Makefile.in
+src/Makefile.am -+        |      +-&gt; src/Makefile.in
+                          |      +-&gt; config.h.in
+                      automake
+                      aclocal
+                      aclocal.m4
+                      autoheader
+</pre><p>
+Editing <code class="filename">configure.ac</code> and <code class="filename">Makefile.am</code>
+files requires some knowledge of <span class="command"><strong>autoconf</strong></span> and
+<span class="command"><strong>automake</strong></span>.  See <code class="literal">info autoconf</code> and
+<code class="literal">info automake</code>.
+</p><p>
+The second step of the Autotools workflow is usually that the user obtains this
+distributed source and runs <code class="literal">./configure &amp;&amp; make</code> in
+the source directory to compile the program into an executable command
+<span class="command"><strong><em class="replaceable"><code>binary</code></em></strong></span>.
+</p><pre class="screen">
+Makefile.in -----+                +-&gt; Makefile -----+-&gt; make -&gt; <em class="replaceable"><code>binary</code></em>
+src/Makefile.in -+-&gt; ./configure -+-&gt; src/Makefile -+
+config.h.in -----+                +-&gt; config.h -----+
+                 |
+  config.status -+
+  config.guess --+
+</pre><p>
+You can change many things in the <code class="filename">Makefile</code>; for
+instance you can change the default location for file installation
+using the option <code class="literal">./configure --prefix=/usr</code>.
+</p><p>
+Although it is not required, updating the <code class="filename">configure</code> and
+other files with <code class="literal">autoreconf -i -f</code> may improve
+the compatibility of the source.
+<sup>[<a id="idp447472" href="first.en.html#ftn.idp447472" class="footnote">13</a>]</sup>
+</p><p>
+<a class="ulink" href="http://en.wikipedia.org/wiki/CMake" target="_top">CMake</a> is an alternative
+build system.  You can recognize such sources by the
+<code class="filename">CMakeLists.txt</code> file.
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="namever"></a>2.6. Package name and version</h2></div></div></div><p>
+If the upstream source comes as <code class="filename">gentoo-0.9.12.tar.gz</code>, you can
+take <code class="literal">gentoo</code> as the (source) <span class="strong"><strong>package name</strong></span>
+and <code class="literal">0.9.12</code> as the <span class="strong"><strong>upstream version</strong></span>.
+These are used in the <code class="filename">debian/changelog</code> file described later in
+<a class="xref" href="dreq.en.html#changelog" title="4.3. changelog">Section 4.3, “<code class="filename">changelog</code>”</a>, too.
+</p><p>
+Although this simple approach works most of the times, you may need to adjust
+<span class="strong"><strong>package name</strong></span> and 
+<span class="strong"><strong>upstream version</strong></span> by renaming the upstream
+source to follow Debian Policy and existing convention.
+</p><p>
+You must choose the <span class="strong"><strong>package name</strong></span> 
+to consist only of lower case letters (<code class="literal">a-z</code>), digits
+(<code class="literal">0-9</code>), plus (<code class="literal">+</code>) and minus
+(<code class="literal">-</code>) signs, and periods (<code class="literal">.</code>). It must be
+at least two characters long, must start with an alphanumeric character, and
+must not be the same as existing ones.
+It is a good idea to keep its length within 30 characters.
+<sup>[<a id="idp461504" href="first.en.html#ftn.idp461504" class="footnote">14</a>]</sup>
+</p><p>
+If upstream uses some generic term such as <code class="literal">test-suite</code> for
+its name, it is a good idea to rename it to identify its contents explicitly and avoid namespace pollution.
+<sup>[<a id="idp464192" href="first.en.html#ftn.idp464192" class="footnote">15</a>]</sup>
+</p><p>
+You should choose the <span class="strong"><strong>upstream version</strong></span> 
+to consist only of
+alphanumerics (<code class="literal">0-9A-Za-z</code>), plus (<code class="literal">+</code>),
+tildes (<code class="literal">~</code>), and periods (<code class="literal">.</code>). It must
+start with a digit (<code class="literal">0-9</code>).  <sup>[<a id="idp468864" href="first.en.html#ftn.idp468864" class="footnote">16</a>]</sup>
+It is good idea to keep its length within 8 characters if possible.
+<sup>[<a id="idp469536" href="first.en.html#ftn.idp469536" class="footnote">17</a>]</sup>
+</p><p>
+If upstream does not use a normal versioning scheme such as
+<code class="literal">2.30.32</code> but uses some kind of date such as
+<code class="literal">11Apr29</code>, a random codename string, or a VCS hash value as part
+of the version, make sure to remove them from the
+<span class="strong"><strong>upstream version</strong></span>.  Such information can be
+recorded in the <code class="filename">debian/changelog</code> file.  If you need to
+invent a version string, use the <code class="literal">YYYYMMDD</code> format such as
+<code class="literal">20110429</code> as upstream version.  This ensures that
+<span class="command"><strong>dpkg</strong></span> interprets later versions correctly as upgrades.
+If you need to ensure smooth transition to the normal version scheme such as
+<code class="literal">0.1</code> in future, use the <code class="literal">0~YYMMDD</code> format
+such as <code class="literal">0~110429</code> as upstream version, instead.
+</p><p>
+Version strings <sup>[<a id="idp477664" href="first.en.html#ftn.idp477664" class="footnote">18</a>]</sup>
+can be compared using <span class="citerefentry"><span class="refentrytitle">dpkg</span>(1)</span> as follows.
+</p><pre class="screen">
+$ dpkg --compare-versions <em class="replaceable"><code>ver1</code></em> <em class="replaceable"><code>op</code></em> <em class="replaceable"><code>ver2</code></em>
+</pre><p>
+The version comparison rule can be summarized as:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Strings are compared from the head to the tail.</p></li><li class="listitem"><p>Letters are larger than digits.</p></li><li class="listitem"><p>Numbers are compared as integers.</p></li><li class="listitem"><p>Letters are compared in ASCII code order.</p></li><li class="listitem"><p>There are special rules for period
+(<code class="literal">.</code>), plus (<code class="literal">+</code>), and tilde
+(<code class="literal">~</code>) characters, as follows.</p><p>
+<code class="literal">0.0</code> &lt; 
+<code class="literal">0.5</code> &lt; 
+<code class="literal">0.10</code> &lt; 
+<code class="literal">0.99</code> &lt; 
+<code class="literal">1</code> &lt;
+<code class="literal">1.0~rc1</code> &lt;
+<code class="literal">1.0</code> &lt; 
+<code class="literal">1.0+b1</code> &lt; 
+<code class="literal">1.0+nmu1</code> &lt;
+<code class="literal">1.1</code> &lt; 
+<code class="literal">2.0</code>
+</p></li></ul></div><p>
+One tricky case occurs when upstream releases
+<code class="filename">gentoo-0.9.12-ReleaseCandidate-99.tar.gz</code> as the
+pre-release of <code class="filename">gentoo-0.9.12.tar.gz</code>.  You need to make
+sure that the upgrade works properly by renaming the upstream source to
+<code class="filename">gentoo-0.9.12~rc99.tar.gz</code>.
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="dh-make"></a>2.7. Setting up <span class="command"><strong>dh_make</strong></span></h2></div></div></div><p>
+Set up the shell environment variables <code class="literal">$DEBEMAIL</code> and
+<code class="literal">$DEBFULLNAME</code> so that various Debian maintenance
+tools recognize your email address and name to use for packages. <sup>[<a id="idp501392" href="first.en.html#ftn.idp501392" class="footnote">19</a>]</sup>
+</p><pre class="screen">
+$ cat &gt;&gt;~/.bashrc &lt;&lt;EOF
+DEBEMAIL="your.email.address@example.org"
+DEBFULLNAME="Firstname Lastname"
+export DEBEMAIL DEBFULLNAME
+EOF
+$ . ~/.bashrc
+</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="non-native-dh-make"></a>2.8. Initial non-native Debian package</h2></div></div></div><p>
+Normal Debian packages are non-native Debian packages made from upstream
+programs.  If you wish to create a non-native Debian package of an upstream
+source <code class="filename">gentoo-0.9.12.tar.gz</code>, you can create an initial
+non-native Debian package for it by issuing the <span class="command"><strong>dh_make</strong></span>
+command as follows.
+</p><pre class="screen">
+$ cd ~/gentoo
+$ wget http://example.org/gentoo-0.9.12.tar.gz
+$ tar -xvzf gentoo-0.9.12.tar.gz
+$ cd gentoo-0.9.12
+$ dh_make -f ../gentoo-0.9.12.tar.gz
+</pre><p>
+Of course, replace the filename with the name of your original source archive.
+<sup>[<a id="idp506912" href="first.en.html#ftn.idp506912" class="footnote">20</a>]</sup> See
+<span class="citerefentry"><span class="refentrytitle">dh_make</span>(8)</span> for details.
+</p><p>
+You should see some output asking you what sort of package you want
+to create.  Gentoo is a single binary package - it creates only one binary package, i.e,
+one <code class="filename">.deb</code> file - so we will select the first option
+(with the <code class="literal">s</code> key), check the information on the screen, and
+confirm by pressing <code class="literal"><em class="replaceable"><code>ENTER</code></em></code>.
+<sup>[<a id="idp512848" href="first.en.html#ftn.idp512848" class="footnote">21</a>]</sup>
+</p><p>
+This execution of <span class="command"><strong>dh_make</strong></span> creates a copy of the upstream
+tarball as <code class="filename">gentoo_0.9.12.orig.tar.gz</code> in the
+parent directory to accommodate the creation of the non-native Debian source
+package with the name <code class="filename">debian.tar.gz</code> later.
+</p><pre class="screen">
+$ cd ~/gentoo ; ls -F
+gentoo-0.9.12/
+gentoo-0.9.12.tar.gz
+gentoo_0.9.12.orig.tar.gz
+</pre><p>
+Please note two key features of this filename
+<code class="filename">gentoo_0.9.12.orig.tar.gz</code>:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+Package name and version are separated by the character <code class="literal">_</code>
+(underscore).
+</p></li><li class="listitem"><p>
+The string <code class="filename">.orig</code> is inserted before the
+<code class="filename">.tar.gz</code>.
+</p></li></ul></div><p>
+You should also notice that many template files are created in the source under
+the <code class="filename">debian</code> directory.  These will be explained in
+<a class="xref" href="dreq.en.html" title="Chapter 4. Required files under the debian directory">Chapter 4, <i>Required files under the <code class="filename">debian</code> directory</i></a> and <a class="xref" href="dother.en.html" title="Chapter 5. Other files under the debian directory">Chapter 5, <i>Other files under the <code class="filename">debian</code> directory</i></a>.  You should also understand
+that packaging cannot be a fully automated process.  You will need to modify the upstream
+source for Debian (see <a class="xref" href="modify.en.html" title="Chapter 3. Modifying the source">Chapter 3, <i>Modifying the source</i></a>).  After this, you need to
+use the proper methods for building Debian packages (<a class="xref" href="build.en.html" title="Chapter 6. Building the package">Chapter 6, <i>Building the package</i></a>),
+testing them (<a class="xref" href="checkit.en.html" title="Chapter 7. Checking the package for errors">Chapter 7, <i>Checking the package for errors</i></a>), and uploading them (<a class="xref" href="upload.en.html" title="Chapter 8. Uploading the package">Chapter 8, <i>Uploading the package</i></a>).
+All the steps will be explained.
+</p><p>
+If you accidentally erased some template files while working on them, you can
+recover them by running <span class="command"><strong>dh_make</strong></span> with the
+<code class="literal">--addmissing</code> option again in a Debian package source tree.
+</p><p>
+Updating an existing package may get complicated since it may be using older
+techniques.  While learning the basics, please stick to creating a fresh
+package; further explanations are given in <a class="xref" href="update.en.html" title="Chapter 9. Updating the package">Chapter 9, <i>Updating the package</i></a>.
+</p><p>
+Please note that the source file does not need to contain any build system
+discussed in <a class="xref" href="first.en.html#simplemake" title="2.4. Simple build systems">Section 2.4, “Simple build systems”</a> and <a class="xref" href="first.en.html#portable" title="2.5. Popular portable build systems">Section 2.5, “Popular portable build systems”</a>.  It
+could be just a collection of graphical data etc.  Installation of files may be
+carried out using only <code class="systemitem">debhelper</code> configuration
+files such as <code class="filename">debian/install</code> (see
+<a class="xref" href="dother.en.html#install" title="5.11. install">Section 5.11, “<code class="filename">install</code>”</a>).
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="native-dh-make"></a>2.9. Initial native Debian package</h2></div></div></div><p>
+If a package contains source files you are only maintaining for Debian,
+possibly only for local use, it may be simpler to create it as a Debian
+native package. If you have source
+files in <code class="filename">~/mypackage-1.0</code>, you can create an initial native
+Debian package for it by issuing the <span class="command"><strong>dh_make</strong></span> command as
+follows.
+</p><pre class="screen">
+$ cd ~/mypackage-1.0
+$ dh_make --native
+</pre><p>
+Then the <code class="filename">debian</code> directory and its contents are created
+just like <a class="xref" href="first.en.html#non-native-dh-make" title="2.8. Initial non-native Debian package">Section 2.8, “Initial non-native Debian package”</a>.  This does not create a tarball
+since this is a native Debian package.  But that is the only difference.
+The rest of the packaging activities are practically the same.
+</p></div><div class="footnotes"><br /><hr width="100" align="left" /><div class="footnote"><p><sup>[<a id="ftn.idp290224" href="first.en.html#idp290224" class="para">4</a>] </sup>For the older style of non-native Debian source packages in <code class="literal">1.0</code> format,
+<code class="literal"><em class="replaceable"><code>package</code></em>_<em class="replaceable"><code>version</code></em>-<em class="replaceable"><code>revision</code></em>.diff.gz</code>
+is used instead. </p></div><div class="footnote"><p><sup>[<a id="ftn.idp307344" href="first.en.html#idp307344" class="para">5</a>] </sup> See
+<a class="ulink" href="http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Source" target="_top">5.6.1 "Source"</a>, 
+<a class="ulink" href="http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Package" target="_top">5.6.7 "Package"</a>, and
+<a class="ulink" href="http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version" target="_top">5.6.12 "Version"</a>.  
+The <span class="strong"><strong>package architecture</strong></span> follows the
+<a class="ulink" href="http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Architecture" target="_top">Debian Policy Manual, 5.6.8 "Architecture"</a> 
+and is automatically assigned by the package build process.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp329376" href="first.en.html#idp329376" class="para">6</a>] </sup>See
+<a class="ulink" href="http://www.debian.org/doc/manuals/developers-reference/pkgs.html#adopting" target="_top">Debian Developer's Reference 5.9.5.
+"Adopting a package"</a>.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp340240" href="first.en.html#idp340240" class="para">7</a>] </sup> Having
+said that, there will of course always be new programs that are worth
+packaging.  </p></div><div class="footnote"><p><sup>[<a id="ftn.idp389376" href="first.en.html#idp389376" class="para">8</a>] </sup>Do not worry about the missing
+<code class="filename">Makefile</code>.  You can install the <span class="command"><strong>hello</strong></span>
+command by simply using <span class="command"><strong>debhelper</strong></span> as in
+<a class="xref" href="dother.en.html#install" title="5.11. install">Section 5.11, “<code class="filename">install</code>”</a>, or by modifying the upstream source to add a new
+<code class="filename">Makefile</code> with the <code class="literal">install</code> target as in
+<a class="xref" href="modify.en.html" title="Chapter 3. Modifying the source">Chapter 3, <i>Modifying the source</i></a>.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp404944" href="first.en.html#idp404944" class="para">9</a>] </sup> You can identify the archive format
+using the <span class="command"><strong>file</strong></span> command when the file extension is not
+enough.  </p></div><div class="footnote"><p><sup>[<a id="ftn.idp408112" href="first.en.html#idp408112" class="para">10</a>] </sup> This program is already packaged. The
+<a class="ulink" href="http://packages.qa.debian.org/g/gentoo.html" target="_top">current version</a> uses Autotools as its
+build structure and is substantially different from the following examples,
+which were based on version 0.9.12.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp420672" href="first.en.html#idp420672" class="para">11</a>] </sup>
+Many modern programs come with a script <code class="filename">configure</code> which
+when executed creates a <code class="filename">Makefile</code> customized for
+your system.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp434976" href="first.en.html#idp434976" class="para">12</a>] </sup>Autotools is too big to deal in this small tutorial. This
+section is meant to provide keywords and references only.  Please make sure to read the 
+<a class="ulink" href="http://www.lrde.epita.fr/~adl/autotools.html" target="_top">Autotools Tutorial</a> and 
+the local copy of <code class="filename">/usr/share/doc/autotools-dev/README.Debian.gz</code>, 
+if you need to use it.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp447472" href="first.en.html#idp447472" class="para">13</a>] </sup>You can automate this by using 
+<code class="systemitem">dh-autoreconf</code> package.  
+See <a class="xref" href="dreq.en.html#customrules" title="4.4.3. Customization of rules file">Section 4.4.3, “Customization of <code class="filename">rules</code> file”</a>.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp461504" href="first.en.html#idp461504" class="para">14</a>] </sup>The default package name field length of <span class="command"><strong>aptitude</strong></span> is 30.  For more than 90% of packages, the package name is less than 24 characters.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp464192" href="first.en.html#idp464192" class="para">15</a>] </sup>If you follow the 
+<a class="ulink" href="http://www.debian.org/doc/developers-reference/pkgs.html#newpackage" target="_top">Debian Developer's Reference 5.1. "New packages"</a>, 
+the ITP process will usually catch this kind of issues.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp468864" href="first.en.html#idp468864" class="para">16</a>] </sup>This stricter
+rule should help you avoid confusing file names.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp469536" href="first.en.html#idp469536" class="para">17</a>] </sup>The default version field length of <span class="command"><strong>aptitude</strong></span> is 10.  The Debian revision with preceding hyphen usually consumes 2.  For more than 80% of packages, the upstream version is less than 8 characters and the Debian revision is less than 2 characters.  For more than 90% of packages, the upstream version is less than 10 characters and the Debian revision is less than 3 characters.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp477664" href="first.en.html#idp477664" class="para">18</a>] </sup>Version strings may be
+<span class="strong"><strong>upstream version</strong></span> 
+(<code class="literal"><em class="replaceable"><code>version</code></em></code>),
+<span class="strong"><strong>Debian revision</strong></span> 
+(<code class="literal"><em class="replaceable"><code>revision</code></em></code>), or
+<span class="strong"><strong>version</strong></span> 
+(<code class="literal"><em class="replaceable"><code>version</code></em>-<em class="replaceable"><code>revision</code></em></code>).
+See <a class="xref" href="update.en.html#newrevision" title="9.1. New Debian revision">Section 9.1, “New Debian revision”</a> for how the 
+<span class="strong"><strong>Debian revision</strong></span> is incremented.
+</p></div><div class="footnote"><p><sup>[<a id="ftn.idp501392" href="first.en.html#idp501392" class="para">19</a>] </sup> The
+following text assumes you are using Bash as your login shell.  If you use
+some other login shell such as Z shell, use their corresponding
+configuration files instead of <code class="filename">~/.bashrc</code>. </p></div><div class="footnote"><p><sup>[<a id="ftn.idp506912" href="first.en.html#idp506912" class="para">20</a>] </sup> If the upstream source provides the
+<code class="filename">debian</code> directory and its contents, run the
+<span class="command"><strong>dh_make</strong></span> command with the extra option
+<code class="literal">--addmissing</code>.  The new source <code class="literal">3.0 (quilt)</code> format is
+robust enough not to break even for these packages.  You may need to update the contents
+provided by the upstream for your Debian package.  </p></div><div class="footnote"><p><sup>[<a id="ftn.idp512848" href="first.en.html#idp512848" class="para">21</a>] </sup> There are several choices here: <code class="literal">s</code> for 
+Single binary package, <code class="literal">i</code> for arch-Independent package, <code class="literal">m</code> for
+Multiple binary packages, <code class="literal">l</code> for Library package, <code class="literal">k</code> for
+Kernel module package, <code class="literal">n</code> for kernel patch package, and <code class="literal">b</code>
+for <code class="systemitem">cdbs</code> package.  This document focuses on the
+use of the <span class="command"><strong>dh</strong></span> command (from the package
+<code class="systemitem">debhelper</code>) to create a single binary package,
+but also touches on how to use it for arch-independent or
+multiple binary packages.  The package
+<code class="systemitem">cdbs</code> offers an alternative packaging script
+infrastructure to the <span class="command"><strong>dh</strong></span> command and is outside the scope of
+this document.  </p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="start.en.html"><img src="http://www.debian.org/doc/manuals/maint-guide/images/prev.gif" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="modify.en.html"><img src="images/next.gif" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 1. Getting started The Right Way </td><td width="20%" align="center"><a accesskey="h" href="index.en.html"><img src="http://www.debian.org/doc/manuals/maint-guide/images/home.gif" alt="Home" /></a></td><td width="40%" align="right" valign="top"> Chapter 3. Modifying the source</td></tr></table></div></body></html>

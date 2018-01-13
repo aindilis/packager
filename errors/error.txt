@@ -1,0 +1,28 @@
+andrewdo@justin:~/Downloads$ packager plexil
+Select CodeBase
+<Chose:plexil-150-linux-i386>
+<Chose:/var/lib/myfrdcsa/codebases/external/plexil-150-linux-i386>
+0) Stash
+1) Extract
+2) ExtractMultiple
+3) Build
+4) Rebuild
+5) Test
+6) Edit
+7) DpkgInstall
+8) Upload
+9) AptGetInstall
+10) RemovePackage
+11) RemoveSandbox
+12) RemoveExternal
+1
+Checking InstallDir: </var/lib/myfrdcsa/sandbox/plexil-150-linux-i386-/var/lib/myfrdcsa/codebases/external/plexil-150-linux-i386>
+<<</var/lib/myfrdcsa/codebases/external/plexil-150-linux-i386>>>
+<Chose:plexil-150-linux-i386.tar.gz>
+plexil-150-linux-i386.tar.gz
+mkdir -p /var/lib/myfrdcsa/sandbox/plexil-150-linux-i386-/var/lib/myfrdcsa/codebases/external/plexil-150-linux-i386 && cd /var/lib/myfrdcsa/sandbox/plexil-150-linux-i386-/var/lib/myfrdcsa/codebases/external/plexil-150-linux-i386 && tar -xzf "/var/lib/myfrdcsa/codebases/external/plexil-150-linux-i386/plexil-150-linux-i386.tar.gz"
+Execute this command?: y
+mv "plexil" plexil-150-linux-i386-/var/lib/myfrdcsa/codebases/external/plexil-150-linux-i386
+Execute this command?: y
+mv: cannot move `plexil' to `plexil-150-linux-i386-/var/lib/myfrdcsa/codebases/external/plexil-150-linux-i386': No such file or directory
+Extracted

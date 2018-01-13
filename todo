@@ -1,0 +1,11 @@
+(create a graphical plan editor for computing plans that ought to be acted on.)
+
+(create a subset of parsed  items that represent actual plan goals, or
+similar  objects.   Do not  be  concerned  about  opencyc, simply  get
+dependencies working for PSE, as a test.)
+
+(write plans for how to deal correctly with radar and packager arguments
+	(could use ACE if it is available))
+
+(write database of systems monitoring various aspects of the systems, such as:
+	(desired, aquired, packaged, installed, etc.))

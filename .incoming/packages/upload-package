@@ -1,0 +1,4 @@
+#!/bin/sh
+
+dput -f -c dput.cf -u local $0
+mini-dinstall --config=mini-dinstall.conf --batch

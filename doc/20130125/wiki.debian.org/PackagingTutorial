@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<link rel="shortcut icon" href="http://wiki.debian.org/htdocs/favicon.ico">
+<script type="text/javascript" src="http://wiki.debian.org/htdocs/bugstatus.js"></script>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="robots" content="index,nofollow">
+
+<title>PackagingTutorial - Debian Wiki</title>
+<script type="text/javascript" src="http://wiki.debian.org/htdocs/common/js/common.js"></script>
+
+<script type="text/javascript">
+<!--
+var search_hint = "Search";
+//-->
+</script>
+
+
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="http://wiki.debian.org/htdocs/debwiki/css/common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="http://wiki.debian.org/htdocs/debwiki/css/screen.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="print" href="http://wiki.debian.org/htdocs/debwiki/css/print.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="projection" href="http://wiki.debian.org/htdocs/debwiki/css/projection.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="http://wiki.debian.org/htdocs/debian-wiki-1.0.css">
+
+<!-- css only for MS IE6/IE7 browsers -->
+<!--[if lt IE 8]>
+   <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/htdocs/debwiki/css/msie.css">
+<![endif]-->
+
+
+
+
+
+<link rel="Start" href="http://wiki.debian.org/FrontPage">
+<link rel="Alternate" title="Wiki Markup" href="http://wiki.debian.org/PackagingTutorial?action=raw">
+<link rel="Alternate" media="print" title="Print View" href="http://wiki.debian.org/PackagingTutorial?action=print">
+<link rel="Search" href="http://wiki.debian.org/FindPage">
+<link rel="Index" href="http://wiki.debian.org/TitleIndex">
+<link rel="Glossary" href="http://wiki.debian.org/WordIndex">
+<link rel="Help" href="http://wiki.debian.org/HelpOnFormatting">
+</head>
+
+<body  lang="en" dir="ltr">
+<div id="logo"><a href="http://www.debian.org" title="Debian Homepage"><img src="http://wiki.debian.org/htdocs/debwiki/img/openlogo-50.png" alt="Debian" width="50" height="61"></a></div>
+<div id="header">
+<div id="wikisection">
+<p class="section"><a href="http://wiki.debian.org/" title="Debian Wiki Homepage">Wiki</a></p>
+<div id="username"><a href="http://wiki.debian.org/PackagingTutorial?action=login" id="login" rel="nofollow">Login</a></div>
+</div>
+<div id="navbar">
+
+<ul id="navibar">
+<li class="wikilink"><a href="http://wiki.debian.org/FrontPage">FrontPage</a></li><li class="wikilink"><a href="http://wiki.debian.org/RecentChanges">RecentChanges</a></li><li class="wikilink"><a href="http://wiki.debian.org/FindPage">FindPage</a></li><li class="wikilink"><a href="http://wiki.debian.org/HelpContents">HelpContents</a></li><li class="current"><a href="PackagingTutorial">PackagingTutorial</a></li>
+</ul>
+
+</div>
+
+<form id="searchform" method="get" action="PackagingTutorial">
+<div>
+<input type="hidden" name="action" value="fullsearch">
+<input type="hidden" name="context" value="180">
+<label for="searchinput">Search:</label>
+<input id="searchinput" type="text" name="value" value="" size="20"
+    onfocus="searchFocus(this)" onblur="searchBlur(this)"
+    onkeyup="searchChange(this)" onchange="searchChange(this)" alt="Search">
+<input id="titlesearch" name="titlesearch" type="submit"
+    value="Titles" alt="Search Titles">
+<input id="fullsearch" name="fullsearch" type="submit"
+    value="Text" alt="Search Full Text">
+</div>
+</form>
+<script type="text/javascript">
+<!--// Initialize search form
+var f = document.getElementById('searchform');
+f.getElementsByTagName('label')[0].style.display = 'none';
+var e = document.getElementById('searchinput');
+searchChange(e);
+searchBlur(e);
+//-->
+</script>
+
+<div id="logo"><a href="http://www.debian.org" title="Debian Homepage"><img src="http://wiki.debian.org/htdocs/debwiki/img/openlogo-50.png" alt="Debian" width="50" height="61"></a></div>
+
+<div id="breadcrumbs"><a href="http://wiki.debian.org/" title="Debian Wiki Homepage">Wiki</a><span class="sep">/</span>
+
+</div>
+
+<ul class="editbar"><li><span class="disabled">Immutable Page</span></li><li class="toggleCommentsButton" style="display:none;"><a href="PackagingTutorial#" class="nbcomment" onClick="toggleComments();return false;">Comments</a></li><li><a class="nbinfo" href="http://wiki.debian.org/PackagingTutorial?action=info" rel="nofollow">Info</a></li><li><a class="nbattachments" href="http://wiki.debian.org/PackagingTutorial?action=AttachFile" rel="nofollow">Attachments</a></li><li>
+<form class="actionsmenu" method="GET" action="PackagingTutorial">
+<div>
+    <label>More Actions:</label>
+    <select name="action"
+        onchange="if ((this.selectedIndex != 0) &&
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="RenamePage" disabled class="disabled">Rename Page</option>
+<option value="DeletePage" disabled class="disabled">Delete Page</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="show" disabled class="disabled">Subscribe User</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="show" disabled class="disabled">Remove Spam</option>
+<option value="show" disabled class="disabled">Revert to this revision</option>
+<option value="PackagePages">Package Pages</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="Load">Load</option>
+<option value="Save">Save</option>
+<option value="SlideShow">SlideShow</option>
+    </select>
+    <input type="submit" value="Do">
+    
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+<h1 id="locationline">
+
+
+<ul id="pagelocation">
+<li><a class="backlink" href="http://wiki.debian.org/PackagingTutorial?action=fullsearch&amp;context=180&amp;value=linkto%3A%22PackagingTutorial%22" rel="nofollow" title="Click to do a full-text search for this title">PackagingTutorial</a></li>
+</ul>
+
+</h1>
+</div>
+
+<div id="page" lang="en" dir="ltr">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><div><table style="width: 100%;"><tbody><tr>  <td style="border: 0px hidden"><p class="line891"><small><a href="http://wiki.debian.org/DebianWiki/EditorGuide#translation">Translation(s)</a>: English - <a href="http://wiki.debian.org/es/PackagingTutorial">Español</a> - <a href="http://wiki.debian.org/it/PackagingTutorial">Italiano</a></small></td>
+  <td style="text-align: right; border: 0px hidden"><p class="line862"> <img alt="(!)" height="16" src="http://wiki.debian.org/htdocs/debwiki/img/idea.png" title="(!)" width="16" /> <a class="nonexistent" href="http://wiki.debian.org/PackagingTutorial/Discussion">Discussion</a></td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-4"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-5"></span><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="PackagingTutorial#Introduction">Introduction</a></li><li>
+<a href="PackagingTutorial#Requirements">Requirements</a><ol><li>
+<a href="PackagingTutorial#about_packaging">about packaging</a></li></ol></li><li>
+<a href="PackagingTutorial#The_packaging_workflow">The packaging workflow</a><ol><li>
+<a href="PackagingTutorial#Getting_the_software">Getting the software</a></li><li>
+<a href="PackagingTutorial#Debianization_with_dh">Debianization with dh</a></li><li>
+<a href="PackagingTutorial#Preparing_the_package">Preparing the package</a><ol><li>
+<a href="PackagingTutorial#README_and_INSTALL">README and INSTALL</a></li><li>
+<a href="PackagingTutorial#A.ex">.ex</a></li><li>
+<a href="PackagingTutorial#debian.2Fchangelog">debian/changelog</a></li><li>
+<a href="PackagingTutorial#debian.2Fcontrol">debian/control</a></li><li>
+<a href="PackagingTutorial#debian.2Fcopyright">debian/copyright</a></li><li>
+<a href="PackagingTutorial#debian.2Fdocs">debian/docs</a></li><li>
+<a href="PackagingTutorial#debian.2Fcompat">debian/compat</a></li><li>
+<a href="PackagingTutorial#debian.2Fmanpages">debian/manpages</a></li><li>
+<a href="PackagingTutorial#debian.2Frules">debian/rules</a></li></ol></li><li>
+<a href="PackagingTutorial#Building_the_packages">Building the packages</a></li><li>
+<a href="PackagingTutorial#Installing_and_Running">Installing and Running</a></li><li>
+<a href="PackagingTutorial#Sharing_your_package">Sharing your package</a></li></ol></li><li>
+<a href="PackagingTutorial#Questions_.26_Answers">Questions &amp; Answers</a><ol><li>
+<a href="PackagingTutorial#What_does_.27ITP.27_mean_and_what_is_it_for.3F">What does 'ITP' mean and what is it for?</a></li><li>
+<a href="PackagingTutorial#What_are_the_autotools.3F__What.27s_the_.60..2Fconfigure.60_script.3F">What are the autotools?  What's the `./configure` script?</a></li><li>
+<a href="PackagingTutorial#How_do_I_package_non-compiling_packages.3F_.28docs.2C_webpages.2C_shellscripts.29">How do I package non-compiling packages? (docs, webpages, shellscripts)</a></li></ol></li><li>
+<a href="PackagingTutorial#See_also">See also</a></li></ol></div> <span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span><p class="line867">
+<h1 id="Introduction">Introduction</h1>
+<span class="anchor" id="line-8"></span><p class="line862">This tutorial is based on the <a href="http://wiki.debian.org/DebianWomen">Debian Women</a> IRC <a class="nonexistent" href="http://wiki.debian.org/DebianWomen/TrainingSessions">live tutorial</a> given by Gürkan Sengün.   <span class="anchor" id="line-9"></span><span class="anchor" id="line-10"></span><p class="line874">It has been slightly modified to fit the web style, and keep the names of the participants anonymous. <span class="anchor" id="line-11"></span><span class="anchor" id="line-12"></span><p class="line867">
+<h1 id="Requirements">Requirements</h1>
+<span class="anchor" id="line-13"></span><p class="line874">This course is intended for people who have never made a Debian package, but compiled some software from source themselves. We will create a little Debian package.  <span class="anchor" id="line-14"></span><span class="anchor" id="line-15"></span><p class="line874">For this we'll need some Debian tools, please do: <span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span><p class="line867"><span class="anchor" id="line-18"></span><span class="anchor" id="line-19"></span><pre><span class="anchor" id="line-1"></span>   apt-get install build-essential devscripts dh-make</pre><span class="anchor" id="line-20"></span><span class="anchor" id="line-21"></span><p class="line867">
+<h2 id="about_packaging">about packaging</h2>
+<span class="anchor" id="line-22"></span><p class="line862">You can package anything that is Free Software (that complies to the <a class="http" href="http://www.debian.org/social_contract">DFSG</a> for Debian (main). <span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span><p class="line862">Before you package something for Debian, it is good idea to check if nobody else did it before, a quick search on google, and then a search to find if <a class="http" href="http://www.debian.org/devel/wnpp/being_packaged">there's an ITP</a>.  Once you are sure that the software is not packaged, then you should file an <a href="http://wiki.debian.org/Glossary#ITP">ITP</a> yourself. <span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><p class="line862">Anybody can <a href="http://wiki.debian.org/HelpDebian">work on Debian</a>. People that make packages for Debian of software, can put it online (on a webserver). If that person then finds a <a href="http://wiki.debian.org/Glossary#Sponsor">sponsor</a> - someone (a <a href="http://wiki.debian.org/Glossary#debian-developer">Debian Developer</a>, short DD) who checks and uploads that package to Debian - the person becomes a <a href="http://wiki.debian.org/DebianMaintainer">Debian Maintainer</a> (DM) and appears at: <a class="http" href="http://www.debian.org/devel/people">http://www.debian.org/devel/people</a> <span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><p class="line862">When a new package is uploaded to Debian, it first appears in the "Debian new queue" (you can find that using google).  Later it appears on <a class="http" href="http://buildd.debian.org">http://buildd.debian.org</a> <span class="anchor" id="line-29"></span><span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><p class="line867">
+<h1 id="The_packaging_workflow">The packaging workflow</h1>
+<span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><p class="line867">
+<h2 id="Getting_the_software">Getting the software</h2>
+<span class="anchor" id="line-34"></span><span class="anchor" id="line-35"></span><p class="line862">This tutorial will be given on the package <strong>wmplopfork</strong> (a little dockapp, that'll show cpu usage graphically). <span class="anchor" id="line-36"></span><span class="anchor" id="line-37"></span><p class="line874">The steps to be taken and the general advice given, apply to any other program.   <span class="anchor" id="line-38"></span><span class="anchor" id="line-39"></span><p class="line862">You can download the software used in this tutorial from: <a class="http" href="http://hules.free.fr/wmforkplop/">http://hules.free.fr/wmforkplop/</a> <span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><p class="line874">A good idea when you are making packages is to have a directory called "debian" in your $HOME (or maybe "sources/debian" or "src/debian", you get the idea), and in that directory download the source code of the upstream programs. <span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><p class="line862">So, once you have downloaded the source code, you should unpack it (in this case with <tt class="backtick">tar&nbsp;-xzvf&nbsp;wmforkplop-0.9.1.tar.gz&nbsp;</tt>).   <span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><p class="line862">As you can see, wmforkplop unpacks nicely into wmforkplop-0.9.1, but not every software is available so nicely, sometimes they screw up and unpack in the same directory.  You can have a look at the tar file by doing <tt class="backtick">tar&nbsp;-tvf&nbsp;tarfile.tar.gz</tt>, or using <strong>mc</strong>. <span class="anchor" id="line-46"></span><span class="anchor" id="line-47"></span><p class="line867">
+<h2 id="Debianization_with_dh">Debianization with dh</h2>
+<span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span><p class="line874">In your login script (.bashrc, .zshenv, etc) define the environment variables:  <span class="anchor" id="line-50"></span><span class="anchor" id="line-51"></span><span class="anchor" id="line-52"></span><pre><span class="anchor" id="line-1-1"></span>   export DEBEMAIL=your@email.address` and `export DEBFULLNAME="Your name"</pre><span class="anchor" id="line-53"></span><span class="anchor" id="line-54"></span><p class="line862">Be sure you have those variables exported before going on, they'll be used by <strong>dh_make</strong>. <span class="anchor" id="line-55"></span><span class="anchor" id="line-56"></span><p class="line874">Now it's the time to change into the new directory and execute: <span class="anchor" id="line-57"></span><span class="anchor" id="line-58"></span><span class="anchor" id="line-59"></span><pre><span class="anchor" id="line-1-2"></span>dh_make</pre><span class="anchor" id="line-60"></span><p class="line874">This program will ask some questions and help us in creating the new package. <span class="anchor" id="line-61"></span><span class="anchor" id="line-62"></span><p class="line867"><span class="anchor" id="line-63"></span><span class="anchor" id="line-64"></span><pre><span class="anchor" id="line-1-3"></span> Type of package: single binary, multiple binary, library, or kernel module? [s/m/l/k]</pre><span class="anchor" id="line-65"></span><span class="anchor" id="line-66"></span><p class="line874">It's asking us what type of package we want to create. Select "s" for single binary.  It's the usual package when you are starting.  It's better to start simple, and then do more complicated packages when you are more experienced. <span class="anchor" id="line-67"></span><span class="anchor" id="line-68"></span><p class="line862">It'll show us some more information, and wait for &lt;enter&gt; to confirm, confirm it. <span class="anchor" id="line-69"></span><span class="anchor" id="line-70"></span><p class="line867">
+<h2 id="Preparing_the_package">Preparing the package</h2>
+<span class="anchor" id="line-71"></span><span class="anchor" id="line-72"></span><p class="line867"><strong>dh_make</strong> does a very nice job of helping us start with the package, but there's still a lot of work to do, specially inside the <tt class="backtick">debian/</tt> directory. <span class="anchor" id="line-73"></span><span class="anchor" id="line-74"></span><p class="line867">
+<h3 id="README_and_INSTALL">README and INSTALL</h3>
+<span class="anchor" id="line-75"></span><p class="line862">A good practice is to go and read first the <strong>README</strong> and <strong>INSTALL</strong> files provided with the upstream package.   <span class="anchor" id="line-76"></span><span class="anchor" id="line-77"></span><p class="line862">This will allow us to know how the program is to be installed, and know if it has any unexpected dependencies.  Also, if the <tt class="backtick">INSTALL</tt> file is not the vanilla <a href="http://wiki.debian.org/AutoTools">AutoTools</a>, we might need to read it in detail to find out what we should to install it. <span class="anchor" id="line-78"></span><span class="anchor" id="line-79"></span><p class="line862">In the case of wmforkplop, the <tt class="backtick">README</tt> tells us what other software we need to be able to build it: imlib2 and libgtop2; there is also a note that the source package has a font: Vera.ttf, since this is a font that is provided by another package (you  can check that using <a class="http" href="http://packages.debian.org">http://packages.debian.org</a>) we will depend on that package. <span class="anchor" id="line-80"></span><span class="anchor" id="line-81"></span><p class="line862">The <tt class="backtick">INSTALL</tt> tells us that wmforkplop uses autotools, and therefore no Makefile needs to be touched.  In the case of a piece of software that does not use the autotools, you might need to modify the Makefile in order to make it suitable for Debian.  You need it to install into the debian/ directory by using $(DESTDIR). <span class="anchor" id="line-82"></span><span class="anchor" id="line-83"></span><p class="line867">
+<h3 id="A.ex">.ex</h3>
+<span class="anchor" id="line-84"></span><p class="line862">Change into the <tt class="backtick">debian/</tt> directory and have a look at the many files that dh_make created, we'll be deleting a lot of them soon.  Many of them are <tt class="backtick">.ex</tt> files (from <em>example</em>), no .ex files should be left when you are finished packaging. <span class="anchor" id="line-85"></span><span class="anchor" id="line-86"></span><p class="line874">We can remove  <span class="anchor" id="line-87"></span><ul><li><p class="line891"><strong>init.d.ex</strong> : our software is not a daemon, <span class="anchor" id="line-88"></span></li><li><p class="line891"><strong>emacsen*</strong> : it has nothing todo with emacs. <span class="anchor" id="line-89"></span></li><li><p class="line891"><strong>conffile.ex</strong> : there are no conffiles. <span class="anchor" id="line-90"></span></li><li><p class="line891"><strong>post*.ex</strong>, <strong>pre*.ex</strong>, <strong>cron.d.ex</strong>, and <strong>manpage.*ml.ex</strong> : we don't need those. <span class="anchor" id="line-91"></span></li><li><p class="line891"><strong>README.Debian</strong> : we don't have notes we want to tell our users (yet).  <span class="anchor" id="line-92"></span><span class="anchor" id="line-93"></span></li></ul><p class="line874">After all this deleting, you should be left with 10 files. <span class="anchor" id="line-94"></span><span class="anchor" id="line-95"></span><p class="line867"><strong>debian/manpage.1.ex</strong>: This is an example of a manpage.   <span class="anchor" id="line-96"></span><ul><li style="list-style-type:none"><p class="line862">Our package does not include the needed manpage for the command, so we need to edit it.<br>
+ <span class="anchor" id="line-97"></span>The binary, when compiled, is called wmforkplop, therefore we want to rename <tt class="backtick">manpage.1.ex</tt> to wmforkplop.1.<br>
+ <span class="anchor" id="line-98"></span>If you are asking yourself "why is it .1?", do <tt class="backtick">man&nbsp;man</tt>.<br>
+ <span class="anchor" id="line-99"></span>We will not go into the details of editing the manual page here, just change the SECTION to 1, and do as much editing as you feel like doing. <span class="anchor" id="line-100"></span><span class="anchor" id="line-101"></span></li></ul><p class="line867"><strong>debian/menu.ex</strong>: This is an example of a menu file for the <strong>menu</strong> package.  <span class="anchor" id="line-102"></span><ul><li style="list-style-type:none">Our package is a graphical tool, and we need a menu file.   <span class="anchor" id="line-103"></span><p class="line862">So we rename <tt class="backtick">menu.ex</tt> to <tt class="backtick">menu</tt>.  It's possible to add icons to your applications.   <span class="anchor" id="line-104"></span><span class="anchor" id="line-105"></span></li></ul><p class="line867"><strong>debian/watch.ex</strong>: This is an example watch file. <span class="anchor" id="line-106"></span><ul><li style="list-style-type:none"><p class="line862">It can be removed safely, although it's quite useful. You can use <strong>uscan</strong> to check if there's a new version upstream. <span class="anchor" id="line-107"></span><span class="anchor" id="line-108"></span></li></ul><p class="line874">We'll go through the remaining files in order. <span class="anchor" id="line-109"></span><span class="anchor" id="line-110"></span><p class="line867">
+<h3 id="debian.2Fchangelog">debian/changelog</h3>
+<span class="anchor" id="line-111"></span><p class="line874">In this file you see the package, the version-debian version archive and urgency,something like <span class="anchor" id="line-112"></span><span class="anchor" id="line-113"></span><span class="anchor" id="line-114"></span><pre><span class="anchor" id="line-1-4"></span>wmforkplop (0.9.1-1) unstable; urgency=low</pre><p class="line874"> <span class="anchor" id="line-115"></span>Where <br>
+ <span class="anchor" id="line-116"></span><ul><li><p class="line891"><tt class="backtick">0.9.1</tt> is the version of the program, <span class="anchor" id="line-117"></span></li><li><p class="line891"><tt class="backtick">-1</tt> is the debian revision,  <span class="anchor" id="line-118"></span></li><li><p class="line891"><tt class="backtick">unstable</tt> is the archive we would be uploading to,  <span class="anchor" id="line-119"></span></li><li><p class="line891"><tt class="backtick">urgency=low</tt> states how much time the package will spend in unstable before it's intended to migrate to testing,<br>
+ <span class="anchor" id="line-120"></span>you will usually want the "low" value (low means 10 days), although "medium" and "high" are also available. <span class="anchor" id="line-121"></span><span class="anchor" id="line-122"></span></li></ul><p class="line862">If we had filed an ITP, we'd have gotten a bugs.debian.org ITP bug number, something like #123456.  We can close the bug with the upload of that package, if we put into the changelog:<br>
+ <span class="anchor" id="line-123"></span><ul><li style="list-style-type:none"><span class="anchor" id="line-124"></span><span class="anchor" id="line-125"></span><pre><span class="anchor" id="line-1-5"></span> * Initial Release. (Closes: #123456) </pre><span class="anchor" id="line-126"></span><span class="anchor" id="line-127"></span></li></ul><p class="line862">The <tt class="backtick">debian/changelog</tt> file may seem innocent, but it's one of the most important ones.<br>
+ <span class="anchor" id="line-128"></span><ul><li style="list-style-type:none"><p class="line862">It's parsed by many bots (the bugs bot, the buildd bot, etc);<br>
+ <span class="anchor" id="line-129"></span>it's the only file where you state the version of the package; it's the information that will be stored with each release. <span class="anchor" id="line-130"></span><span class="anchor" id="line-131"></span></li></ul><p class="line867">
+<h3 id="debian.2Fcontrol">debian/control</h3>
+<span class="anchor" id="line-132"></span><p class="line874">This file controls <span class="anchor" id="line-133"></span><ul><li>the source package name,  <span class="anchor" id="line-134"></span></li><li>the binary package name, <span class="anchor" id="line-135"></span></li><li>into what section the package goes, <span class="anchor" id="line-136"></span></li><li>who the maintainer is (we can also define co-maintainers here), <span class="anchor" id="line-137"></span></li><li>if the package replaces another,  <span class="anchor" id="line-138"></span></li><li>suggest and/or recommend other things,  <span class="anchor" id="line-139"></span></li><li>define dependencies (source as well as binary). <span class="anchor" id="line-140"></span><span class="anchor" id="line-141"></span></li></ul><p class="line862">The top part is the Source package information documented in: <a class="http" href="http://www.nl.debian.org/doc/debian-policy/ch-controlfields.html">http://www.nl.debian.org/doc/debian-policy/ch-controlfields.html</a> <span class="anchor" id="line-142"></span><span class="anchor" id="line-143"></span><ul><li style="list-style-type:none"><p class="line891"><strong>Source</strong>: the suggested source name is usually alright,  <span class="anchor" id="line-144"></span><span class="anchor" id="line-145"></span><p class="line891"><strong>Section: unknown</strong> we want to change.  , we will pick <strong>x11</strong> for wmforkplop. <span class="anchor" id="line-146"></span><span class="anchor" id="line-147"></span><p class="line891"><strong>Priority: optional</strong> is allright. <span class="anchor" id="line-148"></span><ul><li style="list-style-type:none"><p class="line862">You can look at other packages, using <tt class="backtick">apt-cache&nbsp;show</tt> to find out what priorities they have.  For example, <tt class="backtick">apt-cache&nbsp;show&nbsp;bash</tt>. <span class="anchor" id="line-149"></span><span class="anchor" id="line-150"></span></li></ul><p class="line891"><strong>Maintainer:</strong> after this field you could make a new line that says: <span class="anchor" id="line-151"></span><span class="anchor" id="line-152"></span><p class="line891"><strong>Uploaders:  Some friend &lt;<a class="mailto" href="mailto:some@mail.ru">some@mail.ru</a>&gt;</strong>, this would state who the co-maintainers are.<br>
+   <span class="anchor" id="line-153"></span><ul><li style="list-style-type:none"><p class="line862">It's important to notice that the <strong>Uploaders</strong> field is not shown while doing <tt class="backtick">apt-cache&nbsp;show&nbsp;somepackage</tt>, but it will appear if you do <tt class="backtick">apt-cache&nbsp;showsrc&nbsp;somepackage</tt>. <span class="anchor" id="line-154"></span><span class="anchor" id="line-155"></span></li></ul><p class="line891"><strong>Build-Depends</strong> is one of the most important fields. This lists the packages that are needed in order to be able to build this package.<br>
+ <span class="anchor" id="line-156"></span><ul><li style="list-style-type:none"><p class="line862">For wmforkplop, we need to do <tt class="backtick">apt-cache&nbsp;search&nbsp;libgtop&nbsp;dev</tt>, and we'll find: libgtop2-dev, that's what we want to add to the Build-Depends line. <br>
+ <span class="anchor" id="line-157"></span>Also do <tt class="backtick">apt-cache&nbsp;search&nbsp;imlib&nbsp;dev</tt> and then add libimlib2-dev to the Build-Depends line. It should look like:<br>
+ <span class="anchor" id="line-158"></span><span class="anchor" id="line-159"></span><span class="anchor" id="line-160"></span><pre><span class="anchor" id="line-1-6"></span>   Build-Depends: debhelper (&gt;= 4.0.0), libgtop2-dev, libimlib2-dev</pre><span class="anchor" id="line-161"></span><p class="line862">You might wonder, what the (&gt;= 4.0.0) is for, that's called a versioned build dependency. Sometimes a software needs a new enough library to work properly (or at all), that's what that is good for. <span class="anchor" id="line-162"></span><span class="anchor" id="line-163"></span></li></ul><p class="line891"><strong>Standards-Version</strong>: it should say 3.x.x, with the latest policy version: <tt class="backtick">dpkg&nbsp;-l&nbsp;debian-policy</tt> (if you have it installed, if not, you should). <span class="anchor" id="line-164"></span><span class="anchor" id="line-165"></span></li></ul><p class="line874">Now comes the  binary package information: <span class="anchor" id="line-166"></span><span class="anchor" id="line-167"></span><ul><li style="list-style-type:none"><p class="line891"><strong>Package: wmforkplop</strong>. The binary package name should be ok. <span class="anchor" id="line-168"></span><span class="anchor" id="line-169"></span><p class="line891"><strong>Architecture: any</strong> says the package shall be compiled on <em>any</em> architecture (i.e it will be built on i386, sparc, powerpc, alpha, etc).<br>
+ <span class="anchor" id="line-170"></span><ul><li style="list-style-type:none"><p class="line862">Sometimes we have data (graphics, sound) or shellscripts that don't need be compiled, we would then change it to <strong>all</strong>, since once it's built it's useful for <em>all</em> the architectures. <span class="anchor" id="line-171"></span><span class="anchor" id="line-172"></span></li></ul><p class="line891"><strong>Depends</strong>: This binary field is meant to state which packages must be around when we run the software.<br>
+ <span class="anchor" id="line-173"></span><ul><li style="list-style-type:none"><p class="line862">We should add the font package here, the one that has the Vera.ttf file, we can find it by doing <tt class="backtick">dpkg&nbsp;-S&nbsp;Vera.ttf</tt>: <strong>ttf-bitstream-vera</strong>. <span class="anchor" id="line-174"></span>So, our   line should be: <span class="anchor" id="line-175"></span><span class="anchor" id="line-176"></span><span class="anchor" id="line-177"></span><pre><span class="anchor" id="line-1-7"></span>    Depends: ${shlibs:Depends}, ${misc:Depends}, ttf-bitstream-vera</pre><span class="anchor" id="line-178"></span><p class="line862">The <tt class="backtick">${...}</tt> are substitutions, they are replaced by other values which are automatically calculated by other tools at build time, <br>
+ <span class="anchor" id="line-179"></span><tt class="backtick">shlibs:Depends</tt> are automatically calculated library dependencies when you run <tt class="backtick">dh_shlibdeps</tt> in the rules file,<br>
+ <span class="anchor" id="line-180"></span><tt class="backtick">misc:Depends</tt> is calculated by debhelper. <span class="anchor" id="line-181"></span><span class="anchor" id="line-182"></span></li></ul><p class="line891"><strong>Description:</strong> The first line is the short description, from the next line on, it's the long description.<br>
+ <span class="anchor" id="line-183"></span><ul><li style="list-style-type:none"><p class="line862">The short description should give a basic idea of what the package is, following the sintax: [package] is a [short description].<br>
+ <span class="anchor" id="line-184"></span>The long description has to start a new sentence (i.e. it does NOT continue the short desc), <br>
+ <span class="anchor" id="line-185"></span>you need to leave one space at the beginning of each line, and if you want to leave an empty line, you have to put a space followed by a dot there.<br>
+ <span class="anchor" id="line-186"></span>For wmforkplop, a good description would be: <br>
+ <span class="anchor" id="line-187"></span><span class="anchor" id="line-188"></span><span class="anchor" id="line-189"></span><span class="anchor" id="line-190"></span><pre><span class="anchor" id="line-1-8"></span>dockapp displaying processes and forking activity
+<span class="anchor" id="line-2"></span>  Each time a new process is created, and each time another one dies, a spot light appears on the applet and evolves. wmforkplop also displays the top cpu consuming processes, just like wmtop. It also has a process browser (click in the applet to bring it), which gives more informations about each process, and ability to kill a specific process, or "killall" all process who have the same name.</pre><span class="anchor" id="line-191"></span><span class="anchor" id="line-192"></span></li></ul></li></ul><p class="line867">
+<h3 id="debian.2Fcopyright">debian/copyright</h3>
+<span class="anchor" id="line-193"></span><p class="line874">In this file you should state  <span class="anchor" id="line-194"></span><ul><li>the upstream author, <span class="anchor" id="line-195"></span></li><li>the place where you downloaded the software, <span class="anchor" id="line-196"></span></li><li>the licence of the program.   <span class="anchor" id="line-197"></span><span class="anchor" id="line-198"></span></li></ul><p class="line874">If the software is GPL you can put just a brief notice, that states that  <span class="anchor" id="line-199"></span><ul><li style="list-style-type:none">"on Debian GNU/Linux systems you can find the complete GPL licence in /usr/share/common-licences/GPL".   <span class="anchor" id="line-200"></span><span class="anchor" id="line-201"></span></li></ul><p class="line874">But if it's not GPL (or BSD), you should include the full licence here. <span class="anchor" id="line-202"></span><span class="anchor" id="line-203"></span><p class="line874">If some parts of the software are GPL and some are some other licence, then you should state those parts very clearly,and paste the licence verbatim in the copyright file. <span class="anchor" id="line-204"></span><span class="anchor" id="line-205"></span><p class="line867">
+<h3 id="debian.2Fdocs">debian/docs</h3>
+<span class="anchor" id="line-206"></span><p class="line862">This file includes the files that will be copied to <tt class="backtick">/usr/share/doc/package</tt> when the package is installed. <span class="anchor" id="line-207"></span><span class="anchor" id="line-208"></span><p class="line874">In the case of wmforkplop, we can remove the Vera.txt line since we already added the dependency. <span class="anchor" id="line-209"></span><span class="anchor" id="line-210"></span><p class="line874">Then we should have a look at the ../{NEWS, README, TODO} files.  <span class="anchor" id="line-211"></span><ul><li style="list-style-type:none"><p class="line862">If there are only install/compile instructions we don't want that for the user in the binary package, so we remove them as well. <br>
+ <span class="anchor" id="line-212"></span>If there is important or interesting information in those files, then we leave them there. <span class="anchor" id="line-213"></span><span class="anchor" id="line-214"></span></li></ul><p class="line867">
+<h3 id="debian.2Fcompat">debian/compat</h3>
+<span class="anchor" id="line-215"></span><p class="line862">This file states the compatibility level with <strong>debhelper</strong>.  <span class="anchor" id="line-216"></span><span class="anchor" id="line-217"></span><p class="line874">Debhelper has gone through numerous revisions, some of which break compatibility, you can use the compat number to specify the debhelper revision that your package needs or supports.  <span class="anchor" id="line-218"></span><span class="anchor" id="line-219"></span><p class="line862">We already stated that we require dehelper (&gt;= 4.0.0), so compat should say 4.  <span class="anchor" id="line-220"></span><span class="anchor" id="line-221"></span><p class="line874">You might have an old package, that uses old debhelper syntax and might be compat 1, or compat 2.  <span class="anchor" id="line-222"></span><span class="anchor" id="line-223"></span><p class="line874">It's recommended to use the latest version, anyway.  <span class="anchor" id="line-224"></span><span class="anchor" id="line-225"></span><p class="line867">
+<h3 id="debian.2Fmanpages">debian/manpages</h3>
+<span class="anchor" id="line-226"></span><p class="line874">This file states where the manpages are.  <span class="anchor" id="line-227"></span><span class="anchor" id="line-228"></span><p class="line874">It was not created by debhelper, we need to create it ourselves.   <span class="anchor" id="line-229"></span><span class="anchor" id="line-230"></span><p class="line862">In the <tt class="backtick">debian/</tt> directory do:  <span class="anchor" id="line-231"></span><span class="anchor" id="line-232"></span><span class="anchor" id="line-233"></span><pre><span class="anchor" id="line-1-9"></span>echo "debian/wmforkplop.1" &gt; manpages</pre><span class="anchor" id="line-234"></span><span class="anchor" id="line-235"></span><p class="line867">
+<h3 id="debian.2Frules">debian/rules</h3>
+<span class="anchor" id="line-236"></span><p class="line862">This file is similar to a Makefile, it has <em>rules</em> to perform a variety of tasks.   <span class="anchor" id="line-237"></span><span class="anchor" id="line-238"></span><p class="line874">Debhelper has already filled it with many rules and tasks, some of them are commented out.   <span class="anchor" id="line-239"></span><span class="anchor" id="line-240"></span><p class="line874">Once you are done editing, no commented out lines should be there.  This is to say, you should uncomment those that you need and delete those that you don't.   <span class="anchor" id="line-241"></span><span class="anchor" id="line-242"></span><p class="line874">Suggested Makefile reading:  <span class="anchor" id="line-243"></span><span class="anchor" id="line-244"></span><ul><li><p class="line891"><a class="http" href="http://users.actcom.co.il/~choo/lupg/tutorials/writing-makefiles/writing-makefiles.html">http://users.actcom.co.il/~choo/lupg/tutorials/writing-makefiles/writing-makefiles.html</a> <span class="anchor" id="line-245"></span><span class="anchor" id="line-246"></span></li></ul><p class="line862">At the very bottom of the file you'll find three commented commands: <tt class="backtick">dh_perl</tt>, <tt class="backtick">dh_python</tt>, <tt class="backtick">dh_makeshlibs</tt>, you can remove them all, since we are not using perl, nor python, nor making shlibs.<br>
+ <span class="anchor" id="line-247"></span>We can then remove: <tt class="backtick">dh_installinfo</tt>, <tt class="backtick">dh_cron</tt>, <tt class="backtick">dh_init</tt>, <tt class="backtick">dh_mime</tt>, <tt class="backtick">dh_pam</tt>, <tt class="backtick">dh_emacsen</tt>, <tt class="backtick">dh_logrotate</tt>, <tt class="backtick">dh_debconf</tt> and <tt class="backtick">dh_install</tt> too, for the same reasons. <br>
+ <span class="anchor" id="line-248"></span>We would use  <span class="anchor" id="line-249"></span><ul><li><p class="line891"><tt class="backtick">dh_debconf</tt> if we had some debconf questions to ask to the user,  <span class="anchor" id="line-250"></span></li><li><p class="line891"><tt class="backtick">dh_install</tt> is to copy files inside the temporary build directory, but we aren't doing any extra copying.  <span class="anchor" id="line-251"></span><span class="anchor" id="line-252"></span></li></ul><p class="line862">But do uncomment <tt class="backtick">dh_installmenu</tt> (since we do have a menu file). <span class="anchor" id="line-253"></span><span class="anchor" id="line-254"></span><p class="line867">
+<h2 id="Building_the_packages">Building the packages</h2>
+<span class="anchor" id="line-255"></span><span class="anchor" id="line-256"></span><p class="line874">We are almost done with the preparation of the package, the next big step is to build it. <span class="anchor" id="line-257"></span><span class="anchor" id="line-258"></span><p class="line862">We will do it using the command <tt class="backtick">debuild</tt>. If you don't have your GPG key ready, you can  build the package without signing with: <span class="anchor" id="line-259"></span><span class="anchor" id="line-260"></span><span class="anchor" id="line-261"></span><pre><span class="anchor" id="line-1-10"></span>debuild -us -uc</pre><span class="anchor" id="line-262"></span><p class="line874">But keep in mind that it is a good idea to have your GPG key ready when building packages.  <span class="anchor" id="line-263"></span><span class="anchor" id="line-264"></span><p class="line874">It might complain that you don't have the necessary build dependencies, if so, install them. <span class="anchor" id="line-265"></span><span class="anchor" id="line-266"></span><p class="line874">When you are building, you might face some errors like: <span class="anchor" id="line-267"></span><ul><li><p class="line891"><tt class="backtick">E:&nbsp;wmforkplop:&nbsp;description-contains-tabs</tt>  <span class="anchor" id="line-268"></span></li><li><p class="line891"><tt class="backtick">W:&nbsp;wmforkplop:&nbsp;description-starts-with-leading-spaces</tt>  <span class="anchor" id="line-269"></span></li><li><p class="line891"><tt class="backtick">W:&nbsp;wmforkplop:&nbsp;manpage-section-mismatch</tt>.   <span class="anchor" id="line-270"></span></li></ul><p class="line874">This is common, so don't feel bad about it, fix the errors and then try building again. <span class="anchor" id="line-271"></span><span class="anchor" id="line-272"></span><p class="line874">Once you are finished building, you should go to your parent directory (the $HOME/debian one) and list the files in it. You should have  <span class="anchor" id="line-273"></span><ul><li><p class="line862">The <a href="http://wiki.debian.org/SourcePackage">source package</a> <span class="anchor" id="line-274"></span><ul><li>a diff.gz,  <span class="anchor" id="line-275"></span></li><li>a .dsc  <span class="anchor" id="line-276"></span></li><li>a orig.tar.gz file. <span class="anchor" id="line-277"></span></li></ul>yes, the source package is actually three files <span class="anchor" id="line-278"></span></li></ul><ul><li><p class="line862">the <a href="http://wiki.debian.org/DebianPackage">binary package</a> : a .deb file.   <span class="anchor" id="line-279"></span></li><li>other files (you can have a look at them) <span class="anchor" id="line-280"></span><ul><li>.build  <span class="anchor" id="line-281"></span></li><li>.changes  <span class="anchor" id="line-282"></span><span class="anchor" id="line-283"></span></li></ul></li></ul><p class="line862">Now you can run <strong>lintian</strong> on the package, to check that it's in a good state: <span class="anchor" id="line-284"></span><span class="anchor" id="line-285"></span><span class="anchor" id="line-286"></span><pre><span class="anchor" id="line-1-11"></span>lintian -Ivi wmforkplop_0.9.1-1_i386.deb</pre><span class="anchor" id="line-287"></span><p class="line874">Or whichever was the file that you built.   <span class="anchor" id="line-288"></span><span class="anchor" id="line-289"></span><p class="line874">It will probably show you a list of errors and warnings that you'll have to correct them and then rebuild the package <span class="anchor" id="line-290"></span><span class="anchor" id="line-291"></span><p class="line874">Once you've done fixing the .deb errors and warnings, you might run lintian over  <span class="anchor" id="line-292"></span><ul><li>the .dsc file (this is to say, over the source package),  <span class="anchor" id="line-293"></span></li><li>or directly over the .changes file (which will run lintian over all the files listed there - useful if you have many binary packages). <span class="anchor" id="line-294"></span><span class="anchor" id="line-295"></span></li></ul><p class="line867">
+<h2 id="Installing_and_Running">Installing and Running</h2>
+<span class="anchor" id="line-296"></span><span class="anchor" id="line-297"></span><p class="line874">The last test of the package is to install it and run it.  To install it you'd do: <span class="anchor" id="line-298"></span><span class="anchor" id="line-299"></span><span class="anchor" id="line-300"></span><pre><span class="anchor" id="line-1-12"></span>dpkg -i wmforkplop_0.9.1-1_i386.deb</pre><p class="line874"> <span class="anchor" id="line-301"></span>After it's installed try the things you packaged: try  <span class="anchor" id="line-302"></span><ul><li>man wmforkplop`,  <span class="anchor" id="line-303"></span></li><li><p class="line862">running <tt class="backtick">wmforkplop</tt>,  <span class="anchor" id="line-304"></span></li><li>and test the program (run a find / and in wmforkplop select the largest blob, then say kill, then gently) <span class="anchor" id="line-305"></span><span class="anchor" id="line-306"></span></li></ul><p class="line867">
+<h2 id="Sharing_your_package">Sharing your package</h2>
+<span class="anchor" id="line-307"></span><span class="anchor" id="line-308"></span><p class="line874">Even if you don't put your package in Debian, you can still share it with others by putting it on your webserver/debian/ directory.   <span class="anchor" id="line-309"></span><span class="anchor" id="line-310"></span><p class="line867">
+<h1 id="Questions_.26_Answers">Questions &amp; Answers</h1>
+<span class="anchor" id="line-311"></span><span class="anchor" id="line-312"></span><p class="line874">These are the questions and answers that were made during the irc session.  <span class="anchor" id="line-313"></span><span class="anchor" id="line-314"></span><p class="line874">Hopefully they'll answer many of the usual questions that might come up when reading this tutorial. <span class="anchor" id="line-315"></span><span class="anchor" id="line-316"></span><p class="line867">
+<h2 id="What_does_.27ITP.27_mean_and_what_is_it_for.3F">What does 'ITP' mean and what is it for?</h2>
+<span class="anchor" id="line-317"></span><p class="line867"><strong>ITP</strong> means "Intend To Package".   <span class="anchor" id="line-318"></span><span class="anchor" id="line-319"></span><p class="line874">It's a special type of bug, that indicates that you (or someone else) intends to package a certain piece of software.   <span class="anchor" id="line-320"></span><span class="anchor" id="line-321"></span><p class="line874">The aim of ITPs is that no work is duplicated, so if someone is packaging a program that you want to package, you don't need to do it twice. <span class="anchor" id="line-322"></span><span class="anchor" id="line-323"></span><p class="line862">It is good practice to file an ITP (using reportbug or a mail client) before you package software.<br>
+ <span class="anchor" id="line-324"></span>That will "ensure" that no work is wasted (that other people package the same software like you, if they check the ITP database). <span class="anchor" id="line-325"></span><span class="anchor" id="line-326"></span><p class="line862">See <a class="http" href="http://www.nl.debian.org/devel/wnpp/">http://www.nl.debian.org/devel/wnpp/</a> for more information. <span class="anchor" id="line-327"></span><span class="anchor" id="line-328"></span><p class="line867">
+<h2 id="What_are_the_autotools.3F__What.27s_the_.60..2Fconfigure.60_script.3F">What are the autotools?  What's the `./configure` script?</h2>
+<span class="anchor" id="line-329"></span><p class="line874">The autotools are a set of utilities to help a program compile on any platform. <span class="anchor" id="line-330"></span><span class="anchor" id="line-331"></span><p class="line862">The <tt class="backtick">./configure</tt> tries to detect the platform it's on, and generetes a Makefile to fit the environment, or gives up if it cannot. <span class="anchor" id="line-332"></span><span class="anchor" id="line-333"></span><p class="line862">It's really a blessing, in the old days, you had to edit the Makefile yourself.<br>
+ <span class="anchor" id="line-334"></span>If your platform wasn't mentioned in the Makefile, you had to guess the values to use to make the program compile.<br>
+ <span class="anchor" id="line-335"></span>Often you had to edit the source a little as well. <span class="anchor" id="line-336"></span><span class="anchor" id="line-337"></span><p class="line867">
+<h2 id="How_do_I_package_non-compiling_packages.3F_.28docs.2C_webpages.2C_shellscripts.29">How do I package non-compiling packages? (docs, webpages, shellscripts)</h2>
+<span class="anchor" id="line-338"></span><p class="line874">There's no tutorial on this, because of the miriad of possibilities, so many different types of non-compilation packages that it's hard to have a general story on them.   <span class="anchor" id="line-339"></span><span class="anchor" id="line-340"></span><p class="line862">But you can look at example packages, for example <strong>ttf-junicode</strong> (Architecture: all), or <strong>supertux</strong> (all and i386). Try <tt class="backtick">apt-get&nbsp;source&nbsp;somepackage</tt> and have a look at how it is done. <span class="anchor" id="line-341"></span><span class="anchor" id="line-342"></span><p class="line867"><span class="anchor" id="line-343"></span><span class="anchor" id="line-344"></span><p class="line867"><span class="anchor" id="line-345"></span><p class="line867">
+<h1 id="See_also">See also</h1>
+<span class="anchor" id="line-346"></span><ul><li><p class="line891"><a href="http://wiki.debian.org/Packaging">Packaging</a> is the page that gathers everything about packaging on this wiki <span class="anchor" id="line-347"></span></li></ul><span class="anchor" id="bottom"></span></div><div id="pagebottom"></div>
+</div>
+
+
+<div id="footer">
+<p id="pageinfo" class="info" lang="en" dir="ltr">PackagingTutorial  (last edited 2011-12-26 18:06:16 by <span title="MadameZou"><a href="http://wiki.debian.org/FrancescaCiceri" title="MadameZou">FrancescaCiceri</a></span>)</p>
+
+<ul id="credits">
+<li><a href="http://moinmo.in/" title="This site uses the MoinMoin Wiki software.">MoinMoin Powered</a></li><li><a href="http://moinmo.in/Python" title="MoinMoin is written in Python.">Python Powered</a></li><li><a href="http://validator.w3.org/check?uri=referer" title="Click here to validate this page.">Valid HTML 4.01</a></li><li>Debian Wiki <a href="http://wiki.debian.org/Teams/DebianWiki">team</a>, <a href="http://bugs.debian.org/wiki.debian.org">bugs</a> and <a href="http://git.debian.org/?p=collab-maint/wiki.debian.org.git;a=summary">config</a> available.</li><li>Hosting provided by <a href="http://www.dg-i.net/">Dembach Goo Informatik GmbH &amp; Co KG</a></li>
+</ul>
+
+
+</div>
+</body>
+</html>
+

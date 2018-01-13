@@ -1,0 +1,1148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+<html>
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+<title>Debian Policy Manual - Customized programs</title>
+
+<link href="index.html" rel="start">
+<link href="ch-files.html" rel="prev">
+<link href="ch-docs.html" rel="next">
+<link href="index.html#contents" rel="contents">
+<link href="index.html#copyright" rel="copyright">
+<link href="ch-scope.html" rel="chapter" title="1 About this manual">
+<link href="ch-archive.html" rel="chapter" title="2 The Debian Archive">
+<link href="ch-binary.html" rel="chapter" title="3 Binary packages">
+<link href="ch-source.html" rel="chapter" title="4 Source packages">
+<link href="ch-controlfields.html" rel="chapter" title="5 Control files and their fields">
+<link href="ch-maintainerscripts.html" rel="chapter" title="6 Package maintainer scripts and installation procedure">
+<link href="ch-relationships.html" rel="chapter" title="7 Declaring relationships between packages">
+<link href="ch-sharedlibs.html" rel="chapter" title="8 Shared libraries">
+<link href="ch-opersys.html" rel="chapter" title="9 The Operating System">
+<link href="ch-files.html" rel="chapter" title="10 Files">
+<link href="ch-customized-programs.html" rel="chapter" title="11 Customized programs">
+<link href="ch-docs.html" rel="chapter" title="12 Documentation">
+<link href="ap-pkg-scope.html" rel="appendix" title="A Introduction and scope of these appendices">
+<link href="ap-pkg-binarypkg.html" rel="appendix" title="B Binary packages (from old Packaging Manual)">
+<link href="ap-pkg-sourcepkg.html" rel="appendix" title="C Source packages (from old Packaging Manual)">
+<link href="ap-pkg-controlfields.html" rel="appendix" title="D Control files and their fields (from old Packaging Manual)">
+<link href="ap-pkg-conffiles.html" rel="appendix" title="E Configuration file handling (from old Packaging Manual)">
+<link href="ap-pkg-alternatives.html" rel="appendix" title="F Alternative versions of an interface - update-alternatives (from old Packaging Manual)">
+<link href="ap-pkg-diversions.html" rel="appendix" title="G Diversions - overriding a package's version of a file (from old Packaging Manual)">
+<link href="ch-scope.html#s1.1" rel="section" title="1.1 Scope">
+<link href="ch-scope.html#s1.2" rel="section" title="1.2 New versions of this document">
+<link href="ch-scope.html#s-authors" rel="section" title="1.3 Authors and Maintainers">
+<link href="ch-scope.html#s-related" rel="section" title="1.4 Related documents">
+<link href="ch-scope.html#s-definitions" rel="section" title="1.5 Definitions">
+<link href="ch-archive.html#s-dfsg" rel="section" title="2.1 The Debian Free Software Guidelines">
+<link href="ch-archive.html#s-sections" rel="section" title="2.2 Archive areas">
+<link href="ch-archive.html#s-pkgcopyright" rel="section" title="2.3 Copyright considerations">
+<link href="ch-archive.html#s-subsections" rel="section" title="2.4 Sections">
+<link href="ch-archive.html#s-priorities" rel="section" title="2.5 Priorities">
+<link href="ch-binary.html#s3.1" rel="section" title="3.1 The package name">
+<link href="ch-binary.html#s-versions" rel="section" title="3.2 The version of a package">
+<link href="ch-binary.html#s-maintainer" rel="section" title="3.3 The maintainer of a package">
+<link href="ch-binary.html#s-descriptions" rel="section" title="3.4 The description of a package">
+<link href="ch-binary.html#s-dependencies" rel="section" title="3.5 Dependencies">
+<link href="ch-binary.html#s-virtual_pkg" rel="section" title="3.6 Virtual packages">
+<link href="ch-binary.html#s3.7" rel="section" title="3.7 Base system">
+<link href="ch-binary.html#s3.8" rel="section" title="3.8 Essential packages">
+<link href="ch-binary.html#s-maintscripts" rel="section" title="3.9 Maintainer Scripts">
+<link href="ch-source.html#s-standardsversion" rel="section" title="4.1 Standards conformance">
+<link href="ch-source.html#s-pkg-relations" rel="section" title="4.2 Package relationships">
+<link href="ch-source.html#s4.3" rel="section" title="4.3 Changes to the upstream sources">
+<link href="ch-source.html#s-dpkgchangelog" rel="section" title="4.4 Debian changelog: debian/changelog">
+<link href="ch-source.html#s-dpkgcopyright" rel="section" title="4.5 Copyright: debian/copyright">
+<link href="ch-source.html#s4.6" rel="section" title="4.6 Error trapping in makefiles">
+<link href="ch-source.html#s-timestamps" rel="section" title="4.7 Time Stamps">
+<link href="ch-source.html#s-restrictions" rel="section" title="4.8 Restrictions on objects in source packages">
+<link href="ch-source.html#s-debianrules" rel="section" title="4.9 Main building script: debian/rules">
+<link href="ch-source.html#s-substvars" rel="section" title="4.10 Variable substitutions: debian/substvars">
+<link href="ch-source.html#s-debianwatch" rel="section" title="4.11 Optional upstream source location: debian/watch">
+<link href="ch-source.html#s-debianfiles" rel="section" title="4.12 Generated files list: debian/files">
+<link href="ch-source.html#s-embeddedfiles" rel="section" title="4.13 Convenience copies of code">
+<link href="ch-source.html#s-readmesource" rel="section" title="4.14 Source package handling: debian/README.source">
+<link href="ch-controlfields.html#s-controlsyntax" rel="section" title="5.1 Syntax of control files">
+<link href="ch-controlfields.html#s-sourcecontrolfiles" rel="section" title="5.2 Source package control files -- debian/control">
+<link href="ch-controlfields.html#s-binarycontrolfiles" rel="section" title="5.3 Binary package control files -- DEBIAN/control">
+<link href="ch-controlfields.html#s-debiansourcecontrolfiles" rel="section" title="5.4 Debian source control files -- .dsc">
+<link href="ch-controlfields.html#s-debianchangesfiles" rel="section" title="5.5 Debian changes files -- .changes">
+<link href="ch-controlfields.html#s-controlfieldslist" rel="section" title="5.6 List of fields">
+<link href="ch-controlfields.html#s5.7" rel="section" title="5.7 User-defined fields">
+<link href="ch-maintainerscripts.html#s6.1" rel="section" title="6.1 Introduction to package maintainer scripts">
+<link href="ch-maintainerscripts.html#s-idempotency" rel="section" title="6.2 Maintainer scripts idempotency">
+<link href="ch-maintainerscripts.html#s-controllingterminal" rel="section" title="6.3 Controlling terminal for maintainer scripts">
+<link href="ch-maintainerscripts.html#s-exitstatus" rel="section" title="6.4 Exit status">
+<link href="ch-maintainerscripts.html#s-mscriptsinstact" rel="section" title="6.5 Summary of ways maintainer scripts are called">
+<link href="ch-maintainerscripts.html#s-unpackphase" rel="section" title="6.6 Details of unpack phase of installation or upgrade">
+<link href="ch-maintainerscripts.html#s-configdetails" rel="section" title="6.7 Details of configuration">
+<link href="ch-maintainerscripts.html#s-removedetails" rel="section" title="6.8 Details of removal and/or configuration purging">
+<link href="ch-relationships.html#s-depsyntax" rel="section" title="7.1 Syntax of relationship fields">
+<link href="ch-relationships.html#s-binarydeps" rel="section" title="7.2 Binary Dependencies - Depends, Recommends, Suggests, Enhances, Pre-Depends">
+<link href="ch-relationships.html#s-breaks" rel="section" title="7.3 Packages which break other packages - Breaks">
+<link href="ch-relationships.html#s-conflicts" rel="section" title="7.4 Conflicting binary packages - Conflicts">
+<link href="ch-relationships.html#s-virtual" rel="section" title="7.5 Virtual packages - Provides">
+<link href="ch-relationships.html#s-replaces" rel="section" title="7.6 Overwriting files and replacing packages - Replaces">
+<link href="ch-relationships.html#s-sourcebinarydeps" rel="section" title="7.7 Relationships between source and binary packages - Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep">
+<link href="ch-relationships.html#s-built-using" rel="section" title="7.8 Additional source packages used to build the binary - Built-Using">
+<link href="ch-sharedlibs.html#s-sharedlibs-runtime" rel="section" title="8.1 Run-time shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-support-files" rel="section" title="8.2 Shared library support files">
+<link href="ch-sharedlibs.html#s-sharedlibs-static" rel="section" title="8.3 Static libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-dev" rel="section" title="8.4 Development files">
+<link href="ch-sharedlibs.html#s-sharedlibs-intradeps" rel="section" title="8.5 Dependencies between the packages of the same library">
+<link href="ch-sharedlibs.html#s-sharedlibs-depends" rel="section" title="8.6 Dependencies between the library and other packages">
+<link href="ch-opersys.html#s9.1" rel="section" title="9.1 File system hierarchy">
+<link href="ch-opersys.html#s9.2" rel="section" title="9.2 Users and groups">
+<link href="ch-opersys.html#s-sysvinit" rel="section" title="9.3 System run levels and init.d scripts">
+<link href="ch-opersys.html#s9.4" rel="section" title="9.4 Console messages from init.d scripts">
+<link href="ch-opersys.html#s-cron-jobs" rel="section" title="9.5 Cron jobs">
+<link href="ch-opersys.html#s-menus" rel="section" title="9.6 Menus">
+<link href="ch-opersys.html#s-mime" rel="section" title="9.7 Multimedia handlers">
+<link href="ch-opersys.html#s9.8" rel="section" title="9.8 Keyboard configuration">
+<link href="ch-opersys.html#s9.9" rel="section" title="9.9 Environment variables">
+<link href="ch-opersys.html#s-doc-base" rel="section" title="9.10 Registering Documents using doc-base">
+<link href="ch-opersys.html#s-alternateinit" rel="section" title="9.11 Alternate init systems">
+<link href="ch-files.html#s-binaries" rel="section" title="10.1 Binaries">
+<link href="ch-files.html#s-libraries" rel="section" title="10.2 Libraries">
+<link href="ch-files.html#s10.3" rel="section" title="10.3 Shared libraries">
+<link href="ch-files.html#s-scripts" rel="section" title="10.4 Scripts">
+<link href="ch-files.html#s10.5" rel="section" title="10.5 Symbolic links">
+<link href="ch-files.html#s10.6" rel="section" title="10.6 Device files">
+<link href="ch-files.html#s-config-files" rel="section" title="10.7 Configuration files">
+<link href="ch-files.html#s10.8" rel="section" title="10.8 Log files">
+<link href="ch-files.html#s-permissions-owners" rel="section" title="10.9 Permissions and owners">
+<link href="ch-customized-programs.html#s-arch-spec" rel="section" title="11.1 Architecture specification strings">
+<link href="ch-customized-programs.html#s11.2" rel="section" title="11.2 Daemons">
+<link href="ch-customized-programs.html#s11.3" rel="section" title="11.3 Using pseudo-ttys and modifying wtmp, utmp and lastlog">
+<link href="ch-customized-programs.html#s11.4" rel="section" title="11.4 Editors and pagers">
+<link href="ch-customized-programs.html#s-web-appl" rel="section" title="11.5 Web servers and applications">
+<link href="ch-customized-programs.html#s-mail-transport-agents" rel="section" title="11.6 Mail transport, delivery and user agents">
+<link href="ch-customized-programs.html#s11.7" rel="section" title="11.7 News system configuration">
+<link href="ch-customized-programs.html#s11.8" rel="section" title="11.8 Programs for the X Window System">
+<link href="ch-customized-programs.html#s-perl" rel="section" title="11.9 Perl programs and modules">
+<link href="ch-customized-programs.html#s-emacs" rel="section" title="11.10 Emacs lisp programs">
+<link href="ch-customized-programs.html#s11.11" rel="section" title="11.11 Games">
+<link href="ch-docs.html#s12.1" rel="section" title="12.1 Manual pages">
+<link href="ch-docs.html#s12.2" rel="section" title="12.2 Info documents">
+<link href="ch-docs.html#s12.3" rel="section" title="12.3 Additional documentation">
+<link href="ch-docs.html#s12.4" rel="section" title="12.4 Preferred documentation formats">
+<link href="ch-docs.html#s-copyrightfile" rel="section" title="12.5 Copyright information">
+<link href="ch-docs.html#s12.6" rel="section" title="12.6 Examples">
+<link href="ch-docs.html#s-changelogs" rel="section" title="12.7 Changelog files">
+<link href="ap-pkg-binarypkg.html#s-pkg-bincreating" rel="section" title="B.1 Creating package files - dpkg-deb">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlarea" rel="section" title="B.2 Package control information files">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlfile" rel="section" title="B.3 The main control information file: control">
+<link href="ap-pkg-binarypkg.html#sB.4" rel="section" title="B.4 Time Stamps">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetools" rel="section" title="C.1 Tools for processing source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetree" rel="section" title="C.2 The Debian package source tree">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcearchives" rel="section" title="C.3 Source packages as archives">
+<link href="ap-pkg-sourcepkg.html#sC.4" rel="section" title="C.4 Unpacking a Debian source package without dpkg-source">
+<link href="ap-pkg-controlfields.html#sD.1" rel="section" title="D.1 Syntax of control files">
+<link href="ap-pkg-controlfields.html#sD.2" rel="section" title="D.2 List of fields">
+<link href="ap-pkg-conffiles.html#sE.1" rel="section" title="E.1 Automatic handling of configuration files by dpkg">
+<link href="ap-pkg-conffiles.html#sE.2" rel="section" title="E.2 Fully-featured maintainer script configuration handling">
+<link href="ch-archive.html#s-main" rel="subsection" title="2.2.1 The main archive area">
+<link href="ch-archive.html#s-contrib" rel="subsection" title="2.2.2 The contrib archive area">
+<link href="ch-archive.html#s-non-free" rel="subsection" title="2.2.3 The non-free archive area">
+<link href="ch-binary.html#s3.2.1" rel="subsection" title="3.2.1 Version numbers based on dates">
+<link href="ch-binary.html#s-synopsis" rel="subsection" title="3.4.1 The single line synopsis">
+<link href="ch-binary.html#s-extendeddesc" rel="subsection" title="3.4.2 The extended description">
+<link href="ch-binary.html#s-maintscriptprompt" rel="subsection" title="3.9.1 Prompting in maintainer scripts">
+<link href="ch-source.html#s-debianrules-options" rel="subsection" title="4.9.1 debian/rules and DEB_BUILD_OPTIONS">
+<link href="ch-controlfields.html#s-f-Source" rel="subsection" title="5.6.1 Source">
+<link href="ch-controlfields.html#s-f-Maintainer" rel="subsection" title="5.6.2 Maintainer">
+<link href="ch-controlfields.html#s-f-Uploaders" rel="subsection" title="5.6.3 Uploaders">
+<link href="ch-controlfields.html#s-f-Changed-By" rel="subsection" title="5.6.4 Changed-By">
+<link href="ch-controlfields.html#s-f-Section" rel="subsection" title="5.6.5 Section">
+<link href="ch-controlfields.html#s-f-Priority" rel="subsection" title="5.6.6 Priority">
+<link href="ch-controlfields.html#s-f-Package" rel="subsection" title="5.6.7 Package">
+<link href="ch-controlfields.html#s-f-Architecture" rel="subsection" title="5.6.8 Architecture">
+<link href="ch-controlfields.html#s-f-Essential" rel="subsection" title="5.6.9 Essential">
+<link href="ch-controlfields.html#s5.6.10" rel="subsection" title="5.6.10 Package interrelationship fields: Depends, Pre-Depends, Recommends, Suggests, Breaks, Conflicts, Provides, Replaces, Enhances">
+<link href="ch-controlfields.html#s-f-Standards-Version" rel="subsection" title="5.6.11 Standards-Version">
+<link href="ch-controlfields.html#s-f-Version" rel="subsection" title="5.6.12 Version">
+<link href="ch-controlfields.html#s-f-Description" rel="subsection" title="5.6.13 Description">
+<link href="ch-controlfields.html#s-f-Distribution" rel="subsection" title="5.6.14 Distribution">
+<link href="ch-controlfields.html#s-f-Date" rel="subsection" title="5.6.15 Date">
+<link href="ch-controlfields.html#s-f-Format" rel="subsection" title="5.6.16 Format">
+<link href="ch-controlfields.html#s-f-Urgency" rel="subsection" title="5.6.17 Urgency">
+<link href="ch-controlfields.html#s-f-Changes" rel="subsection" title="5.6.18 Changes">
+<link href="ch-controlfields.html#s-f-Binary" rel="subsection" title="5.6.19 Binary">
+<link href="ch-controlfields.html#s-f-Installed-Size" rel="subsection" title="5.6.20 Installed-Size">
+<link href="ch-controlfields.html#s-f-Files" rel="subsection" title="5.6.21 Files">
+<link href="ch-controlfields.html#s-f-Closes" rel="subsection" title="5.6.22 Closes">
+<link href="ch-controlfields.html#s-f-Homepage" rel="subsection" title="5.6.23 Homepage">
+<link href="ch-controlfields.html#s-f-Checksums" rel="subsection" title="5.6.24 Checksums-Sha1 and Checksums-Sha256">
+<link href="ch-controlfields.html#s-f-DM-Upload-Allowed" rel="subsection" title="5.6.25 DM-Upload-Allowed">
+<link href="ch-controlfields.html#s-f-VCS-fields" rel="subsection" title="5.6.26 Version Control System (VCS) fields">
+<link href="ch-relationships.html#s7.6.1" rel="subsection" title="7.6.1 Overwriting files in other packages">
+<link href="ch-relationships.html#s7.6.2" rel="subsection" title="7.6.2 Replacing whole packages, forcing their removal">
+<link href="ch-sharedlibs.html#s-ldconfig" rel="subsection" title="8.1.1 ldconfig">
+<link href="ch-sharedlibs.html#s-dpkg-shlibdeps" rel="subsection" title="8.6.1 Generating dependencies on shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-updates" rel="subsection" title="8.6.2 Shared library ABI changes">
+<link href="ch-sharedlibs.html#s-sharedlibs-symbols" rel="subsection" title="8.6.3 The symbols system">
+<link href="ch-sharedlibs.html#s-symbols-paths" rel="subsection" title="8.6.3.1 The symbols files present on the system">
+<link href="ch-sharedlibs.html#s-symbols" rel="subsection" title="8.6.3.2 The symbols File Format">
+<link href="ch-sharedlibs.html#s-providing-symbols" rel="subsection" title="8.6.3.3 Providing a symbols file">
+<link href="ch-sharedlibs.html#s-sharedlibs-shlibdeps" rel="subsection" title="8.6.4 The shlibs system">
+<link href="ch-sharedlibs.html#s-shlibs-paths" rel="subsection" title="8.6.4.1 The shlibs files present on the system">
+<link href="ch-sharedlibs.html#s-shlibs" rel="subsection" title="8.6.4.2 The shlibs File Format">
+<link href="ch-sharedlibs.html#s8.6.4.3" rel="subsection" title="8.6.4.3 Providing a shlibs file">
+<link href="ch-opersys.html#s-fhs" rel="subsection" title="9.1.1 File System Structure">
+<link href="ch-opersys.html#s9.1.2" rel="subsection" title="9.1.2 Site-specific programs">
+<link href="ch-opersys.html#s9.1.3" rel="subsection" title="9.1.3 The system-wide mail directory">
+<link href="ch-opersys.html#s-fhs-run" rel="subsection" title="9.1.4 /run and /run/lock">
+<link href="ch-opersys.html#s9.2.1" rel="subsection" title="9.2.1 Introduction">
+<link href="ch-opersys.html#s9.2.2" rel="subsection" title="9.2.2 UID and GID classes">
+<link href="ch-opersys.html#s-/etc/init.d" rel="subsection" title="9.3.1 Introduction">
+<link href="ch-opersys.html#s-writing-init" rel="subsection" title="9.3.2 Writing the scripts">
+<link href="ch-opersys.html#s9.3.3" rel="subsection" title="9.3.3 Interfacing with the initscript system">
+<link href="ch-opersys.html#s9.3.3.1" rel="subsection" title="9.3.3.1 Managing the links">
+<link href="ch-opersys.html#s9.3.3.2" rel="subsection" title="9.3.3.2 Running initscripts">
+<link href="ch-opersys.html#s9.3.4" rel="subsection" title="9.3.4 Boot-time initialization">
+<link href="ch-opersys.html#s9.3.5" rel="subsection" title="9.3.5 Example">
+<link href="ch-opersys.html#s-cron-files" rel="subsection" title="9.5.1 Cron job file names">
+<link href="ch-opersys.html#s-upstart" rel="subsection" title="9.11.1 Event-based boot with upstart">
+<link href="ch-files.html#s10.7.1" rel="subsection" title="10.7.1 Definitions">
+<link href="ch-files.html#s10.7.2" rel="subsection" title="10.7.2 Location">
+<link href="ch-files.html#s10.7.3" rel="subsection" title="10.7.3 Behavior">
+<link href="ch-files.html#s10.7.4" rel="subsection" title="10.7.4 Sharing configuration files">
+<link href="ch-files.html#s10.7.5" rel="subsection" title="10.7.5 User configuration files (&quot;dotfiles&quot;)">
+<link href="ch-files.html#s10.9.1" rel="subsection" title="10.9.1 The use of dpkg-statoverride">
+<link href="ch-customized-programs.html#s-arch-wildcard-spec" rel="subsection" title="11.1.1 Architecture wildcards">
+<link href="ch-customized-programs.html#s11.8.1" rel="subsection" title="11.8.1 Providing X support and package priorities">
+<link href="ch-customized-programs.html#s11.8.2" rel="subsection" title="11.8.2 Packages providing an X server">
+<link href="ch-customized-programs.html#s11.8.3" rel="subsection" title="11.8.3 Packages providing a terminal emulator">
+<link href="ch-customized-programs.html#s11.8.4" rel="subsection" title="11.8.4 Packages providing a window manager">
+<link href="ch-customized-programs.html#s11.8.5" rel="subsection" title="11.8.5 Packages providing fonts">
+<link href="ch-customized-programs.html#s-appdefaults" rel="subsection" title="11.8.6 Application defaults files">
+<link href="ch-customized-programs.html#s11.8.7" rel="subsection" title="11.8.7 Installation directory issues">
+<link href="ch-docs.html#s-copyrightformat" rel="subsection" title="12.5.1 Machine-readable copyright information">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-source" rel="subsection" title="C.1.1 dpkg-source - packs and unpacks Debian source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-buildpackage" rel="subsection" title="C.1.2 dpkg-buildpackage - overall package-building control script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-gencontrol" rel="subsection" title="C.1.3 dpkg-gencontrol - generates binary package control files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-shlibdeps" rel="subsection" title="C.1.4 dpkg-shlibdeps - calculates shared library dependencies">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-distaddfile" rel="subsection" title="C.1.5 dpkg-distaddfile - adds a file to debian/files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-genchanges" rel="subsection" title="C.1.6 dpkg-genchanges - generates a .changes upload control file">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-parsechangelog" rel="subsection" title="C.1.7 dpkg-parsechangelog - produces parsed representation of a changelog">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-architecture" rel="subsection" title="C.1.8 dpkg-architecture - information about the build and host system">
+<link href="ap-pkg-sourcepkg.html#s-pkg-debianrules" rel="subsection" title="C.2.1 debian/rules - the main building script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-srcsubstvars" rel="subsection" title="C.2.2 debian/substvars and variable substitutions">
+<link href="ap-pkg-sourcepkg.html#sC.2.3" rel="subsection" title="C.2.3 debian/files">
+<link href="ap-pkg-sourcepkg.html#sC.2.4" rel="subsection" title="C.2.4 debian/tmp">
+<link href="ap-pkg-sourcepkg.html#sC.4.1" rel="subsection" title="C.4.1 Restrictions on objects in source packages">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Filename" rel="subsection" title="D.2.1 Filename and MSDOS-Filename">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Size" rel="subsection" title="D.2.2 Size and MD5sum">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Status" rel="subsection" title="D.2.3 Status">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Conffiles" rel="subsection" title="D.2.5 Conffiles">
+<link href="ap-pkg-controlfields.html#sD.2.6" rel="subsection" title="D.2.6 Obsolete fields">
+
+</head>
+
+<body>
+
+<p><a name="ch-customized-programs"></a></p>
+<hr>
+
+<p>
+[ <a href="ch-files.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ 11 ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-docs.html">next</a> ]
+</p>
+
+<hr>
+
+<h1>
+Debian Policy Manual
+<br>Chapter 11 - Customized programs
+</h1>
+
+<hr>
+
+<h2><a name="s-arch-spec"></a>11.1 Architecture specification strings</h2>
+
+<p>
+If a program needs to specify an <em>architecture specification string</em> in
+some place, it should select one of the strings provided by
+<samp>dpkg-architecture -L</samp>.  The strings are in the format
+<samp><var>os</var>-<var>arch</var></samp>, though the OS part is sometimes
+elided, as when the OS is Linux.
+</p>
+
+<p>
+Note that we don't want to use <samp><var>arch</var>-debian-linux</samp> to
+apply to the rule
+<samp><var>architecture</var>-<var>vendor</var>-<var>os</var></samp> since this
+would make our programs incompatible with other Linux distributions.  We also
+don't use something like <samp><var>arch</var>-unknown-linux</samp>, since the
+<samp>unknown</samp> does not look very good.
+</p>
+
+<hr>
+
+<h3><a name="s-arch-wildcard-spec"></a>11.1.1 Architecture wildcards</h3>
+
+<p>
+A package may specify an architecture wildcard.  Architecture wildcards are in
+the format <samp>any</samp> (which matches every architecture),
+<samp><var>os</var></samp>-any, or any-<samp><var>cpu</var></samp>.  [<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f98" name="fr98">98</a>]
+</p>
+
+<hr>
+
+<h2><a name="s11.2"></a>11.2 Daemons</h2>
+
+<p>
+The configuration files <code>/etc/services</code>,
+<code>/etc/protocols</code>, and <code>/etc/rpc</code> are managed by the
+<code>netbase</code> package and must not be modified by other packages.
+</p>
+
+<p>
+If a package requires a new entry in one of these files, the maintainer should
+get in contact with the <code>netbase</code> maintainer, who will add the
+entries and release a new version of the <code>netbase</code> package.
+</p>
+
+<p>
+The configuration file <code>/etc/inetd.conf</code> must not be modified by the
+package's scripts except via the <code>update-inetd</code> script or the
+<code>DebianNet.pm</code> Perl module.  See their documentation for details on
+how to add entries.
+</p>
+
+<p>
+If a package wants to install an example entry into
+<code>/etc/inetd.conf</code>, the entry must be preceded with exactly one hash
+character (<samp>#</samp>).  Such lines are treated as &quot;commented out by
+user&quot; by the <code>update-inetd</code> script and are not changed or
+activated during package updates.
+</p>
+
+<hr>
+
+<h2><a name="s11.3"></a>11.3 Using pseudo-ttys and modifying wtmp, utmp and lastlog</h2>
+
+<p>
+Some programs need to create pseudo-ttys.  This should be done using Unix98
+ptys if the C library supports it.  The resulting program must not be installed
+setuid root, unless that is required for other functionality.
+</p>
+
+<p>
+The files <code>/var/run/utmp</code>, <code>/var/log/wtmp</code> and
+<code>/var/log/lastlog</code> must be installed writable by group
+<samp>utmp</samp>.  Programs which need to modify those files must be installed
+setgid <samp>utmp</samp>.
+</p>
+
+<hr>
+
+<h2><a name="s11.4"></a>11.4 Editors and pagers</h2>
+
+<p>
+Some programs have the ability to launch an editor or pager program to edit or
+display a text document.  Since there are lots of different editors and pagers
+available in the Debian distribution, the system administrator and each user
+should have the possibility to choose their preferred editor and pager.
+</p>
+
+<p>
+In addition, every program should choose a good default editor/pager if none is
+selected by the user or system administrator.
+</p>
+
+<p>
+Thus, every program that launches an editor or pager must use the EDITOR or
+PAGER environment variable to determine the editor or pager the user wishes to
+use.  If these variables are not set, the programs <code>/usr/bin/editor</code>
+and <code>/usr/bin/pager</code> should be used, respectively.
+</p>
+
+<p>
+These two files are managed through the <code>dpkg</code>
+&quot;alternatives&quot; mechanism.  Every package providing an editor or pager
+must call the <code>update-alternatives</code> script to register as an
+alternative for <code>/usr/bin/editor</code> or <code>/usr/bin/pager</code> as
+appropriate.  The alternative should have a slave alternative for
+<code>/usr/share/man/man1/editor.1.gz</code> or
+<code>/usr/share/man/man1/pager.1.gz</code> pointing to the corresponding
+manual page.
+</p>
+
+<p>
+If it is very hard to adapt a program to make use of the EDITOR or PAGER
+variables, that program may be configured to use
+<code>/usr/bin/sensible-editor</code> and <code>/usr/bin/sensible-pager</code>
+as the editor or pager program respectively.  These are two scripts provided in
+the <code>sensible-utils</code> package that check the EDITOR and PAGER
+variables and launch the appropriate program, and fall back to
+<code>/usr/bin/editor</code> and <code>/usr/bin/pager</code> if the variable is
+not set.
+</p>
+
+<p>
+A program may also use the VISUAL environment variable to determine the user's
+choice of editor.  If it exists, it should take precedence over EDITOR.  This
+is in fact what <code>/usr/bin/sensible-editor</code> does.
+</p>
+
+<p>
+It is not required for a package to depend on <samp>editor</samp> and
+<samp>pager</samp>, nor is it required for a package to provide such virtual
+packages.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f99" name="fr99">99</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-web-appl"></a>11.5 Web servers and applications</h2>
+
+<p>
+This section describes the locations and URLs that should be used by all web
+servers and web applications in the Debian system.
+</p>
+<ol type="1" start="1" >
+<li>
+<p>
+Cgi-bin executable files are installed in the directory
+</p>
+<pre>
+     /usr/lib/cgi-bin/<var>cgi-bin-name</var>
+</pre>
+
+<p>
+or a subdirectory of that directory, and should be referred to as
+</p>
+<pre>
+     http://localhost/cgi-bin/<var>cgi-bin-name</var>
+</pre>
+
+<p>
+(possibly with a subdirectory name before <var>cgi-bin-name</var>).
+</p>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+Access to HTML documents
+</p>
+
+<p>
+HTML documents for a package are stored in
+<code>/usr/share/doc/<var>package</var></code> and can be referred to as
+</p>
+<pre>
+     http://localhost/doc/<var>package</var>/<var>filename</var>
+</pre>
+
+<p>
+The web server should restrict access to the document tree so that only clients
+on the same host can read the documents.  If the web server does not support
+such access controls, then it should not provide access at all, or ask about
+providing access during installation.
+</p>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<p>
+Access to images
+</p>
+
+<p>
+It is recommended that images for a package be stored in
+<samp>/usr/share/images/<var>package</var></samp> and may be referred to
+through an alias <samp>/images/</samp> as
+</p>
+
+<pre>
+                       http://localhost/images/&lt;package&gt;/&lt;filename&gt;
+</pre>
+</li>
+</ol>
+<ol type="1" start="4" >
+<li>
+<p>
+Web Document Root
+</p>
+
+<p>
+Web Applications should try to avoid storing files in the Web Document Root.
+Instead they should use the /usr/share/doc/<var>package</var> directory for
+documents and register the Web Application via the <code>doc-base</code>
+package.  If access to the web document root is unavoidable then use
+</p>
+<pre>
+     /var/www
+</pre>
+
+<p>
+as the Document Root.  This might be just a symbolic link to the location where
+the system administrator has put the real document root.
+</p>
+</li>
+</ol>
+<ol type="1" start="5" >
+<li>
+<p>
+Providing httpd and/or httpd-cgi
+</p>
+
+<p>
+All web servers should provide the virtual package <samp>httpd</samp>.  If a
+web server has CGI support it should provide <samp>httpd-cgi</samp>
+additionally.
+</p>
+
+<p>
+All web applications which do not contain CGI scripts should depend on
+<samp>httpd</samp>, all those web applications which <samp>do</samp> contain
+CGI scripts, should depend on <samp>httpd-cgi</samp>.
+</p>
+</li>
+</ol>
+
+<hr>
+
+<h2><a name="s-mail-transport-agents"></a>11.6 Mail transport, delivery and user agents</h2>
+
+<p>
+Debian packages which process electronic mail, whether mail user agents (MUAs)
+or mail transport agents (MTAs), must ensure that they are compatible with the
+configuration decisions below.  Failure to do this may result in lost mail,
+broken <samp>From:</samp> lines, and other serious brain damage!
+</p>
+
+<p>
+The mail spool is <code>/var/mail</code> and the interface to send a mail
+message is <code>/usr/sbin/sendmail</code> (as per the FHS).  On older systems,
+the mail spool may be physically located in <code>/var/spool/mail</code>, but
+all access to the mail spool should be via the <code>/var/mail</code> symlink.
+The mail spool is part of the base system and not part of the MTA package.
+</p>
+
+<p>
+All Debian MUAs, MTAs, MDAs and other mailbox accessing programs (such as IMAP
+daemons) must lock the mailbox in an NFS-safe way.  This means that
+<samp>fcntl()</samp> locking must be combined with dot locking.  To avoid
+deadlocks, a program should use <samp>fcntl()</samp> first and dot locking
+after this, or alternatively implement the two locking methods in a non
+blocking way[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f100" name="fr100">100</a>].  Using the
+functions <samp>maillock</samp> and <samp>mailunlock</samp> provided by the
+<samp>liblockfile*</samp>[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f101" name="fr101">101</a>]
+packages is the recommended way to realize this.
+</p>
+
+<p>
+Mailboxes are generally either mode 600 and owned by <var>user</var> or mode
+660 and owned by <samp><var>user</var>:mail</samp>[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f102" name="fr102">102</a>].  The local system
+administrator may choose a different permission scheme; packages should not
+make assumptions about the permission and ownership of mailboxes unless
+required (such as when creating a new mailbox).  A MUA may remove a mailbox
+(unless it has nonstandard permissions) in which case the MTA or another MUA
+must recreate it if needed.
+</p>
+
+<p>
+The mail spool is 2775 <samp>root:mail</samp>, and MUAs should be setgid mail
+to do the locking mentioned above (and must obviously avoid accessing other
+users' mailboxes using this privilege).
+</p>
+
+<p>
+<code>/etc/aliases</code> is the source file for the system mail aliases (e.g.,
+postmaster, usenet, etc.), it is the one which the sysadmin and
+<code>postinst</code> scripts may edit.  After <code>/etc/aliases</code> is
+edited the program or human editing it must call <code>newaliases</code>.  All
+MTA packages must come with a <code>newaliases</code> program, even if it does
+nothing, but older MTA packages did not do this so programs should not fail if
+<code>newaliases</code> cannot be found.  Note that because of this, all MTA
+packages must have <samp>Provides</samp>, <samp>Conflicts</samp> and
+<samp>Replaces: mail-transport-agent</samp> control fields.
+</p>
+
+<p>
+The convention of writing <samp>forward to <var>address</var></samp> in the
+mailbox itself is not supported.  Use a <samp>.forward</samp> file instead.
+</p>
+
+<p>
+The <code>rmail</code> program used by UUCP for incoming mail should be
+<code>/usr/sbin/rmail</code>.  Likewise, <code>rsmtp</code>, for receiving
+batch-SMTP-over-UUCP, should be <code>/usr/sbin/rsmtp</code> if it is
+supported.
+</p>
+
+<p>
+If your package needs to know what hostname to use on (for example) outgoing
+news and mail messages which are generated locally, you should use the file
+<code>/etc/mailname</code>.  It will contain the portion after the username and
+<samp>@</samp> (at) sign for email addresses of users on the machine (followed
+by a newline).
+</p>
+
+<p>
+Such a package should check for the existence of this file when it is being
+configured.  If it exists, it should be used without comment, although an MTA's
+configuration script may wish to prompt the user even if it finds that this
+file exists.  If the file does not exist, the package should prompt the user
+for the value (preferably using <code>debconf</code>) and store it in
+<code>/etc/mailname</code> as well as using it in the package's configuration.
+The prompt should make it clear that the name will not just be used by that
+package.  For example, in this situation the <samp>inn</samp> package could say
+something like:
+</p>
+<pre>
+     Please enter the &quot;mail name&quot; of your system.  This is the
+     hostname portion of the address to be shown on outgoing
+     news and mail messages.  The default is
+     <var>syshostname</var>, your system's host name.  Mail
+     name [&quot;<var>syshostname</var>&quot;]:
+</pre>
+
+<p>
+where <var>syshostname</var> is the output of <samp>hostname --fqdn</samp>.
+</p>
+
+<hr>
+
+<h2><a name="s11.7"></a>11.7 News system configuration</h2>
+
+<p>
+All the configuration files related to the NNTP (news) servers and clients
+should be located under <code>/etc/news</code>.
+</p>
+
+<p>
+There are some configuration issues that apply to a number of news clients and
+server packages on the machine.  These are:
+</p>
+<dl>
+<dt><code>/etc/news/organization</code></dt>
+<dd>
+<p>
+A string which should appear as the organization header for all messages posted
+by NNTP clients on the machine
+</p>
+</dd>
+</dl>
+<dl>
+<dt><code>/etc/news/server</code></dt>
+<dd>
+<p>
+Contains the FQDN of the upstream NNTP server, or localhost if the local
+machine is an NNTP server.
+</p>
+</dd>
+</dl>
+
+<p>
+Other global files may be added as required for cross-package news
+configuration.
+</p>
+
+<hr>
+
+<h2><a name="s11.8"></a>11.8 Programs for the X Window System</h2>
+
+<hr>
+
+<h3><a name="s11.8.1"></a>11.8.1 Providing X support and package priorities</h3>
+
+<p>
+Programs that can be configured with support for the X Window System must be
+configured to do so and must declare any package dependencies necessary to
+satisfy their runtime requirements when using the X Window System.  If such a
+package is of higher priority than the X packages on which it depends, it is
+required that either the X-specific components be split into a separate
+package, or that an alternative version of the package, which includes X
+support, be provided, or that the package's priority be lowered.
+</p>
+
+<hr>
+
+<h3><a name="s11.8.2"></a>11.8.2 Packages providing an X server</h3>
+
+<p>
+Packages that provide an X server that, directly or indirectly, communicates
+with real input and display hardware should declare in their
+<samp>Provides</samp> control field that they provide the virtual package
+<samp>xserver</samp>.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f103" name="fr103">103</a>]
+</p>
+
+<hr>
+
+<h3><a name="s11.8.3"></a>11.8.3 Packages providing a terminal emulator</h3>
+
+<p>
+Packages that provide a terminal emulator for the X Window System which meet
+the criteria listed below should declare in their <samp>Provides</samp> control
+field that they provide the virtual package <samp>x-terminal-emulator</samp>.
+They should also register themselves as an alternative for
+<code>/usr/bin/x-terminal-emulator</code>, with a priority of 20.  That
+alternative should have a slave alternative for
+<code>/usr/share/man/man1/x-terminal-emulator.1.gz</code> pointing to the
+corresponding manual page.
+</p>
+
+<p>
+To be an <samp>x-terminal-emulator</samp>, a program must:
+</p>
+<ul>
+<li>
+<p>
+Be able to emulate a DEC VT100 terminal, or a compatible terminal.
+</p>
+</li>
+<li>
+<p>
+Support the command-line option <samp>-e <var>command</var></samp>, which
+creates a new terminal window[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f104"
+name="fr104">104</a>] and runs the specified <var>command</var>, interpreting
+the entirety of the rest of the command line as a command to pass straight to
+exec, in the manner that <samp>xterm</samp> does.
+</p>
+</li>
+<li>
+<p>
+Support the command-line option <samp>-T <var>title</var></samp>, which creates
+a new terminal window with the window title <var>title</var>.
+</p>
+</li>
+</ul>
+
+<hr>
+
+<h3><a name="s11.8.4"></a>11.8.4 Packages providing a window manager</h3>
+
+<p>
+Packages that provide a window manager should declare in their
+<samp>Provides</samp> control field that they provide the virtual package
+<samp>x-window-manager</samp>.  They should also register themselves as an
+alternative for <code>/usr/bin/x-window-manager</code>, with a priority
+calculated as follows:
+</p>
+<ul>
+<li>
+<p>
+Start with a priority of 20.
+</p>
+</li>
+<li>
+<p>
+If the window manager supports the Debian menu system, add 20 points if this
+support is available in the package's default configuration (i.e., no
+configuration files belonging to the system or user have to be edited to
+activate the feature); if configuration files must be modified, add only 10
+points.
+</p>
+</li>
+<li>
+<p>
+If the window manager complies with <code><a
+href="http://www.freedesktop.org/wiki/Specifications/wm-spec">The Window
+Manager Specification Project</a></code>, written by the <code><a
+href="http://www.freedesktop.org/wiki/">Free Desktop Group</a></code>, add 40
+points.
+</p>
+</li>
+<li>
+<p>
+If the window manager permits the X session to be restarted using a
+<em>different</em> window manager (without killing the X server) in its default
+configuration, add 10 points; otherwise add none.
+</p>
+</li>
+</ul>
+
+<p>
+That alternative should have a slave alternative for
+<code>/usr/share/man/man1/x-window-manager.1.gz</code> pointing to the
+corresponding manual page.
+</p>
+
+<hr>
+
+<h3><a name="s11.8.5"></a>11.8.5 Packages providing fonts</h3>
+
+<p>
+Packages that provide fonts for the X Window System[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f105" name="fr105">105</a>] must do a number of things to
+ensure that they are both available without modification of the X or font
+server configuration, and that they do not corrupt files used by other font
+packages to register information about themselves.
+</p>
+<ol type="1" start="1" >
+<li>
+<p>
+Fonts of any type supported by the X Window System must be in a separate binary
+package from any executables, libraries, or documentation (except that specific
+to the fonts shipped, such as their license information).  If one or more of
+the fonts so packaged are necessary for proper operation of the package with
+which they are associated the font package may be Recommended; if the fonts
+merely provide an enhancement, a Suggests relationship may be used.  Packages
+must not Depend on font packages.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f106"
+name="fr106">106</a>]
+</p>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+BDF fonts must be converted to PCF fonts with the <code>bdftopcf</code> utility
+(available in the <samp>xfonts-utils</samp> package, <code>gzip</code>ped, and
+placed in a directory that corresponds to their resolution:
+</p>
+<ul>
+<li>
+<p>
+100 dpi fonts must be placed in <code>/usr/share/fonts/X11/100dpi/</code>.
+</p>
+</li>
+<li>
+<p>
+75 dpi fonts must be placed in <code>/usr/share/fonts/X11/75dpi/</code>.
+</p>
+</li>
+<li>
+<p>
+Character-cell fonts, cursor fonts, and other low-resolution fonts must be
+placed in <code>/usr/share/fonts/X11/misc/</code>.
+</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<p>
+Type 1 fonts must be placed in <code>/usr/share/fonts/X11/Type1/</code>.  If
+font metric files are available, they must be placed here as well.
+</p>
+</li>
+</ol>
+<ol type="1" start="4" >
+<li>
+<p>
+Subdirectories of <code>/usr/share/fonts/X11/</code> other than those listed
+above must be neither created nor used.  (The <code>PEX</code>,
+<code>CID</code>, <code>Speedo</code>, and <code>cyrillic</code> directories
+are excepted for historical reasons, but installation of files into these
+directories remains discouraged.)
+</p>
+</li>
+</ol>
+<ol type="1" start="5" >
+<li>
+<p>
+Font packages may, instead of placing files directly in the X font directories
+listed above, provide symbolic links in that font directory pointing to the
+files' actual location in the filesystem.  Such a location must comply with the
+FHS.
+</p>
+</li>
+</ol>
+<ol type="1" start="6" >
+<li>
+<p>
+Font packages should not contain both 75dpi and 100dpi versions of a font.  If
+both are available, they should be provided in separate binary packages with
+<samp>-75dpi</samp> or <samp>-100dpi</samp> appended to the names of the
+packages containing the corresponding fonts.
+</p>
+</li>
+</ol>
+<ol type="1" start="7" >
+<li>
+<p>
+Fonts destined for the <code>misc</code> subdirectory should not be included in
+the same package as 75dpi or 100dpi fonts; instead, they should be provided in
+a separate package with <samp>-misc</samp> appended to its name.
+</p>
+</li>
+</ol>
+<ol type="1" start="8" >
+<li>
+<p>
+Font packages must not provide the files <code>fonts.dir</code>,
+<code>fonts.alias</code>, or <code>fonts.scale</code> in a font directory:
+</p>
+<ul>
+<li>
+<p>
+<code>fonts.dir</code> files must not be provided at all.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<code>fonts.alias</code> and <code>fonts.scale</code> files, if needed, should
+be provided in the directory
+<code>/etc/X11/fonts/<var>fontdir</var>/<var>package</var>.<var>extension</var></code>,
+where <var>fontdir</var> is the name of the subdirectory of
+<code>/usr/share/fonts/X11/</code> where the package's corresponding fonts are
+stored (e.g., <samp>75dpi</samp> or <samp>misc</samp>), <var>package</var> is
+the name of the package that provides these fonts, and <var>extension</var> is
+either <samp>scale</samp> or <samp>alias</samp>, whichever corresponds to the
+file contents.
+</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol type="1" start="9" >
+<li>
+<p>
+Font packages must declare a dependency on <samp>xfonts-utils</samp> in their
+<samp>Depends</samp> or <samp>Pre-Depends</samp> control field.
+</p>
+</li>
+</ol>
+<ol type="1" start="10" >
+<li>
+<p>
+Font packages that provide one or more <code>fonts.scale</code> files as
+described above must invoke <code>update-fonts-scale</code> on each directory
+into which they installed fonts <em>before</em> invoking
+<code>update-fonts-dir</code> on that directory.  This invocation must occur in
+both the <code>postinst</code> (for all arguments) and <code>postrm</code> (for
+all arguments except <samp>upgrade</samp>) scripts.
+</p>
+</li>
+</ol>
+<ol type="1" start="11" >
+<li>
+<p>
+Font packages that provide one or more <code>fonts.alias</code> files as
+described above must invoke <code>update-fonts-alias</code> on each directory
+into which they installed fonts.  This invocation must occur in both the
+<code>postinst</code> (for all arguments) and <code>postrm</code> (for all
+arguments except <samp>upgrade</samp>) scripts.
+</p>
+</li>
+</ol>
+<ol type="1" start="12" >
+<li>
+<p>
+Font packages must invoke <code>update-fonts-dir</code> on each directory into
+which they installed fonts.  This invocation must occur in both the
+<code>postinst</code> (for all arguments) and <code>postrm</code> (for all
+arguments except <samp>upgrade</samp>) scripts.
+</p>
+</li>
+</ol>
+<ol type="1" start="13" >
+<li>
+<p>
+Font packages must not provide alias names for the fonts they include which
+collide with alias names already in use by fonts already packaged.
+</p>
+</li>
+</ol>
+<ol type="1" start="14" >
+<li>
+<p>
+Font packages must not provide fonts with the same XLFD registry name as
+another font already packaged.
+</p>
+</li>
+</ol>
+
+<hr>
+
+<h3><a name="s-appdefaults"></a>11.8.6 Application defaults files</h3>
+
+<p>
+Application defaults files must be installed in the directory
+<code>/etc/X11/app-defaults/</code> (use of a localized subdirectory of
+<code>/etc/X11/</code> as described in the <em>X Toolkit Intrinsics - C
+Language Interface</em> manual is also permitted).  They must be registered as
+<samp>conffile</samp>s or handled as configuration files.
+</p>
+
+<p>
+Customization of programs' X resources may also be supported with the provision
+of a file with the same name as that of the package placed in the
+<code>/etc/X11/Xresources/</code> directory, which must be registered as a
+<samp>conffile</samp> or handled as a configuration file.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f107" name="fr107">107</a>]
+</p>
+
+<hr>
+
+<h3><a name="s11.8.7"></a>11.8.7 Installation directory issues</h3>
+
+<p>
+Historically, packages using the X Window System used a separate set of
+installation directories from other packages.  This practice has been
+discontinued and packages using the X Window System should now generally be
+installed in the same directories as any other package.  Specifically, packages
+must not install files under the <code>/usr/X11R6/</code> directory and the
+<code>/usr/X11R6/</code> directory hierarchy should be regarded as obsolete.
+</p>
+
+<p>
+Include files previously installed under <code>/usr/X11R6/include/X11/</code>
+should be installed into <code>/usr/include/X11/</code>.  For files previously
+installed into subdirectories of <code>/usr/X11R6/lib/X11/</code>, package
+maintainers should determine if subdirectories of <code>/usr/lib/</code> and
+<code>/usr/share/</code> can be used.  If not, a subdirectory of
+<code>/usr/lib/X11/</code> should be used.
+</p>
+
+<p>
+Configuration files for window, display, or session managers or other
+applications that are tightly integrated with the X Window System may be placed
+in a subdirectory of <code>/etc/X11/</code> corresponding to the package name.
+Other X Window System applications should use the <code>/etc/</code> directory
+unless otherwise mandated by policy (such as for <a
+href="ch-customized-programs.html#s-appdefaults">Application defaults files, Section 11.8.6</a>).
+</p>
+
+<hr>
+
+<h2><a name="s-perl"></a>11.9 Perl programs and modules</h2>
+
+<p>
+Perl programs and modules should follow the current Perl policy.
+</p>
+
+<p>
+The Perl policy can be found in the <samp>perl-policy</samp> files in the
+<samp>debian-policy</samp> package.  It is also available from the Debian web
+mirrors at <samp><code><a
+href="http://www.debian.org/doc/packaging-manuals/perl-policy/">/doc/packaging-manuals/perl-policy/</a></code></samp>.
+</p>
+
+<hr>
+
+<h2><a name="s-emacs"></a>11.10 Emacs lisp programs</h2>
+
+<p>
+Please refer to the &quot;Debian Emacs Policy&quot; for details of how to
+package emacs lisp programs.
+</p>
+
+<p>
+The Emacs policy is available in <code>debian-emacs-policy.gz</code> of the
+<code>emacsen-common</code> package.  It is also available from the Debian web
+mirrors at <samp><code><a
+href="http://www.debian.org/doc/packaging-manuals/debian-emacs-policy">/doc/packaging-manuals/debian-emacs-policy</a></code></samp>.
+</p>
+
+<hr>
+
+<h2><a name="s11.11"></a>11.11 Games</h2>
+
+<p>
+The permissions on <code>/var/games</code> are mode 755, owner
+<samp>root</samp> and group <samp>root</samp>.
+</p>
+
+<p>
+Each game decides on its own security policy.
+</p>
+
+<p>
+Games which require protected, privileged access to high-score files, saved
+games, etc., may be made set-<em>group</em>-id (mode 2755) and owned by
+<samp>root:games</samp>, and use files and directories with appropriate
+permissions (770 <samp>root:games</samp>, for example).  They must not be made
+set-<em>user</em>-id, as this causes security problems.  (If an attacker can
+subvert any set-user-id game they can overwrite the executable of any other,
+causing other players of these games to run a Trojan horse program.  With a
+set-group-id game the attacker only gets access to less important game data,
+and if they can get at the other players' accounts at all it will take
+considerably more effort.)
+</p>
+
+<p>
+Some packages, for example some fortune cookie programs, are configured by the
+upstream authors to install with their data files or other static information
+made unreadable so that they can only be accessed through set-id programs
+provided.  You should not do this in a Debian package: anyone can download the
+<code>.deb</code> file and read the data from it, so there is no point making
+the files unreadable.  Not making the files unreadable also means that you
+don't have to make so many programs set-id, which reduces the risk of a
+security hole.
+</p>
+
+<p>
+As described in the FHS, binaries of games should be installed in the directory
+<code>/usr/games</code>.  This also applies to games that use the X Window
+System.  Manual pages for games (X and non-X games) should be installed in
+<code>/usr/share/man/man6</code>.
+</p>
+
+<hr>
+
+<p>
+[ <a href="ch-files.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ 11 ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-docs.html">next</a> ]
+</p>
+
+<hr>
+
+<p>
+Debian Policy Manual
+</p>
+
+<address>
+version 3.9.4.0, 2012-09-19<br>
+<br>
+<a href="ch-scope.html#s-authors">The Debian Policy Mailing List</a><br>
+<br>
+</address>
+<hr>
+
+</body>
+
+</html>
+

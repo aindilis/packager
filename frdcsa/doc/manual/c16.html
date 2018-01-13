@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>&#13;      Packaging Techniques
+    </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="HOME"
+TITLE="
+    Predator Codebase
+  "
+HREF="book1.html"><LINK
+REL="PREVIOUS"
+TITLE="
+	Towards a Solution
+      "
+HREF="x13.html"><LINK
+REL="NEXT"
+TITLE="
+	Examples of Architectural Components
+      "
+HREF="x26.html"></HEAD
+><BODY
+CLASS="chapter"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Predator Codebase</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x13.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x26.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="chapter"
+><H1
+><A
+NAME="AEN16"
+></A
+>Chapter 2. 
+      Packaging Techniques
+    </H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="c16.html#AEN18"
+>The Packaging Process</A
+></DT
+><DT
+><A
+HREF="x26.html"
+>Examples of Architectural Components</A
+></DT
+><DT
+><A
+HREF="x35.html"
+>Policy</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="AEN18"
+>The Packaging Process</A
+></H1
+><P
+>&#13;	The packaging process is semi-supervised, of course, since the
+	system  does  not begin  with  all  of  the capabilities.   Of
+	course,  given the  domain, the  architecture itself  is under
+	constant elaboration  and the development  of the architecture
+	is considered part of its learning.
+      </P
+><P
+>&#13;	Importantly, the packages which are produced by early versions
+	of Predator can later  be used to facilitate capabilities.  An
+	example  of this  might be  that a  system for  annotating and
+	extracting  text files  could  be packaged  with the  current,
+	hand-written perl implementation of Predator, and then used to
+	annotate  files  for  extraction  to increase  the  extent  of
+	automation.
+      </P
+><P
+>&#13;	In  addition to  "learning"  via programming,  there are  real
+	learning systems employed.  The  first is that any action that
+	the user  takes in excess of  Predator in order  to complete a
+	package must  be formalizeable  as an action.   By documenting
+	the various incompletenesses of Predator, it will be easier to
+	add  features or  train existing  learning methods  to perform
+	certain tasks.
+      </P
+><P
+>&#13;	The basic  process is currently Make like.   There are several
+	targets which  relate to stages  of packaging.  Most  of these
+	steps are  performed by existing  packaging assistants, almost
+	all of  which are clearly specified in  the Debian Maintainers
+	Manual.  Incidentally,  we intend to formalize  the process of
+	taking  documents  like the  Debian  Developers' Policies  and
+	mapping the  logic documented therein  into code, so  that, as
+	best practices and online documentation are improved, updating
+	the  code to reflect  this is  an entirely  auditable process.
+	Obviously, the  notion of process is very  important here, but
+	we  have  yet  to  find  an appropriate  system  for  robustly
+	modelling processes (as opposed to simply hard coding them via
+	software).  This remains a  major need.  We have explored many
+	techniques but none have been employed successfully, mainly on
+	account  of  our  own  ignorance  and lack  of  resources  and
+	assistance.  (We have, for instance, looked at AIAI's I-DE and
+	I-X, Flowdesigner,  ArgoUML, AcmeStudio, OntoEdit,  etc.  Many
+	times we have  not succeeding in getting the  software to even
+	run.  Although this could be  viewed as ineptitude, it is more
+	appropriate  and accurate  to consider  it lack  of resources.
+	For  instance, during  the  aforementioned testing  I had  not
+	eaten in  6 days,  save 2  cans of red  kidney beans  and some
+	hotdogs  one day.  Secondly,  this may  be attributable  to my
+	ignorance of Software  Engineering and Architecture practices.
+	However,  I   feel  that  such   practices  are  prohibitively
+	difficult to  learn, and seek  assistance to do so.   The fact
+	that there are not existing  tools which more or less complete
+	the  process  indicates a  certain  lack  of  rigour in  these
+	approaches.)
+      </P
+><P
+>&#13;	So, as the software is  packaged, more cases for more software
+	is elaborated.  A fundamental  problem is that the information
+	does not come  in any standard form, if  at all, and therefore
+	has  to be  estimated.   One instance  of  this is  dependency
+	information.  There are hybrid methods for accomplishing this.
+	First is, every  software package that is added,  the files it
+	contains are  mapped to the desired  metadata.  Therefore, the
+	system  should be able  to look  in appropriate  places, using
+	appropriate features, to extract the desired information.  For
+	instance, the  system should know  to look in readmes,  and to
+	incorporate the names of known systems to approximately filter
+	the readme  file for  dependency information.  In  some cases,
+	not  all the  software  is necessary,  and  so the  annotation
+	language,  which  is   an  ontology,  must  include  relations
+	specifying this.  There are natural kinds of dependencies with
+	Debian (suggets, depends,  recommends, conflicts), etc.  Using
+	other tools like pbuilder and sbuild, it should be possible to
+	do  some   measure  of  automatic   testing  of  dependencies.
+	Integrating  both modes  should  give a  head start.   Lastly,
+	data-mining  of dependencies  versus  various features  should
+	allow prediction  of what libraries are needed.   All of these
+	techniques  will  substantially  reduce,  and  in  some  cases
+	eliminate completely,  the effort of  the packaging supervisor
+	to manually  locate software.  Of  course it is also  the case
+	that the  system will be invoked on  each dependency, thereby,
+	automatically   finding   and   packaging   (where   possible)
+	dependencies.    This  information   will  be   used   by  the
+	Machiavelli system in  authoring persuasive letters to authors
+	of software, based on further confidence building tests - such
+	as applying question answering software to questions like "why
+	isn't system X licensed open source", and user given approval,
+	to write  letters to  the authors in  the hopes  of persuading
+	them  to  relicense  their  software, as  well  as  key-player
+	network analysis measures to focus efforts on important cases.
+	Incidentally,  the  persuasive   letter  authoring  system  is
+	already completed.
+      </P
+><P
+>&#13;	In conclusion, there are variety of special methods which must
+	be  invoked  to  extract  information  necessary  to  creating
+	packages.   The system  attempts  to monitor  the process  and
+	activities of packagers in  order to identify commonalties and
+	areas for improvement.  The system evolves both through manual
+	coding, and automatic learning.  The system interacts with the
+	user, proceeding as far as  possible before asking the user to
+	complete  some task.   I  forgot to  mention  that a  planning
+	process  is  necessary,  and  should  be part  of  the  larger
+	planning  system,  and  therefore  able to  exchange  tactical
+	information  to improve the  overall quality  of automatically
+	maintained development plans.
+      </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x13.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="book1.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x26.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Towards a Solution</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Examples of Architectural Components</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

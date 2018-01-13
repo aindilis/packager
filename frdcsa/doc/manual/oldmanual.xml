@@ -1,0 +1,344 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"file:///usr/share/sgml/docbook/dtd/xml/4.1.2/docbookx.dtd" [
+<!ENTITY legal SYSTEM "legal.xml">
+]>
+<book>
+  <title>
+    RADAR: Rapid Application Discovery and Retrieval
+  </title>
+  <bookinfo>
+    <author>
+      <firstname>Andrew</firstname>
+      <surname>Dougherty</surname>
+    </author>
+  </bookinfo>
+  <toc>
+  </toc>
+  <chapter>
+    <title>What is RADAR?</title>
+    <sect1 id="overview">
+      <title>
+	Overview
+      </title>
+      <para>
+	An extract from his poem, The Stream, reads as follows:
+
+	If you want to find the source
+	You have to go up, against the current
+	Tear through, seek, don't give up.
+	You know it must be somewhere here.
+	Where are you, source?
+	Where are you, source? 
+
+	http://news.bbc.co.uk/1/hi/entertainment/arts/3528449.stm	
+      </para>
+      <para>
+	RADAR is a tool  for rapidly locating software upstream source
+	archives  and categorizing  them for  packaging.  The  goal of
+	RADAR  is to  support people  who are  tracking  software.
+      </para>
+      <para>
+	RADAR will  consist of either single or  multiple agents, thus
+	enabling  information to  be distributed  among users,  and to
+	integrate their results.
+      </para>
+    </sect1>
+  </chapter>
+  <chapter>
+    <title>
+      Search Heuristics and Clustering
+    </title>
+    <sect1>
+      <title>
+	Overview
+      </title>
+      <para>
+	A clustering is defined as:  a grouping of a number of similar
+	things;  "a bunch  of trees";  "a cluster  of  admirers" [syn:
+	{bunch}, {clump}, {cluster}].   RADAR's primary application is
+	clustering   and  <phrase>system   identification</phrase>  of
+	target applications,  where application is a  unit of software
+	which performs a possibly  useful function.  We are interested
+	in having  redundancy and quality across  an orthonormal basis
+	of novel applications that satisfy perceived needs.
+      </para>
+      <para>
+	RADAR is an architecture for properly distributing information
+	to applications  which can  perform relevant functions  on the
+	data  and return semantic  information which  will be  used to
+	identify targets.  As the RADAR architecture helps to identify
+	new systems, these systems  will be digested and packaged, and
+	will  gradually  replace RADAR  modules  with more  organized,
+	complex,  accurate systems.	
+      </para>
+      <para>
+	Knowing what  we do about formal mathematical  systems and the
+	relation  between   system  complexity  and   problem  solving
+	capability, we have  a basic model of growth  that is designed
+	to maximize capabilities.   This model is necessarily complex,
+	but basically  can be thought  of as making sure  that foreign
+	applications of value are aquired and set up.  However we have
+	a suboptimal substructural  problem - that is -  we don't have
+	the ability  to access the right packages  immediately, and to
+	do everything  in the way  we would like  to.  As a  result of
+	this,  we  have developed  the  following methodologies.   The
+	first is that we try to create a market for tasks that need to
+	be done,  so that people who  would like to work  in this area
+	have clear  indications of  what work needs  to be  done.  The
+	second, and  the point  of this paragraph,  is that  a natural
+	equilibrium is  struck in which a certain  amount of knowledge
+	loss is  assumed, and  the structures are  grown incrementally
+	and  forked frequently.   Fortunately, we  do not  suffer from
+	state space explosion because the new architectural components
+	solve  the  organizational problems  that  would  have led  to
+	explosion.
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+	Examples of Architectural Components
+      </title>
+      <para>
+	<itemizedlist>
+	  <title>
+	    Examples of Ad Hoc Modular  Architecture
+	  </title>
+	  <listitem>
+	    <para>
+	      Docbook  - Needing  a  meaningful way  to represent  the
+	      documents, we  learned about Docbook.   This represent a
+	      certain kind of generalization  of the purpose of RADAR,
+	      in   which   we   use  existing   applications.    These
+	      generalizations are being made formal by specifying them
+	      in SubL, and possibly using TCM.
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      OpenCyc -
+	      <application>OpenCyc</application>,            possibly
+	      <application>RKF</application>,
+	      <application>Powerloom</application>,  etc,  will form
+	      the  core  of  knowledge-based components  that  other
+	      systems will feed content to.
+	    </para>
+	  </listitem>
+	</itemizedlist>
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+	Policy
+      </title>
+      <para>
+	The  policy of  RADAR  is to  collect  and use  applications
+	according   to  their   licenses  and/or   specific  written
+	agreements.  A sophisticated  license management system will
+	be found-or-created to ensure  that all software, indeed all
+	data,  is used in  accordance with  its authors  wishes.  We
+	intend to formalize the contents  of licenses so that we can
+	formally prove the correctness of the software use.
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+	Search Strategies
+      </title>
+      <cmdsynopsis>
+	<command>frdcsa-index</command>
+	<arg>website</arg>
+      </cmdsynopsis>
+    </sect1>
+    <sect1>
+      <title>
+	Classification
+      </title>
+      <para>
+	Web  sites will  be classified  into one  of  several kinds,
+	among  which might  be:  sites and  metasites of,  projects,
+	groups, people, software.
+      </para>
+      <para>
+	<ulink url="http://www-2.cs.cmu.edu/afs/cs.cmu.edu/project/theo-20/www/data/">
+	  WebKB 
+	</ulink> 
+	provides classified web pages in the target domain.
+	Rainbow is used to classify them.
+      </para>
+    </sect1> 
+    <sect1>
+      <title>
+	Annotation
+      </title>
+      <para>
+	<ulink url="http://nl.ijs.si/et/talks/esslli02/esslli02-3.html">
+	  Annotation of Language Resources
+	</ulink>
+	summarizes   at  least   some   of  the   various  tools   and
+	methodologies we might pursue in creating these recognizers.
+      </para>
+      <para>
+	Alembic -
+	We will  use one of several  methods for automatically
+	extracting   information   from  webpages   concerning
+	aspects   of  applications.   We   will  be   able  to
+	automatically  recognize package names,  author names,
+	author  emails,  package  homepages, package  mirrors,
+	package  versions,  packages  documentation,  manuals,
+	copyright/license  information, operating  system, and
+	so  on.   To  accomplish  this we  will  possibly  use
+	several different  freely available tools.   Note that
+	<application>Gate</application>,
+	<application>Alembic</application>       and       the
+	<application>BBN Tagger</application> will work here.
+      </para>
+      <para>
+	Sample image of using Alembic to parse named entities from a
+	project web page.
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+	Metadata
+      </title>
+      <para>
+	Use  of the Dublic  Core metadata  will be  incorporated, so
+	that tagsets map to this, and this metadata is automatically
+	extracted  referring  to  various  entities  such  as  labs,
+	projects, people and software.
+      </para>
+    </sect1>
+  </chapter>
+  <chapter>
+    <title>
+      Knowledge-Based Management of Systems
+    </title>
+    <sect1>
+      <title>
+	Overview
+      </title>
+      <para>
+	Although  the  primary emphasis  of  RADAR  is clustering,  it
+	requires a sophisticated interface to  a back end to store the
+	information it  requires.  Since  RADAR is primarily  used for
+	locating  upstream  sources, this  means  that  it differs  in
+	design requirements from the software repository which is used
+	to track  all application information,  from locally developed
+	software, preexisting  packages, and upstream  sources.  So it
+	inherits  the metadata  object model  of the  general software
+	repository.
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+	Distributed Sharing of Software Knowledge Base
+      </title>
+      <para>
+	We will  use a knowledge exchange  format like KIF  or KQML to
+	share  search  results  from  various people.   The  types  of
+	interactions that  are of use  in such a  distributed scenario
+	are typical of  agent based systems, so one  might expect that
+	we would agentify the RADAR  application, or create a group of
+	interacting agents.
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+      </title>
+      <para>
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+      </title>
+      <para>
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+      </title>
+      <para>
+      </para>
+    </sect1>
+  </chapter>
+  <chapter>
+    <title>
+      Architecture
+    </title>
+    <sect1>
+      <title>
+	Emacs Interface
+      </title>
+      <para>
+	The RADAR minor mode is the primary interface with Emacs.
+      </para>
+      <sect2>
+	<title>
+	  Reuse of existing Emacs tools.
+	</title>
+	<para>
+	  Existing  Emacs  functions must  be  thoroughly utilized  to
+	  avoid duplicate work.   However, modular insertion of proper
+	  Emacs  methodologies as they  are discovered  and formalized
+	  will also  work.  For instance, writing a  NER extractor for
+	  the  desired  package  metadata  is useful,  but  certainly,
+	  existing Emacs tools for identifying e-mail, should be used.
+	</para>
+      </sect2>
+    </sect1>
+    <sect1>
+      <title>
+	OO-Perl Interface
+      </title>
+      <para>
+	radar.pl  contains a  class structure  implementing  the basic
+	architecture.
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+	Auditing of Sources
+      </title>
+      <para>
+	A primary RADAR  feature is the ability to  track sources over
+	time.  This would include the following capabilities.
+
+	Relate extracted metadata to source document.
+	Monitor source documents for changes.
+	Cache copies of different source documents (a.l.a. wayback machine)
+	Track new, continuous, and removed content across copies.
+      </para>
+    </sect1>
+    <sect1>
+      <title>
+	Debian Packages
+      </title>
+      <para>
+	There  are several packaging  tools which  are used  by RADAR.
+	This includes uupdate, uscan, dbs and most development tools.
+      </para>
+      <para>
+	<ulink url="file:///usr/share/doc/developers-reference/index.en.html">
+	  Developer's Reference
+	</ulink>
+	outlines the basic package requirements.
+      </para>
+    </sect1>
+  </chapter>
+  <chapter>
+    <title>
+      Miscellaneous
+    </title>
+    <sect1>
+      <title>
+	Misc.
+      </title>
+      <para>
+	Radar  stands for Rapid  Application Discovery  and Retrieval.
+	It  is  a tool  for  easing  the  process of  discovering  and
+	retrieving software for the debian archive.
+      </para>
+    </sect1>
+  </chapter>
+</book>

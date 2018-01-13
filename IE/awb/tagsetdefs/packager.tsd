@@ -1,0 +1,364 @@
+File-Type:          Tag Set Definition
+File-Type-Version:  1.0
+Comment1:            The ordering of the tagsets indicates the precedence of
+Comment2:            co-extensive tags.  Thus, if two tags have identical extents
+Comment3:            (that is, start and end values are the same as each other), then
+Comment4:            the tag that is part of a tagset occurring EARLIER in this listing
+Comment5:            should CONTAIN the tag that is part of tagset occurring LATER in
+Comment6:            this listing.  DSD 4/19/96
+Comment7:            Note that for HUB4 B&E tags, all E_ tags must precede all corresponding
+Comment8:            B_ tags for the workbench (ptf2sgm) to output tags in the correct order.
+Comment9:            JSA 7/8/98
+
+CCAP	Closed-captioned segment tags
+	SSEG
+	BROADCAST
+
+WSJ	Wall Street Journal Article Markup (Doc, Docno, etc.)
+	MSGSEQ
+	DOCID
+	DOC
+	DOCNO
+	DD
+	NWORDS
+	HLS
+	HL
+	AUTHOR
+	AN
+	G
+	GV
+	IDS
+	PREAMBLE
+	TEXT
+	TXT
+	P
+	TRAILER
+	SO
+	CO
+	IN
+	DATELINE
+	HEADLINE
+	DATE
+	COMMENT
+
+INITIATIVE	Initiative tags
+	EXPERT_INIT
+	USER_INIT
+
+MISCDIAL	Miscellaneous tags for dialogues.
+	unsolicited
+	openended
+
+DIALOGUE	Dialogue act tags for human-human and human-computer annotation
+	greeting
+	greeting-response
+	introduce-self
+	introduce-topic
+	thank
+	verify
+	accept
+	reject
+	affirm
+	negate
+	acknowledge
+	apologize
+	give-information
+	offer
+	please-wait
+	request-action
+	request-affirmation
+	request-information
+	request-suggestion
+	request-verification
+	suggest
+	suggest-action
+	closing
+	take-initiative
+	hold
+	youre-welcome
+	end-action
+
+
+UTTER	General utterance types (used in communicator-flight-prefs)
+	UT_DEC
+	UT_IMP
+	UT_WH
+	UT_YESNO
+	UT_NOCONF
+	UT_YESCONF
+	UTYPE
+	QATTRB
+
+FLIGHT communicator flight tags
+	DLOC
+	ALOC
+	DPORT
+	APORT
+	STOPLOC
+	T_DDATE
+	T_ADATE
+	T_CDATE
+	T_DATE_QUAL
+	T_DTIME
+	T_ATIME
+	T_CTIME
+	T_TIME_QUAL
+	FLIGHT
+	AIRLINE
+	FLIGHTNUM
+	FLIGHTQUAL
+	TICKATTR
+
+HUB4REL	Test tags to be used in hub4 relational tagging.
+	ENT_NAME
+	ENT_TYPE
+	ENT_DESCRIPTOR
+	ENT_CATEGORY
+	OBJ_STATUS
+	HUB4_COMMENT
+
+HUB4	Tags used in Hub-4 speech transcription files
+	UTF
+	BN_EPISODE_TRANS
+	CONVERSATION_TRANS
+	WTIME
+	RECORDING_CHANGE
+	BACKGROUND
+	FRAGMENT
+	ASIDE
+	COMMENT
+	CONTRACTION
+	EPISODE
+	EXPAND
+	FOREIGN
+	NOSCORE
+	HYPHEN
+	OVERLAP
+	SECTION
+	SEGMENT
+	SEPARATOR
+	SYNC
+	TIME
+	TURN
+	UNCLEAR
+	E_ASIDE
+	E_FOREIGN
+	E_UNCLEAR
+	E_OVERLAP
+	E_NOSCORE
+	B_ASIDE
+	B_FOREIGN
+	B_UNCLEAR
+	B_OVERLAP
+	B_NOSCORE
+	        
+SGML_Comments Special SGML-specific comment markup (comments: !--)
+	!--
+	
+SENT    S sentence annotations (possibly added automatically by Alembic)
+	S
+
+MUC6	Sixth Message Understanding Conference training data tags
+	CODER
+
+TREEBANK	Treebank stuff for Alex Yeh
+	Sent
+        S-1
+        SBAR
+        SBAR-1
+        SBAR-2
+        SBAR-3
+        SBAR-4
+        SBARQ
+        SBARQ-1
+        SINV
+        SQ
+        WHADVP
+        WHNP
+        WHPP
+        X
+        ADJP
+        ADJP-1
+        ADJP-2
+	ADVP
+        ADVP-1
+        INTJ
+	NP
+	NP-1
+        NPS
+        ORD
+        PNP
+        PP
+        PP-1
+        PP-2
+        PP-3
+        PP-4
+        PP-5
+        PP-6
+	VP
+        VP-1 
+        VP-2
+
+SUPERT	SuperTags...for Grammatical Relations
+	GRSTAG
+
+SYN	Dependency syntax markup, e.g., grammatical relations
+	SYN
+
+NGTMP   Temporary explorations of NG stuff
+	NGC
+        APP
+        NGCAPP
+        NPAPP
+        NGADJP
+	NGP
+	POS
+        NGQ
+	PART
+        COORD
+        NUM
+	NG
+
+VBGRP	Stage 2 (Richer) Verb Group Chunking; VX contained in VG chunks.
+	VG
+	VG-INF
+	VG-VBG
+	VG-VBN
+        CC-MW
+	IN-MW
+        JG
+        RG
+	PG
+	WHG
+        PRT
+	AUX
+	COMP
+	CLT
+
+NXVX    Modified Abney Chunking; NE contained in NX chunks
+	NX
+	VX
+	INF
+	VGX
+	VNX
+	AX
+	RX
+	QUESTION
+
+BUYSELL	Buyer Seller Relation Tags
+	BUYERSELLER
+	BUYER
+	SELLER
+	ITEM
+	PRICE
+
+REL	Relation Tags
+	RELTYPE
+	RELINST
+	RELINSTSLOT
+
+COMP 	Comparison mark-up
+	RECALL
+	PRECISION
+	SAME
+	UNDERLAP
+	TYPE-ERROR
+	PARTIAL-SAME
+
+COREF   Co-reference annotations (types distinguished by their arguments)
+	COREF
+
+COREFMIN	Co-reference-related MIN tags
+	MIN
+	MARKABLE
+
+SEMNET	Semantic Network building blocks for Bernard Schuchner's Ph.D. research
+	OOPH
+	OO
+
+READINGCOMP	5 W's annotations
+	WHO
+	WHAT
+	WHEN
+	WHERE
+	WHY
+
+ACE	ACE-related annotations (e.g., MENTION, MENTIONHEAD, etc.)
+	MENTION
+	MENTIONHEAD
+	SPECIFICITY
+
+TTL	The NEW approach to title and other position/job/function information about people
+	TTL
+	GOV-TTL
+	MIL-TTL
+	PROF-TTL
+	JUD-TTL
+	HON-TTL
+	EXEC-TTL
+        NOT-TTL
+
+NOMHEAD	Nominal Heads derived from EDT data
+	NAMEHEADFAC
+	NAMEHEADGSP
+	NAMEHEADLOC
+	NAMEHEADORG
+	NAMEHEADPER
+	NOMHEADFAC
+	NOMHEADGSP
+	NOMHEADLOC
+	NOMHEADORG
+	NOMHEADPER
+	PROHEADFAC
+	PROHEADGSP
+	PROHEADLOC
+	PROHEADNIL
+	PROHEADORG
+	PROHEADPER
+
+NE	Named Entity Markup
+	ENAMEX
+	NUMEX
+	TIMEX
+	E_ENAMEX
+	E_TIMEX
+	E_NUMEX
+	B_ENAMEX
+	B_TIMEX
+	B_NUMEX
+	MARKER
+	E_MARKER
+	B_MARKER
+
+NOTNE	Things that otherwise would be an NE, but aren't
+	NONAMEX
+	NE_COMMENT
+
+AR	Anchor Reporter Markup
+	ASEG
+	RSEG
+	ANCHOR
+	REPORTER
+
+TIMECODES	Time Code Markup (from Closed Caption streams)
+	TS
+
+POST	Post, title, role and other tags useful for determine a person's position
+	POST
+	ROLE
+	TITLE
+
+PD	The NEWER, more inclusive approach to titles, a.k.a., Person Descriptors.
+        PD
+	NOT-PD
+        
+GEO	Geographical coordinates (Easting, Northing, Coordinate, etc.)
+	GEOCOORD
+	EASTING
+	NORTHING
+
+LEX	Tokenization, Part of Speech, Whitespace, etc.
+	COMPOUND
+	LEX
+	SUBLEX
+	WS

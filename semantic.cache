@@ -1,0 +1,29 @@
+;; Object packager/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "packager/"
+  :tables (list 
+   (semanticdb-table "packager.el"
+    :major-mode 'emacs-lisp-mode
+    :tags 'nil
+    :file "packager.el"
+    )
+   (semanticdb-table "Makefile"
+    :major-mode 'makefile-mode
+    :tags 'nil
+    :file "Makefile"
+    )
+   (semanticdb-table "Makefile.example"
+    :major-mode 'makefile-mode
+    :tags 'nil
+    :file "Makefile.example"
+    )
+   (semanticdb-table "Makefile.template"
+    :major-mode 'makefile-mode
+    :tags 'nil
+    :file "Makefile.template"
+    )
+   )
+  :file "semantic.cache"
+  :semantic-tag-version "2.0beta3"
+  :semanticdb-version "2.0beta3"
+  )

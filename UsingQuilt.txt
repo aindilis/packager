@@ -1,0 +1,150 @@
+Debian
+
+Wiki
+
+Login
+
+  • FrontPage
+  • RecentChanges
+  • FindPage
+  • HelpContents
+  • UsingQuilt
+
+Search: [                    ] [Search Titles] [Search Full Text]
+Debian
+Wiki/
+
+  • Login
+  • Comments
+  • Info
+  • Attachments
+  • More Actions: [Raw Text                ] [Do]
+
+  • UsingQuilt
+
+Translation(s): English - Italiano (!) ?/Discussion
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Contents
+
+ 1. General information
+     1. documentation
+     2. Basic concepts
+ 2. Using quilt with Debian source packages
+     1. Using .quiltrc configuration file
+     2. Environment variables
+ 3. Basic quilt tasks
+     1. Making a new patch
+     2. Editing an existing patch
+
+Using quilt in Debian source packages.
+
+  • This page is aimed at people who want to make some changes to a Debian
+    source package which is already using quilt.
+  • The intention is not to explain quilt, but to offer some Debian specific
+    tips
+
+General information
+
+documentation
+
+  • If you want to understand how quilt work, install the package and read /usr
+    /share/doc/quilt/quilt.pdf.gz
+  • There is an extensive guide on quilt and packaging: Debian New Maintainers'
+    Guide.
+  • A comprehensive yet succinct tutorial on quilt, How to use quilt to manage
+    patches in Debian packages, published by Raphaël Hertzog (coauthor of the
+    New Maintainers' Guide above)
+  • A How-To from the Debian Perl Group: Quilt for Debian Maintainers.
+  • There is also a Quilt Tutorial (PDF), though dated (2006)
+
+Basic concepts
+
+quilt works with some directories : it creates a .pc/ and a patches/ directory.
+
+Those directories can be created when you do
+
+ $ quilt import some_package.diff.gz
+
+Using quilt with Debian source packages
+
+Situation: you have downloaded a Debian source package which uses quilt and
+want to fix a bug and then submit a patch to the maintainers.
+
+Using .quiltrc configuration file
+
+Place a .quiltrc configuration file in your home directory with the following
+lines. 
+
+QUILT_PATCHES=debian/patches
+QUILT_NO_DIFF_INDEX=1
+QUILT_NO_DIFF_TIMESTAMPS=1
+QUILT_REFRESH_ARGS="-p ab"
+
+Environment variables
+
+Alternatively, you can add these lines to .bashrc. Otherwise, run them in your
+shell or terminal before using quilt
+
+export QUILT_PATCHES=debian/patches
+export QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index"
+
+Basic quilt tasks
+
+Making a new patch
+
+The source code unpacked by apt-get source does not have patches applied.
+
+First step: apply existing patches to the source
+
+quilt push -a
+
+to "push" all existing patches onto the source tree (when you build a package,
+this is done by the build scripts)
+
+Creating a new patch
+
+quilt new myPatch.diff # this is the patch name
+
+quilt add README # Where 'README' is the name of file you want to modify. You have to do that for all files you modify before you change them; one quilt patch can change multiple files
+
+Now make changes to the source
+
+Now, make your changes to the files added to the patch: edit it, or replace it
+with an already modified file stored in a different directory.
+
+Updating a patch with changes made to its files
+
+quilt refresh #you can do this as often as you like
+
+Finish your editing
+
+quilt pop -a #this un-applies all patches so that the source returns to the downloaded condition
+
+Editing an existing patch
+
+quilt supports multiple patches, but you are only ever change one of them.
+
+This is the patch last pushed.
+
+To edit an existing patch, start by pushing it
+
+quilt push myPatch.diff
+
+Now edit it, and when ready
+
+quilt refresh myPatch.diff   #note: command line completion may save you some typing
+
+quilt pop -a
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+UsingQuilt (last edited 2013-04-04 13:17:37 by ?Lessyv)
+
+  • MoinMoin Powered
+  • Python Powered
+  • Valid HTML 4.01
+  • Debian Wiki team, bugs and config available.
+  • Hosting provided by Dembach Goo Informatik GmbH & Co KG
+

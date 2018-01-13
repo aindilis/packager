@@ -1,0 +1,4 @@
+libgpg-error 1.0
+libgcrypt 1.2.0 
+libotr 2.0.1    
+wxWidgets 2.5.x

@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<link rel="shortcut icon" href="/htdocs/favicon.ico">
+<script type="text/javascript" src="/htdocs/bugstatus.js"></script>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta name="robots" content="index,nofollow">
+
+<title>UsingQuilt - Debian Wiki</title>
+<script type="text/javascript" src="/htdocs/common/js/common.js"></script>
+
+<script type="text/javascript">
+<!--
+var search_hint = "Search";
+//-->
+</script>
+
+
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/htdocs/debwiki/css/common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="/htdocs/debwiki/css/screen.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="print" href="/htdocs/debwiki/css/print.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="projection" href="/htdocs/debwiki/css/projection.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/htdocs/debian-wiki-1.0.css">
+
+<!-- css only for MS IE6/IE7 browsers -->
+<!--[if lt IE 8]>
+   <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/htdocs/debwiki/css/msie.css">
+<![endif]-->
+
+
+<link rel="alternate" title="Debian Wiki: UsingQuilt" href="/UsingQuilt?diffs=1&amp;show_att=1&amp;action=rss_rc&amp;unique=0&amp;page=UsingQuilt&amp;ddiffs=1" type="application/rss+xml">
+
+
+<link rel="Start" href="/FrontPage">
+<link rel="Alternate" title="Wiki Markup" href="/UsingQuilt?action=raw">
+<link rel="Alternate" media="print" title="Print View" href="/UsingQuilt?action=print">
+<link rel="Search" href="/FindPage">
+<link rel="Index" href="/TitleIndex">
+<link rel="Glossary" href="/WordIndex">
+<link rel="Help" href="/HelpOnFormatting">
+</head>
+
+<body  lang="en" dir="ltr">
+<div id="logo"><a href="http://www.debian.org" title="Debian Homepage"><img src="/htdocs/debwiki/img/openlogo-50.png" alt="Debian" width="50" height="61"></a></div>
+<div id="header">
+<div id="wikisection">
+<p class="section"><a href="/" title="Debian Wiki Homepage">Wiki</a></p>
+<div id="username"><a href="/UsingQuilt?action=login" id="login" rel="nofollow">Login</a></div>
+</div>
+<div id="navbar">
+
+<ul id="navibar">
+<li class="wikilink"><a href="/FrontPage">FrontPage</a></li><li class="wikilink"><a href="/RecentChanges">RecentChanges</a></li><li class="wikilink"><a href="/FindPage">FindPage</a></li><li class="wikilink"><a href="/HelpContents">HelpContents</a></li><li class="current"><a href="/UsingQuilt">UsingQuilt</a></li>
+</ul>
+
+</div>
+
+<form id="searchform" method="get" action="/UsingQuilt">
+<div>
+<input type="hidden" name="action" value="fullsearch">
+<input type="hidden" name="context" value="180">
+<label for="searchinput">Search:</label>
+<input id="searchinput" type="text" name="value" value="" size="20"
+    onfocus="searchFocus(this)" onblur="searchBlur(this)"
+    onkeyup="searchChange(this)" onchange="searchChange(this)" alt="Search">
+<input id="titlesearch" name="titlesearch" type="submit"
+    value="Titles" alt="Search Titles">
+<input id="fullsearch" name="fullsearch" type="submit"
+    value="Text" alt="Search Full Text">
+</div>
+</form>
+<script type="text/javascript">
+<!--// Initialize search form
+var f = document.getElementById('searchform');
+f.getElementsByTagName('label')[0].style.display = 'none';
+var e = document.getElementById('searchinput');
+searchChange(e);
+searchBlur(e);
+//-->
+</script>
+
+<div id="logo"><a href="http://www.debian.org" title="Debian Homepage"><img src="/htdocs/debwiki/img/openlogo-50.png" alt="Debian" width="50" height="61"></a></div>
+
+<div id="breadcrumbs"><a href="/" title="Debian Wiki Homepage">Wiki</a><span class="sep">/</span>
+
+</div>
+
+<ul class="editbar"><li><a href="/UsingQuilt?action=login" id="login-1" rel="nofollow">Login</a></li><li class="toggleCommentsButton" style="display:none;"><a href="#" class="nbcomment" onClick="toggleComments();return false;">Comments</a></li><li><a class="nbinfo" href="/UsingQuilt?action=info" rel="nofollow">Info</a></li><li><a class="nbattachments" href="/UsingQuilt?action=AttachFile" rel="nofollow">Attachments</a></li><li>
+<form class="actionsmenu" method="GET" action="/UsingQuilt">
+<div>
+    <label>More Actions:</label>
+    <select name="action"
+        onchange="if ((this.selectedIndex != 0) &&
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="RenamePage" disabled class="disabled">Rename Page</option>
+<option value="DeletePage" disabled class="disabled">Delete Page</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="show" disabled class="disabled">Subscribe User</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="show" disabled class="disabled">Remove Spam</option>
+<option value="show" disabled class="disabled">Revert to this revision</option>
+<option value="PackagePages">Package Pages</option>
+<option value="show" disabled class="disabled">------------------------</option>
+<option value="Load">Load</option>
+<option value="Save">Save</option>
+<option value="SlideShow">SlideShow</option>
+    </select>
+    <input type="submit" value="Do">
+    
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+<h1 id="locationline">
+
+
+<ul id="pagelocation">
+<li><a class="backlink" href="/UsingQuilt?action=fullsearch&amp;context=180&amp;value=linkto%3A%22UsingQuilt%22" rel="nofollow" title="Click to do a full-text search for this title">UsingQuilt</a></li>
+</ul>
+
+</h1>
+</div>
+
+<div id="page" lang="en" dir="ltr">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><div><table style="width: 100%"><tbody><tr>  <td style="border: 0px hidden ;"><p class="line891"><small><a href="/DebianWiki/EditorGuide#translation">Translation(s)</a>: English - <a href="/it/UsingQuilt">Italiano</a></small></td>
+  <td style="border: 0px hidden ;  text-align: right;"><p class="line862"> <img alt="(!)" height="16" src="/htdocs/debwiki/img/idea.png" title="(!)" width="16" /> <a class="nonexistent" href="/UsingQuilt/Discussion">?</a>/Discussion </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-3"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span><p class="line867"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#General_information">General information</a><ol><li>
+<a href="#documentation">documentation</a></li><li>
+<a href="#Basic_concepts">Basic concepts</a></li></ol></li><li>
+<a href="#Using_quilt_with_Debian_source_packages">Using quilt with Debian source packages</a><ol><li>
+<a href="#Using_.quiltrc_configuration_file">Using .quiltrc configuration file</a></li><li>
+<a href="#Environment_variables">Environment variables</a></li></ol></li><li>
+<a href="#Basic_quilt_tasks">Basic quilt tasks</a><ol><li>
+<a href="#Making_a_new_patch">Making a new patch</a></li><li>
+<a href="#Editing_an_existing_patch">Editing an existing patch</a></li></ol></li></ol></li></ol></div> <span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span><p class="line874">Using quilt in Debian source packages.  <span class="anchor" id="line-8"></span><ul><li>This page is aimed at people who want to make some changes to a Debian source package which is already using quilt.  <span class="anchor" id="line-9"></span></li><li>The intention is not to explain quilt, but to offer some Debian specific tips <span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span></li></ul><p class="line867">
+<h2 id="General_information">General information</h2>
+<span class="anchor" id="line-12"></span><span class="anchor" id="line-13"></span><p class="line867">
+<h3 id="documentation">documentation</h3>
+<span class="anchor" id="line-14"></span><ul><li><p class="line862">If you want to understand how quilt work, install the package and read <strong>/usr/share/doc/quilt/quilt.pdf.gz</strong> <span class="anchor" id="line-15"></span></li><li><p class="line862">There is an extensive guide on quilt and packaging: <a class="http" href="http://www.debian.org/doc/devel-manuals#maint-guide">Debian New Maintainers' Guide</a>. <span class="anchor" id="line-16"></span></li><li><p class="line862">A comprehensive yet succinct tutorial on quilt, <a class="http" href="http://raphaelhertzog.com/2012/08/08/how-to-use-quilt-to-manage-patches-in-debian-packages">How to use quilt to manage patches in Debian packages</a>, published by Raphaël Hertzog (coauthor of the New Maintainers' Guide above) <span class="anchor" id="line-17"></span></li><li><p class="line862">A How-To from the Debian Perl Group: <a class="http" href="http://pkg-perl.alioth.debian.org/howto/quilt.html">Quilt for Debian Maintainers</a>. <span class="anchor" id="line-18"></span></li><li><p class="line862">There is also a <a class="http" href="http://www.shakthimaan.com/downloads/glv/quilt-tutorial/quilt-doc.pdf">Quilt Tutorial</a> (PDF), though dated (2006) <span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span></li></ul><p class="line867">
+<h3 id="Basic_concepts">Basic concepts</h3>
+<span class="anchor" id="line-21"></span><p class="line862">quilt works with some directories : it creates a <strong>.pc/</strong> and a <strong>patches/</strong> directory.  <span class="anchor" id="line-22"></span><span class="anchor" id="line-23"></span><p class="line874">Those directories can be created when you do <span class="anchor" id="line-24"></span><span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><pre><span class="anchor" id="line-1"></span> $ quilt import some_package.diff.gz</pre><span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><p class="line867">
+<h2 id="Using_quilt_with_Debian_source_packages">Using quilt with Debian source packages</h2>
+<span class="anchor" id="line-29"></span><p class="line874">Situation: you have downloaded a Debian source package which uses quilt and want to fix a bug and then submit a patch to the maintainers. <span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><p class="line867">
+<h3 id="Using_.quiltrc_configuration_file">Using .quiltrc configuration file</h3>
+<span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><p class="line874">Place a .quiltrc configuration file in your home directory with the following lines. <span class="anchor" id="line-34"></span><span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span><span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span><span class="anchor" id="line-39"></span><pre><span class="anchor" id="line-1-1"></span>QUILT_PATCHES=debian/patches
+<span class="anchor" id="line-2"></span>QUILT_NO_DIFF_INDEX=1
+<span class="anchor" id="line-3"></span>QUILT_NO_DIFF_TIMESTAMPS=1
+<span class="anchor" id="line-4"></span>QUILT_REFRESH_ARGS="-p ab"</pre><span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><p class="line867">
+<h3 id="Environment_variables">Environment variables</h3>
+<span class="anchor" id="line-42"></span><p class="line874">Alternatively, you can add these lines to .bashrc. Otherwise, run them in your shell or terminal before using quilt <span class="anchor" id="line-43"></span><span class="anchor" id="line-44"></span><p class="line867"><span class="anchor" id="line-45"></span><span class="anchor" id="line-46"></span><span class="anchor" id="line-47"></span><pre><span class="anchor" id="line-1-2"></span>export QUILT_PATCHES=debian/patches
+<span class="anchor" id="line-2-1"></span>export QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index"</pre><span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span><p class="line867">
+<h2 id="Basic_quilt_tasks">Basic quilt tasks</h2>
+<span class="anchor" id="line-50"></span><span class="anchor" id="line-51"></span><p class="line867">
+<h3 id="Making_a_new_patch">Making a new patch</h3>
+<span class="anchor" id="line-52"></span><p class="line874">The source code unpacked by apt-get source does not have patches applied. <span class="anchor" id="line-53"></span><span class="anchor" id="line-54"></span><p class="line867"><strong>First step: apply existing patches to the source </strong> <span class="anchor" id="line-55"></span><span class="anchor" id="line-56"></span><p class="line867"><span class="anchor" id="line-57"></span><span class="anchor" id="line-58"></span><pre><span class="anchor" id="line-1-3"></span>quilt push -a</pre><p class="line874"> to "push" all existing patches onto the source tree (when you build a package, this is done by the build scripts)<span class="anchor" id="line-59"></span><span class="anchor" id="line-60"></span><p class="line867"><strong>Creating a new patch</strong> <span class="anchor" id="line-61"></span><span class="anchor" id="line-62"></span><p class="line867"><span class="anchor" id="line-63"></span><span class="anchor" id="line-64"></span><pre><span class="anchor" id="line-1-4"></span>quilt new myPatch.diff # this is the patch name</pre><span class="anchor" id="line-65"></span><span class="anchor" id="line-66"></span><p class="line867"><span class="anchor" id="line-67"></span><span class="anchor" id="line-68"></span><pre><span class="anchor" id="line-1-5"></span>quilt add README # Where 'README' is the name of file you want to modify. You have to do that for all files you modify before you change them; one quilt patch can change multiple files</pre><span class="anchor" id="line-69"></span><span class="anchor" id="line-70"></span><p class="line867"><strong>Now make changes to the source</strong> <span class="anchor" id="line-71"></span><span class="anchor" id="line-72"></span><p class="line874">Now, make your changes to the files added to the patch: edit it, or replace it with an already modified file stored in a different directory. <span class="anchor" id="line-73"></span><span class="anchor" id="line-74"></span><p class="line867"><strong>Updating a patch with changes made to its files</strong> <span class="anchor" id="line-75"></span><span class="anchor" id="line-76"></span><p class="line867"><span class="anchor" id="line-77"></span><span class="anchor" id="line-78"></span><pre><span class="anchor" id="line-1-6"></span>quilt refresh #you can do this as often as you like</pre><span class="anchor" id="line-79"></span><span class="anchor" id="line-80"></span><p class="line867"><strong>Finish your editing</strong> <span class="anchor" id="line-81"></span><span class="anchor" id="line-82"></span><p class="line867"><span class="anchor" id="line-83"></span><span class="anchor" id="line-84"></span><pre><span class="anchor" id="line-1-7"></span>quilt pop -a #this un-applies all patches so that the source returns to the downloaded condition</pre><span class="anchor" id="line-85"></span><span class="anchor" id="line-86"></span><p class="line867">
+<h3 id="Editing_an_existing_patch">Editing an existing patch</h3>
+<span class="anchor" id="line-87"></span><span class="anchor" id="line-88"></span><p class="line874">quilt supports multiple patches, but you are only ever change one of them. <span class="anchor" id="line-89"></span><span class="anchor" id="line-90"></span><p class="line874">This is the patch last pushed. <span class="anchor" id="line-91"></span><span class="anchor" id="line-92"></span><p class="line874">To edit an existing patch, start by pushing it <span class="anchor" id="line-93"></span><span class="anchor" id="line-94"></span><p class="line867"><span class="anchor" id="line-95"></span><span class="anchor" id="line-96"></span><pre><span class="anchor" id="line-1-8"></span>quilt push myPatch.diff</pre><span class="anchor" id="line-97"></span><span class="anchor" id="line-98"></span><p class="line874">Now edit it, and when ready <span class="anchor" id="line-99"></span><span class="anchor" id="line-100"></span><p class="line867"><span class="anchor" id="line-101"></span><span class="anchor" id="line-102"></span><pre><span class="anchor" id="line-1-9"></span>quilt refresh myPatch.diff   #note: command line completion may save you some typing</pre><span class="anchor" id="line-103"></span><span class="anchor" id="line-104"></span><p class="line867"><span class="anchor" id="line-105"></span><span class="anchor" id="line-106"></span><pre><span class="anchor" id="line-1-10"></span>quilt pop -a</pre><span class="anchor" id="line-107"></span><span class="anchor" id="line-108"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-109"></span><span class="anchor" id="bottom"></span></div><div id="pagebottom"></div>
+</div>
+
+
+<div id="footer">
+<p id="pageinfo" class="info" lang="en" dir="ltr">UsingQuilt  (last edited 2013-04-04 13:17:37 by <span title="Lessyv"><a class="nonexistent" href="/Lessyv" title="Lessyv">?</a>Lessyv</span>)</p>
+
+<ul id="credits">
+<li><a href="http://moinmo.in/" title="This site uses the MoinMoin Wiki software.">MoinMoin Powered</a></li><li><a href="http://moinmo.in/Python" title="MoinMoin is written in Python.">Python Powered</a></li><li><a href="http://validator.w3.org/check?uri=referer" title="Click here to validate this page.">Valid HTML 4.01</a></li><li>Debian Wiki <a href="/Teams/DebianWiki">team</a>, <a href="http://bugs.debian.org/wiki.debian.org">bugs</a> and <a href="http://git.debian.org/?p=collab-maint/wiki.debian.org.git;a=summary">config</a> available.</li><li>Hosting provided by <a href="http://www.dg-i.net/">Dembach Goo Informatik GmbH &amp; Co KG</a></li>
+</ul>
+
+
+</div>
+</body>
+</html>
+

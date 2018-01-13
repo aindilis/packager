@@ -1,0 +1,5 @@
+wget -rl1 -x -k http://wiki.debian.org/HowToPackageForDebian
+wget -rl1 -x -k http://www.debian.org/doc/manuals/developers-reference/
+wget -rl1 -x -k http://www.debian.org/doc/debian-policy/
+wget -rl1 -x -k http://wiki.debian.org/PackagingTutorial
+wget -rl1 -x -k http://www.debian.org/doc/manuals/maint-guide/

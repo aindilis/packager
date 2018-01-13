@@ -1,0 +1,1329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+<html>
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+<title>Debian Policy Manual - Shared libraries</title>
+
+<link href="index.html" rel="start">
+<link href="ch-relationships.html" rel="prev">
+<link href="ch-opersys.html" rel="next">
+<link href="index.html#contents" rel="contents">
+<link href="index.html#copyright" rel="copyright">
+<link href="ch-scope.html" rel="chapter" title="1 About this manual">
+<link href="ch-archive.html" rel="chapter" title="2 The Debian Archive">
+<link href="ch-binary.html" rel="chapter" title="3 Binary packages">
+<link href="ch-source.html" rel="chapter" title="4 Source packages">
+<link href="ch-controlfields.html" rel="chapter" title="5 Control files and their fields">
+<link href="ch-maintainerscripts.html" rel="chapter" title="6 Package maintainer scripts and installation procedure">
+<link href="ch-relationships.html" rel="chapter" title="7 Declaring relationships between packages">
+<link href="ch-sharedlibs.html" rel="chapter" title="8 Shared libraries">
+<link href="ch-opersys.html" rel="chapter" title="9 The Operating System">
+<link href="ch-files.html" rel="chapter" title="10 Files">
+<link href="ch-customized-programs.html" rel="chapter" title="11 Customized programs">
+<link href="ch-docs.html" rel="chapter" title="12 Documentation">
+<link href="ap-pkg-scope.html" rel="appendix" title="A Introduction and scope of these appendices">
+<link href="ap-pkg-binarypkg.html" rel="appendix" title="B Binary packages (from old Packaging Manual)">
+<link href="ap-pkg-sourcepkg.html" rel="appendix" title="C Source packages (from old Packaging Manual)">
+<link href="ap-pkg-controlfields.html" rel="appendix" title="D Control files and their fields (from old Packaging Manual)">
+<link href="ap-pkg-conffiles.html" rel="appendix" title="E Configuration file handling (from old Packaging Manual)">
+<link href="ap-pkg-alternatives.html" rel="appendix" title="F Alternative versions of an interface - update-alternatives (from old Packaging Manual)">
+<link href="ap-pkg-diversions.html" rel="appendix" title="G Diversions - overriding a package's version of a file (from old Packaging Manual)">
+<link href="ch-scope.html#s1.1" rel="section" title="1.1 Scope">
+<link href="ch-scope.html#s1.2" rel="section" title="1.2 New versions of this document">
+<link href="ch-scope.html#s-authors" rel="section" title="1.3 Authors and Maintainers">
+<link href="ch-scope.html#s-related" rel="section" title="1.4 Related documents">
+<link href="ch-scope.html#s-definitions" rel="section" title="1.5 Definitions">
+<link href="ch-archive.html#s-dfsg" rel="section" title="2.1 The Debian Free Software Guidelines">
+<link href="ch-archive.html#s-sections" rel="section" title="2.2 Archive areas">
+<link href="ch-archive.html#s-pkgcopyright" rel="section" title="2.3 Copyright considerations">
+<link href="ch-archive.html#s-subsections" rel="section" title="2.4 Sections">
+<link href="ch-archive.html#s-priorities" rel="section" title="2.5 Priorities">
+<link href="ch-binary.html#s3.1" rel="section" title="3.1 The package name">
+<link href="ch-binary.html#s-versions" rel="section" title="3.2 The version of a package">
+<link href="ch-binary.html#s-maintainer" rel="section" title="3.3 The maintainer of a package">
+<link href="ch-binary.html#s-descriptions" rel="section" title="3.4 The description of a package">
+<link href="ch-binary.html#s-dependencies" rel="section" title="3.5 Dependencies">
+<link href="ch-binary.html#s-virtual_pkg" rel="section" title="3.6 Virtual packages">
+<link href="ch-binary.html#s3.7" rel="section" title="3.7 Base system">
+<link href="ch-binary.html#s3.8" rel="section" title="3.8 Essential packages">
+<link href="ch-binary.html#s-maintscripts" rel="section" title="3.9 Maintainer Scripts">
+<link href="ch-source.html#s-standardsversion" rel="section" title="4.1 Standards conformance">
+<link href="ch-source.html#s-pkg-relations" rel="section" title="4.2 Package relationships">
+<link href="ch-source.html#s4.3" rel="section" title="4.3 Changes to the upstream sources">
+<link href="ch-source.html#s-dpkgchangelog" rel="section" title="4.4 Debian changelog: debian/changelog">
+<link href="ch-source.html#s-dpkgcopyright" rel="section" title="4.5 Copyright: debian/copyright">
+<link href="ch-source.html#s4.6" rel="section" title="4.6 Error trapping in makefiles">
+<link href="ch-source.html#s-timestamps" rel="section" title="4.7 Time Stamps">
+<link href="ch-source.html#s-restrictions" rel="section" title="4.8 Restrictions on objects in source packages">
+<link href="ch-source.html#s-debianrules" rel="section" title="4.9 Main building script: debian/rules">
+<link href="ch-source.html#s-substvars" rel="section" title="4.10 Variable substitutions: debian/substvars">
+<link href="ch-source.html#s-debianwatch" rel="section" title="4.11 Optional upstream source location: debian/watch">
+<link href="ch-source.html#s-debianfiles" rel="section" title="4.12 Generated files list: debian/files">
+<link href="ch-source.html#s-embeddedfiles" rel="section" title="4.13 Convenience copies of code">
+<link href="ch-source.html#s-readmesource" rel="section" title="4.14 Source package handling: debian/README.source">
+<link href="ch-controlfields.html#s-controlsyntax" rel="section" title="5.1 Syntax of control files">
+<link href="ch-controlfields.html#s-sourcecontrolfiles" rel="section" title="5.2 Source package control files -- debian/control">
+<link href="ch-controlfields.html#s-binarycontrolfiles" rel="section" title="5.3 Binary package control files -- DEBIAN/control">
+<link href="ch-controlfields.html#s-debiansourcecontrolfiles" rel="section" title="5.4 Debian source control files -- .dsc">
+<link href="ch-controlfields.html#s-debianchangesfiles" rel="section" title="5.5 Debian changes files -- .changes">
+<link href="ch-controlfields.html#s-controlfieldslist" rel="section" title="5.6 List of fields">
+<link href="ch-controlfields.html#s5.7" rel="section" title="5.7 User-defined fields">
+<link href="ch-maintainerscripts.html#s6.1" rel="section" title="6.1 Introduction to package maintainer scripts">
+<link href="ch-maintainerscripts.html#s-idempotency" rel="section" title="6.2 Maintainer scripts idempotency">
+<link href="ch-maintainerscripts.html#s-controllingterminal" rel="section" title="6.3 Controlling terminal for maintainer scripts">
+<link href="ch-maintainerscripts.html#s-exitstatus" rel="section" title="6.4 Exit status">
+<link href="ch-maintainerscripts.html#s-mscriptsinstact" rel="section" title="6.5 Summary of ways maintainer scripts are called">
+<link href="ch-maintainerscripts.html#s-unpackphase" rel="section" title="6.6 Details of unpack phase of installation or upgrade">
+<link href="ch-maintainerscripts.html#s-configdetails" rel="section" title="6.7 Details of configuration">
+<link href="ch-maintainerscripts.html#s-removedetails" rel="section" title="6.8 Details of removal and/or configuration purging">
+<link href="ch-relationships.html#s-depsyntax" rel="section" title="7.1 Syntax of relationship fields">
+<link href="ch-relationships.html#s-binarydeps" rel="section" title="7.2 Binary Dependencies - Depends, Recommends, Suggests, Enhances, Pre-Depends">
+<link href="ch-relationships.html#s-breaks" rel="section" title="7.3 Packages which break other packages - Breaks">
+<link href="ch-relationships.html#s-conflicts" rel="section" title="7.4 Conflicting binary packages - Conflicts">
+<link href="ch-relationships.html#s-virtual" rel="section" title="7.5 Virtual packages - Provides">
+<link href="ch-relationships.html#s-replaces" rel="section" title="7.6 Overwriting files and replacing packages - Replaces">
+<link href="ch-relationships.html#s-sourcebinarydeps" rel="section" title="7.7 Relationships between source and binary packages - Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep">
+<link href="ch-relationships.html#s-built-using" rel="section" title="7.8 Additional source packages used to build the binary - Built-Using">
+<link href="ch-sharedlibs.html#s-sharedlibs-runtime" rel="section" title="8.1 Run-time shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-support-files" rel="section" title="8.2 Shared library support files">
+<link href="ch-sharedlibs.html#s-sharedlibs-static" rel="section" title="8.3 Static libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-dev" rel="section" title="8.4 Development files">
+<link href="ch-sharedlibs.html#s-sharedlibs-intradeps" rel="section" title="8.5 Dependencies between the packages of the same library">
+<link href="ch-sharedlibs.html#s-sharedlibs-depends" rel="section" title="8.6 Dependencies between the library and other packages">
+<link href="ch-opersys.html#s9.1" rel="section" title="9.1 File system hierarchy">
+<link href="ch-opersys.html#s9.2" rel="section" title="9.2 Users and groups">
+<link href="ch-opersys.html#s-sysvinit" rel="section" title="9.3 System run levels and init.d scripts">
+<link href="ch-opersys.html#s9.4" rel="section" title="9.4 Console messages from init.d scripts">
+<link href="ch-opersys.html#s-cron-jobs" rel="section" title="9.5 Cron jobs">
+<link href="ch-opersys.html#s-menus" rel="section" title="9.6 Menus">
+<link href="ch-opersys.html#s-mime" rel="section" title="9.7 Multimedia handlers">
+<link href="ch-opersys.html#s9.8" rel="section" title="9.8 Keyboard configuration">
+<link href="ch-opersys.html#s9.9" rel="section" title="9.9 Environment variables">
+<link href="ch-opersys.html#s-doc-base" rel="section" title="9.10 Registering Documents using doc-base">
+<link href="ch-opersys.html#s-alternateinit" rel="section" title="9.11 Alternate init systems">
+<link href="ch-files.html#s-binaries" rel="section" title="10.1 Binaries">
+<link href="ch-files.html#s-libraries" rel="section" title="10.2 Libraries">
+<link href="ch-files.html#s10.3" rel="section" title="10.3 Shared libraries">
+<link href="ch-files.html#s-scripts" rel="section" title="10.4 Scripts">
+<link href="ch-files.html#s10.5" rel="section" title="10.5 Symbolic links">
+<link href="ch-files.html#s10.6" rel="section" title="10.6 Device files">
+<link href="ch-files.html#s-config-files" rel="section" title="10.7 Configuration files">
+<link href="ch-files.html#s10.8" rel="section" title="10.8 Log files">
+<link href="ch-files.html#s-permissions-owners" rel="section" title="10.9 Permissions and owners">
+<link href="ch-customized-programs.html#s-arch-spec" rel="section" title="11.1 Architecture specification strings">
+<link href="ch-customized-programs.html#s11.2" rel="section" title="11.2 Daemons">
+<link href="ch-customized-programs.html#s11.3" rel="section" title="11.3 Using pseudo-ttys and modifying wtmp, utmp and lastlog">
+<link href="ch-customized-programs.html#s11.4" rel="section" title="11.4 Editors and pagers">
+<link href="ch-customized-programs.html#s-web-appl" rel="section" title="11.5 Web servers and applications">
+<link href="ch-customized-programs.html#s-mail-transport-agents" rel="section" title="11.6 Mail transport, delivery and user agents">
+<link href="ch-customized-programs.html#s11.7" rel="section" title="11.7 News system configuration">
+<link href="ch-customized-programs.html#s11.8" rel="section" title="11.8 Programs for the X Window System">
+<link href="ch-customized-programs.html#s-perl" rel="section" title="11.9 Perl programs and modules">
+<link href="ch-customized-programs.html#s-emacs" rel="section" title="11.10 Emacs lisp programs">
+<link href="ch-customized-programs.html#s11.11" rel="section" title="11.11 Games">
+<link href="ch-docs.html#s12.1" rel="section" title="12.1 Manual pages">
+<link href="ch-docs.html#s12.2" rel="section" title="12.2 Info documents">
+<link href="ch-docs.html#s12.3" rel="section" title="12.3 Additional documentation">
+<link href="ch-docs.html#s12.4" rel="section" title="12.4 Preferred documentation formats">
+<link href="ch-docs.html#s-copyrightfile" rel="section" title="12.5 Copyright information">
+<link href="ch-docs.html#s12.6" rel="section" title="12.6 Examples">
+<link href="ch-docs.html#s-changelogs" rel="section" title="12.7 Changelog files">
+<link href="ap-pkg-binarypkg.html#s-pkg-bincreating" rel="section" title="B.1 Creating package files - dpkg-deb">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlarea" rel="section" title="B.2 Package control information files">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlfile" rel="section" title="B.3 The main control information file: control">
+<link href="ap-pkg-binarypkg.html#sB.4" rel="section" title="B.4 Time Stamps">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetools" rel="section" title="C.1 Tools for processing source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetree" rel="section" title="C.2 The Debian package source tree">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcearchives" rel="section" title="C.3 Source packages as archives">
+<link href="ap-pkg-sourcepkg.html#sC.4" rel="section" title="C.4 Unpacking a Debian source package without dpkg-source">
+<link href="ap-pkg-controlfields.html#sD.1" rel="section" title="D.1 Syntax of control files">
+<link href="ap-pkg-controlfields.html#sD.2" rel="section" title="D.2 List of fields">
+<link href="ap-pkg-conffiles.html#sE.1" rel="section" title="E.1 Automatic handling of configuration files by dpkg">
+<link href="ap-pkg-conffiles.html#sE.2" rel="section" title="E.2 Fully-featured maintainer script configuration handling">
+<link href="ch-archive.html#s-main" rel="subsection" title="2.2.1 The main archive area">
+<link href="ch-archive.html#s-contrib" rel="subsection" title="2.2.2 The contrib archive area">
+<link href="ch-archive.html#s-non-free" rel="subsection" title="2.2.3 The non-free archive area">
+<link href="ch-binary.html#s3.2.1" rel="subsection" title="3.2.1 Version numbers based on dates">
+<link href="ch-binary.html#s-synopsis" rel="subsection" title="3.4.1 The single line synopsis">
+<link href="ch-binary.html#s-extendeddesc" rel="subsection" title="3.4.2 The extended description">
+<link href="ch-binary.html#s-maintscriptprompt" rel="subsection" title="3.9.1 Prompting in maintainer scripts">
+<link href="ch-source.html#s-debianrules-options" rel="subsection" title="4.9.1 debian/rules and DEB_BUILD_OPTIONS">
+<link href="ch-controlfields.html#s-f-Source" rel="subsection" title="5.6.1 Source">
+<link href="ch-controlfields.html#s-f-Maintainer" rel="subsection" title="5.6.2 Maintainer">
+<link href="ch-controlfields.html#s-f-Uploaders" rel="subsection" title="5.6.3 Uploaders">
+<link href="ch-controlfields.html#s-f-Changed-By" rel="subsection" title="5.6.4 Changed-By">
+<link href="ch-controlfields.html#s-f-Section" rel="subsection" title="5.6.5 Section">
+<link href="ch-controlfields.html#s-f-Priority" rel="subsection" title="5.6.6 Priority">
+<link href="ch-controlfields.html#s-f-Package" rel="subsection" title="5.6.7 Package">
+<link href="ch-controlfields.html#s-f-Architecture" rel="subsection" title="5.6.8 Architecture">
+<link href="ch-controlfields.html#s-f-Essential" rel="subsection" title="5.6.9 Essential">
+<link href="ch-controlfields.html#s5.6.10" rel="subsection" title="5.6.10 Package interrelationship fields: Depends, Pre-Depends, Recommends, Suggests, Breaks, Conflicts, Provides, Replaces, Enhances">
+<link href="ch-controlfields.html#s-f-Standards-Version" rel="subsection" title="5.6.11 Standards-Version">
+<link href="ch-controlfields.html#s-f-Version" rel="subsection" title="5.6.12 Version">
+<link href="ch-controlfields.html#s-f-Description" rel="subsection" title="5.6.13 Description">
+<link href="ch-controlfields.html#s-f-Distribution" rel="subsection" title="5.6.14 Distribution">
+<link href="ch-controlfields.html#s-f-Date" rel="subsection" title="5.6.15 Date">
+<link href="ch-controlfields.html#s-f-Format" rel="subsection" title="5.6.16 Format">
+<link href="ch-controlfields.html#s-f-Urgency" rel="subsection" title="5.6.17 Urgency">
+<link href="ch-controlfields.html#s-f-Changes" rel="subsection" title="5.6.18 Changes">
+<link href="ch-controlfields.html#s-f-Binary" rel="subsection" title="5.6.19 Binary">
+<link href="ch-controlfields.html#s-f-Installed-Size" rel="subsection" title="5.6.20 Installed-Size">
+<link href="ch-controlfields.html#s-f-Files" rel="subsection" title="5.6.21 Files">
+<link href="ch-controlfields.html#s-f-Closes" rel="subsection" title="5.6.22 Closes">
+<link href="ch-controlfields.html#s-f-Homepage" rel="subsection" title="5.6.23 Homepage">
+<link href="ch-controlfields.html#s-f-Checksums" rel="subsection" title="5.6.24 Checksums-Sha1 and Checksums-Sha256">
+<link href="ch-controlfields.html#s-f-DM-Upload-Allowed" rel="subsection" title="5.6.25 DM-Upload-Allowed">
+<link href="ch-controlfields.html#s-f-VCS-fields" rel="subsection" title="5.6.26 Version Control System (VCS) fields">
+<link href="ch-relationships.html#s7.6.1" rel="subsection" title="7.6.1 Overwriting files in other packages">
+<link href="ch-relationships.html#s7.6.2" rel="subsection" title="7.6.2 Replacing whole packages, forcing their removal">
+<link href="ch-sharedlibs.html#s-ldconfig" rel="subsection" title="8.1.1 ldconfig">
+<link href="ch-sharedlibs.html#s-dpkg-shlibdeps" rel="subsection" title="8.6.1 Generating dependencies on shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-updates" rel="subsection" title="8.6.2 Shared library ABI changes">
+<link href="ch-sharedlibs.html#s-sharedlibs-symbols" rel="subsection" title="8.6.3 The symbols system">
+<link href="ch-sharedlibs.html#s-symbols-paths" rel="subsection" title="8.6.3.1 The symbols files present on the system">
+<link href="ch-sharedlibs.html#s-symbols" rel="subsection" title="8.6.3.2 The symbols File Format">
+<link href="ch-sharedlibs.html#s-providing-symbols" rel="subsection" title="8.6.3.3 Providing a symbols file">
+<link href="ch-sharedlibs.html#s-sharedlibs-shlibdeps" rel="subsection" title="8.6.4 The shlibs system">
+<link href="ch-sharedlibs.html#s-shlibs-paths" rel="subsection" title="8.6.4.1 The shlibs files present on the system">
+<link href="ch-sharedlibs.html#s-shlibs" rel="subsection" title="8.6.4.2 The shlibs File Format">
+<link href="ch-sharedlibs.html#s8.6.4.3" rel="subsection" title="8.6.4.3 Providing a shlibs file">
+<link href="ch-opersys.html#s-fhs" rel="subsection" title="9.1.1 File System Structure">
+<link href="ch-opersys.html#s9.1.2" rel="subsection" title="9.1.2 Site-specific programs">
+<link href="ch-opersys.html#s9.1.3" rel="subsection" title="9.1.3 The system-wide mail directory">
+<link href="ch-opersys.html#s-fhs-run" rel="subsection" title="9.1.4 /run and /run/lock">
+<link href="ch-opersys.html#s9.2.1" rel="subsection" title="9.2.1 Introduction">
+<link href="ch-opersys.html#s9.2.2" rel="subsection" title="9.2.2 UID and GID classes">
+<link href="ch-opersys.html#s-/etc/init.d" rel="subsection" title="9.3.1 Introduction">
+<link href="ch-opersys.html#s-writing-init" rel="subsection" title="9.3.2 Writing the scripts">
+<link href="ch-opersys.html#s9.3.3" rel="subsection" title="9.3.3 Interfacing with the initscript system">
+<link href="ch-opersys.html#s9.3.3.1" rel="subsection" title="9.3.3.1 Managing the links">
+<link href="ch-opersys.html#s9.3.3.2" rel="subsection" title="9.3.3.2 Running initscripts">
+<link href="ch-opersys.html#s9.3.4" rel="subsection" title="9.3.4 Boot-time initialization">
+<link href="ch-opersys.html#s9.3.5" rel="subsection" title="9.3.5 Example">
+<link href="ch-opersys.html#s-cron-files" rel="subsection" title="9.5.1 Cron job file names">
+<link href="ch-opersys.html#s-upstart" rel="subsection" title="9.11.1 Event-based boot with upstart">
+<link href="ch-files.html#s10.7.1" rel="subsection" title="10.7.1 Definitions">
+<link href="ch-files.html#s10.7.2" rel="subsection" title="10.7.2 Location">
+<link href="ch-files.html#s10.7.3" rel="subsection" title="10.7.3 Behavior">
+<link href="ch-files.html#s10.7.4" rel="subsection" title="10.7.4 Sharing configuration files">
+<link href="ch-files.html#s10.7.5" rel="subsection" title="10.7.5 User configuration files (&quot;dotfiles&quot;)">
+<link href="ch-files.html#s10.9.1" rel="subsection" title="10.9.1 The use of dpkg-statoverride">
+<link href="ch-customized-programs.html#s-arch-wildcard-spec" rel="subsection" title="11.1.1 Architecture wildcards">
+<link href="ch-customized-programs.html#s11.8.1" rel="subsection" title="11.8.1 Providing X support and package priorities">
+<link href="ch-customized-programs.html#s11.8.2" rel="subsection" title="11.8.2 Packages providing an X server">
+<link href="ch-customized-programs.html#s11.8.3" rel="subsection" title="11.8.3 Packages providing a terminal emulator">
+<link href="ch-customized-programs.html#s11.8.4" rel="subsection" title="11.8.4 Packages providing a window manager">
+<link href="ch-customized-programs.html#s11.8.5" rel="subsection" title="11.8.5 Packages providing fonts">
+<link href="ch-customized-programs.html#s-appdefaults" rel="subsection" title="11.8.6 Application defaults files">
+<link href="ch-customized-programs.html#s11.8.7" rel="subsection" title="11.8.7 Installation directory issues">
+<link href="ch-docs.html#s-copyrightformat" rel="subsection" title="12.5.1 Machine-readable copyright information">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-source" rel="subsection" title="C.1.1 dpkg-source - packs and unpacks Debian source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-buildpackage" rel="subsection" title="C.1.2 dpkg-buildpackage - overall package-building control script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-gencontrol" rel="subsection" title="C.1.3 dpkg-gencontrol - generates binary package control files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-shlibdeps" rel="subsection" title="C.1.4 dpkg-shlibdeps - calculates shared library dependencies">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-distaddfile" rel="subsection" title="C.1.5 dpkg-distaddfile - adds a file to debian/files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-genchanges" rel="subsection" title="C.1.6 dpkg-genchanges - generates a .changes upload control file">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-parsechangelog" rel="subsection" title="C.1.7 dpkg-parsechangelog - produces parsed representation of a changelog">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-architecture" rel="subsection" title="C.1.8 dpkg-architecture - information about the build and host system">
+<link href="ap-pkg-sourcepkg.html#s-pkg-debianrules" rel="subsection" title="C.2.1 debian/rules - the main building script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-srcsubstvars" rel="subsection" title="C.2.2 debian/substvars and variable substitutions">
+<link href="ap-pkg-sourcepkg.html#sC.2.3" rel="subsection" title="C.2.3 debian/files">
+<link href="ap-pkg-sourcepkg.html#sC.2.4" rel="subsection" title="C.2.4 debian/tmp">
+<link href="ap-pkg-sourcepkg.html#sC.4.1" rel="subsection" title="C.4.1 Restrictions on objects in source packages">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Filename" rel="subsection" title="D.2.1 Filename and MSDOS-Filename">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Size" rel="subsection" title="D.2.2 Size and MD5sum">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Status" rel="subsection" title="D.2.3 Status">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Conffiles" rel="subsection" title="D.2.5 Conffiles">
+<link href="ap-pkg-controlfields.html#sD.2.6" rel="subsection" title="D.2.6 Obsolete fields">
+
+</head>
+
+<body>
+
+<p><a name="ch-sharedlibs"></a></p>
+<hr>
+
+<p>
+[ <a href="ch-relationships.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ 8 ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-opersys.html">next</a> ]
+</p>
+
+<hr>
+
+<h1>
+Debian Policy Manual
+<br>Chapter 8 - Shared libraries
+</h1>
+
+<hr>
+
+<p>
+Packages containing shared libraries must be constructed with a little care to
+make sure that the shared library is always available.  This is especially
+important for packages whose shared libraries are vitally important, such as
+the C library (currently <samp>libc6</samp>).
+</p>
+
+<p>
+This section deals only with public shared libraries: shared libraries that are
+placed in directories searched by the dynamic linker by default or which are
+intended to be linked against normally and possibly used by other, independent
+packages.  Shared libraries that are internal to a particular package or that
+are only loaded as dynamic modules are not covered by this section and are not
+subject to its requirements.
+</p>
+
+<p>
+A shared library is identified by the <samp>SONAME</samp> attribute stored in
+its dynamic section.  When a binary is linked against a shared library, the
+<samp>SONAME</samp> of the shared library is recorded in the binary's
+<samp>NEEDED</samp> section so that the dynamic linker knows that library must
+be loaded at runtime.  The shared library file's full name (which usually
+contains additional version information not needed in the <samp>SONAME</samp>)
+is therefore normally not referenced directly.  Instead, the shared library is
+loaded by its <samp>SONAME</samp>, which exists on the file system as a symlink
+pointing to the full name of the shared library.  This symlink must be provided
+by the package.  <a href="ch-sharedlibs.html#s-sharedlibs-runtime">Run-time shared libraries,
+Section 8.1</a> describes how to do this.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f58"
+name="fr58">58</a>]
+</p>
+
+<p>
+When linking a binary or another shared library against a shared library, the
+<samp>SONAME</samp> for that shared library is not yet known.  Instead, the
+shared library is found by looking for a file matching the library name with
+<samp>.so</samp> appended.  This file exists on the file system as a symlink
+pointing to the shared library.
+</p>
+
+<p>
+Shared libraries are normally split into several binary packages.  The
+<samp>SONAME</samp> symlink is installed by the runtime shared library package,
+and the bare <samp>.so</samp> symlink is installed in the development package
+since it's only used when linking binaries or shared libraries.  However, there
+are some exceptions for unusual shared libraries or for shared libraries that
+are also loaded as dynamic modules by other programs.
+</p>
+
+<p>
+This section is primarily concerned with how the separation of shared libraries
+into multiple packages should be done and how dependencies on and between
+shared library binary packages are managed in Debian.  <a
+href="ch-files.html#s-libraries">Libraries, Section 10.2</a> should be read in
+conjunction with this section and contains additional rules for the files
+contained in the shared library packages.
+</p>
+
+<hr>
+
+<h2><a name="s-sharedlibs-runtime"></a>8.1 Run-time shared libraries</h2>
+
+<p>
+The run-time shared library must be placed in a package whose name changes
+whenever the <samp>SONAME</samp> of the shared library changes.  This allows
+several versions of the shared library to be installed at the same time,
+allowing installation of the new version of the shared library without
+immediately breaking binaries that depend on the old version.  Normally, the
+run-time shared library and its <samp>SONAME</samp> symlink should be placed in
+a package named <code><var>libraryname</var><var>soversion</var></code>, where
+<var>soversion</var> is the version number in the <samp>SONAME</samp> of the
+shared library.  Alternatively, if it would be confusing to directly append
+<var>soversion</var> to <var>libraryname</var> (if, for example,
+<var>libraryname</var> itself ends in a number), you should use
+<code><var>libraryname</var>-<var>soversion</var></code> instead.
+</p>
+
+<p>
+To determine the <var>soversion</var>, look at the <samp>SONAME</samp> of the
+library, stored in the ELF <samp>SONAME</samp> attribute.  It is usually of the
+form <samp><var>name</var>.so.<var>major-version</var></samp> (for example,
+<samp>libz.so.1</samp>).  The version part is the part which comes after
+<samp>.so.</samp>, so in that example it is <samp>1</samp>.  The soname may
+instead be of the form
+<samp><var>name</var>-<var>major-version</var>.so</samp>, such as
+<samp>libdb-5.1.so</samp>, in which case the name would be <samp>libdb</samp>
+and the version would be <samp>5.1</samp>.
+</p>
+
+<p>
+If you have several shared libraries built from the same source tree, you may
+lump them all together into a single shared library package provided that all
+of their <samp>SONAME</samp>s will always change together.  Be aware that this
+is not normally the case, and if the <samp>SONAME</samp>s do not change
+together, upgrading such a merged shared library package will be unnecessarily
+difficult because of file conflicts with the old version of the package.  When
+in doubt, always split shared library packages so that each binary package
+installs a single shared library.
+</p>
+
+<p>
+Every time the shared library ABI changes in a way that may break binaries
+linked against older versions of the shared library, the <samp>SONAME</samp> of
+the library and the corresponding name for the binary package containing the
+runtime shared library should change.  Normally, this means the
+<samp>SONAME</samp> should change any time an interface is removed from the
+shared library or the signature of an interface (the number of parameters or
+the types of parameters that it takes, for example) is changed.  This practice
+is vital to allowing clean upgrades from older versions of the package and
+clean transitions between the old ABI and new ABI without having to upgrade
+every affected package simultaneously.
+</p>
+
+<p>
+The <samp>SONAME</samp> and binary package name need not, and indeed normally
+should not, change if new interfaces are added but none are removed or changed,
+since this will not break binaries linked against the old shared library.
+Correct versioning of dependencies on the newer shared library by binaries that
+use the new interfaces is handled via the <a
+href="ch-sharedlibs.html#s-sharedlibs-depends"><samp>symbols</samp> or <samp>shlibs</samp>
+system</a>.
+</p>
+
+<p>
+The package should install the shared libraries under their normal names.  For
+example, the <code>libgdbm3</code> package should install
+<code>libgdbm.so.3.0.0</code> as <code>/usr/lib/libgdbm.so.3.0.0</code>.  The
+files should not be renamed or re-linked by any <code>prerm</code> or
+<code>postrm</code> scripts; <code>dpkg</code> will take care of renaming
+things safely without affecting running programs, and attempts to interfere
+with this are likely to lead to problems.
+</p>
+
+<p>
+Shared libraries should not be installed executable, since the dynamic linker
+does not require this and trying to execute a shared library usually results in
+a core dump.
+</p>
+
+<p>
+The run-time library package should include the symbolic link for the
+<samp>SONAME</samp> that <code>ldconfig</code> would create for the shared
+libraries.  For example, the <code>libgdbm3</code> package should include a
+symbolic link from <code>/usr/lib/libgdbm.so.3</code> to
+<code>libgdbm.so.3.0.0</code>.  This is needed so that the dynamic linker (for
+example <code>ld.so</code> or <code>ld-linux.so.*</code>) can find the library
+between the time that <code>dpkg</code> installs it and the time that
+<code>ldconfig</code> is run in the <code>postinst</code> script.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f59" name="fr59">59</a>]
+</p>
+
+<hr>
+
+<h3><a name="s-ldconfig"></a>8.1.1 <samp>ldconfig</samp></h3>
+
+<p>
+Any package installing shared libraries in one of the default library
+directories of the dynamic linker (which are currently <code>/usr/lib</code>
+and <code>/lib</code>) or a directory that is listed in
+<code>/etc/ld.so.conf</code>[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f60" name="fr60">60</a>]
+must use <code>ldconfig</code> to update the shared library system.
+</p>
+
+<p>
+The package maintainer scripts must only call <code>ldconfig</code> under these
+circumstances:
+</p>
+<ul>
+<li>
+<p>
+When the <code>postinst</code> script is run with a first argument of
+<samp>configure</samp>, the script must call <code>ldconfig</code>, and may
+optionally invoke <code>ldconfig</code> at other times.
+</p>
+</li>
+<li>
+<p>
+When the <code>postrm</code> script is run with a first argument of
+<samp>remove</samp>, the script should call <code>ldconfig</code>.
+</p>
+</li>
+</ul>
+
+<p>
+[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f61" name="fr61">61</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-sharedlibs-support-files"></a>8.2 Shared library support files</h2>
+
+<p>
+If your package contains files whose names do not change with each change in
+the library shared object version, you must not put them in the shared library
+package.  Otherwise, several versions of the shared library cannot be installed
+at the same time without filename clashes, making upgrades and transitions
+unnecessarily difficult.
+</p>
+
+<p>
+It is recommended that supporting files and run-time support programs that do
+not need to be invoked manually by users, but are nevertheless required for the
+package to function, be placed (if they are binary) in a subdirectory of
+<code>/usr/lib</code>, preferably under
+<code>/usr/lib/</code><var>package-name</var>.  If the program or file is
+architecture independent, the recommendation is for it to be placed in a
+subdirectory of <code>/usr/share</code> instead, preferably under
+<code>/usr/share/</code><var>package-name</var>.  Following the
+<var>package-name</var> naming convention ensures that the file names change
+when the shared object version changes.
+</p>
+
+<p>
+Run-time support programs that use the shared library but are not required for
+the library to function or files used by the shared library that can be used by
+any version of the shared library package should instead be put in a separate
+package.  This package might typically be named
+<code><var>libraryname</var>-tools</code>; note the absence of the
+<var>soversion</var> in the package name.
+</p>
+
+<p>
+Files and support programs only useful when compiling software against the
+library should be included in the development package for the library.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f62" name="fr62">62</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-sharedlibs-static"></a>8.3 Static libraries</h2>
+
+<p>
+The static library (<code><var>libraryname.a</var></code>) is usually provided
+in addition to the shared version.  It is placed into the development package
+(see below).
+</p>
+
+<p>
+In some cases, it is acceptable for a library to be available in static form
+only; these cases include:
+</p>
+<ul>
+<li>
+<p>
+libraries for languages whose shared library support is immature or unstable
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+libraries whose interfaces are in flux or under development (commonly the case
+when the library's major version number is zero, or where the ABI breaks across
+patchlevels)
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+libraries which are explicitly intended to be available only in static form by
+their upstream author(s)
+</p>
+</li>
+</ul>
+
+<hr>
+
+<h2><a name="s-sharedlibs-dev"></a>8.4 Development files</h2>
+
+<p>
+If there are development files associated with a shared library, the source
+package needs to generate a binary development package named
+<code><var>libraryname</var><var>soversion</var>-dev</code>, or if you prefer
+only to support one development version at a time,
+<code><var>libraryname</var>-dev</code>.  Installing the development package
+must result in installation of all the development files necessary for
+compiling programs against that shared library.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f63"
+name="fr63">63</a>]
+</p>
+
+<p>
+In case several development versions of a library exist, you may need to use
+<code>dpkg</code>'s Conflicts mechanism (see <a
+href="ch-relationships.html#s-conflicts">Conflicting binary packages -
+<samp>Conflicts</samp>, Section 7.4</a>) to ensure that the user only installs
+one development version at a time (as different development versions are likely
+to have the same header files in them, which would cause a filename clash if
+both were unpacked).
+</p>
+
+<p>
+The development package should contain a symlink for the associated shared
+library without a version number.  For example, the <code>libgdbm-dev</code>
+package should include a symlink from <code>/usr/lib/libgdbm.so</code> to
+<code>libgdbm.so.3.0.0</code>.  This symlink is needed by the linker
+(<code>ld</code>) when compiling packages, as it will only look for
+<code>libgdbm.so</code> when compiling dynamically.
+</p>
+
+<p>
+If the package provides Ada Library Information (<code>*.ali</code>) files for
+use with GNAT, these files must be installed read-only (mode 0444) so that GNAT
+will not attempt to recompile them.  This overrides the normal file mode
+requirements given in <a href="ch-files.html#s-permissions-owners">Permissions
+and owners, Section 10.9</a>.
+</p>
+
+<hr>
+
+<h2><a name="s-sharedlibs-intradeps"></a>8.5 Dependencies between the packages of the same library</h2>
+
+<p>
+Typically the development version should have an exact version dependency on
+the runtime library, to make sure that compilation and linking happens
+correctly.  The <samp>${binary:Version}</samp> substitution variable can be
+useful for this purpose.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f64" name="fr64">64</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-sharedlibs-depends"></a>8.6 Dependencies between the library and other packages</h2>
+
+<p>
+If a package contains a binary or library which links to a shared library, we
+must ensure that, when the package is installed on the system, all of the
+libraries needed are also installed.  These dependencies must be added to the
+binary package when it is built, since they may change based on which version
+of a shared library the binary or library was linked with even if there are no
+changes to the source of the binary (for example, symbol versions change,
+macros become functions or vice versa, or the binary package may determine at
+compile-time whether new library interfaces are available and can be called).
+To allow these dependencies to be constructed, shared libraries must provide
+either a <code>symbols</code> file or a <code>shlibs</code> file.  These
+provide information on the package dependencies required to ensure the presence
+of interfaces provided by this library.  Any package with binaries or libraries
+linking to a shared library must use these files to determine the required
+dependencies when it is built.  Other packages which use a shared library (for
+example using <samp>dlopen()</samp>) should compute appropriate dependencies
+using these files at build time as well.
+</p>
+
+<p>
+The two mechanisms differ in the degree of detail that they provide.  A
+<code>symbols</code> file documents, for each symbol exported by a library, the
+minimal version of the package any binary using this symbol will need.  This is
+typically the version of the package in which the symbol was introduced.  This
+information permits detailed analysis of the symbols used by a particular
+package and construction of an accurate dependency, but it requires the package
+maintainer to track more information about the shared library.
+</p>
+
+<p>
+A <code>shlibs</code> file, in contrast, only documents the last time the
+library ABI changed in any way.  It only provides information about the library
+as a whole, not individual symbols.  When a package is built using a shared
+library with only a <code>shlibs</code> file, the generated dependency will
+require a version of the shared library equal to or newer than the version of
+the last ABI change.  This generates unnecessarily restrictive dependencies
+compared to <code>symbols</code> files if none of the symbols used by the
+package have changed.  This, in turn, may make upgrades needlessly complex and
+unnecessarily restrict use of the package on systems with older versions of the
+shared libraries.
+</p>
+
+<p>
+<code>shlibs</code> files also only support a limited range of library SONAMEs,
+making it difficult to use <code>shlibs</code> files in some unusual corner
+cases.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f65" name="fr65">65</a>]
+</p>
+
+<p>
+<code>symbols</code> files are therefore recommended for most shared library
+packages since they provide more accurate dependencies.  For most C libraries,
+the additional detail required by <code>symbols</code> files is not too
+difficult to maintain.  However, maintaining exhaustive symbols information for
+a C++ library can be quite onerous, so <code>shlibs</code> files may be more
+appropriate for most C++ libraries.  Libraries with a corresponding udeb must
+also provide a <code>shlibs</code> file, since the udeb infrastructure does not
+use <code>symbols</code> files.
+</p>
+
+<hr>
+
+<h3><a name="s-dpkg-shlibdeps"></a>8.6.1 Generating dependencies on shared libraries</h3>
+
+<p>
+When a package that contains any shared libraries or compiled binaries is
+built, it must run <code>dpkg-shlibdeps</code> on each shared library and
+compiled binary to determine the libraries used and hence the dependencies
+needed by the package.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f66" name="fr66">66</a>] To do
+this, put a call to <code>dpkg-shlibdeps</code> into your
+<code>debian/rules</code> file in the source package.  List all of the compiled
+binaries, libraries, or loadable modules in your package.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f67" name="fr67">67</a>] <code>dpkg-shlibdeps</code> will
+use the <code>symbols</code> or <code>shlibs</code> files installed by the
+shared libraries to generate dependency information.  The package must then
+provide a substitution variable into which the discovered dependency
+information can be placed.
+</p>
+
+<p>
+If you are creating a udeb for use in the Debian Installer, you will need to
+specify that <code>dpkg-shlibdeps</code> should use the dependency line of type
+<samp>udeb</samp> by adding the <samp>-tudeb</samp> option[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f68" name="fr68">68</a>].  If there is no dependency line
+of type <samp>udeb</samp> in the <code>shlibs</code> file,
+<code>dpkg-shlibdeps</code> will fall back to the regular dependency line.
+</p>
+
+<p>
+<code>dpkg-shlibdeps</code> puts the dependency information into the
+<code>debian/substvars</code> file by default, which is then used by
+<code>dpkg-gencontrol</code>.  You will need to place a
+<samp>${shlibs:Depends}</samp> variable in the <samp>Depends</samp> field in
+the control file of every binary package built by this source package that
+contains compiled binaries, libraries, or loadable modules.  If you have
+multiple binary packages, you will need to call <code>dpkg-shlibdeps</code> on
+each one which contains compiled libraries or binaries.  For example, you could
+use the <samp>-T</samp> option to the <samp>dpkg</samp> utilities to specify a
+different <code>substvars</code> file for each binary package.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f69" name="fr69">69</a>]
+</p>
+
+<p>
+For more details on <code>dpkg-shlibdeps</code>, see
+<code>dpkg-shlibdeps(1)</code>.
+</p>
+
+<p>
+We say that a binary <samp>foo</samp> <em>directly</em> uses a library
+<samp>libbar</samp> if it is explicitly linked with that library (that is, the
+library is listed in the ELF <samp>NEEDED</samp> attribute, caused by adding
+<samp>-lbar</samp> to the link line when the binary is created).  Other
+libraries that are needed by <samp>libbar</samp> are linked <em>indirectly</em>
+to <samp>foo</samp>, and the dynamic linker will load them automatically when
+it loads <samp>libbar</samp>.  A package should depend on the libraries it
+directly uses, but not the libraries it only uses indirectly.  The dependencies
+for the libraries used directly will automatically pull in the indirectly-used
+libraries.  <code>dpkg-shlibdeps</code> will handle this logic automatically,
+but package maintainers need to be aware of this distinction between directly
+and indirectly using a library if they have to override its results for some
+reason.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f70" name="fr70">70</a>]
+</p>
+
+<hr>
+
+<h3><a name="s-sharedlibs-updates"></a>8.6.2 Shared library ABI changes</h3>
+
+<p>
+Maintaining a shared library package using either <code>symbols</code> or
+<code>shlibs</code> files requires being aware of the exposed ABI of the shared
+library and any changes to it.  Both <code>symbols</code> and
+<code>shlibs</code> files record every change to the ABI of the shared library;
+<code>symbols</code> files do so per public symbol, whereas <code>shlibs</code>
+files record only the last change for the entire library.
+</p>
+
+<p>
+There are two types of ABI changes: ones that are backward-compatible and ones
+that are not.  An ABI change is backward-compatible if any reasonable program
+or library that was linked with the previous version of the shared library will
+still work correctly with the new version of the shared library.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f71" name="fr71">71</a>] Adding new symbols to the shared
+library is a backward-compatible change.  Removing symbols from the shared
+library is not.  Changing the behavior of a symbol may or may not be
+backward-compatible depending on the change; for example, changing a function
+to accept a new enum constant not previously used by the library is generally
+backward-compatible, but changing the members of a struct that is passed into
+library functions is generally not unless the library takes special precautions
+to accept old versions of the data structure.
+</p>
+
+<p>
+ABI changes that are not backward-compatible normally require changing the
+<samp>SONAME</samp> of the library and therefore the shared library package
+name, which forces rebuilding all packages using that shared library to update
+their dependencies and allow them to use the new version of the shared library.
+For more information, see <a href="ch-sharedlibs.html#s-sharedlibs-runtime">Run-time shared
+libraries, Section 8.1</a>.  The remainder of this section will deal with
+backward-compatible changes.
+</p>
+
+<p>
+Backward-compatible changes require either updating or recording the
+<var>minimal-version</var> for that symbol in <code>symbols</code> files or
+updating the version in the <var>dependencies</var> in <code>shlibs</code>
+files.  For more information on how to do this in the two formats, see <a
+href="ch-sharedlibs.html#s-symbols">The <code>symbols</code> File Format, Section 8.6.3.2</a> and
+<a href="ch-sharedlibs.html#s-shlibs">The <code>shlibs</code> File Format, Section 8.6.4.2</a>.
+Below are general rules that apply to both files.
+</p>
+
+<p>
+The easy case is when a public symbol is added.  Simply add the version at
+which the symbol was introduced (for <code>symbols</code> files) or update the
+dependency version (for <code>shlibs</code>) files.  But special care should be
+taken to update dependency versions when the behavior of a public symbol
+changes.  This is easy to neglect, since there is no automated method of
+determining such changes, but failing to update versions in this case may
+result in binary packages with too-weak dependencies that will fail at runtime,
+possibly in ways that can cause security vulnerabilities.  If the package
+maintainer believes that a symbol behavior change may have occurred but isn't
+sure, it's safer to update the version rather than leave it unmodified.  This
+may result in unnecessarily strict dependencies, but it ensures that packages
+whose dependencies are satisfied will work properly.
+</p>
+
+<p>
+A common example of when a change to the dependency version is required is a
+function that takes an enum or struct argument that controls what the function
+does.  For example:
+</p>
+
+<pre>
+     	      enum library_op { OP_FOO, OP_BAR };
+     	      int library_do_operation(enum library_op);
+</pre>
+
+<p>
+If a new operation, <samp>OP_BAZ</samp>, is added, the
+<var>minimal-version</var> of <samp>library_do_operation</samp> (for
+<code>symbols</code> files) or the version in the dependency for the shared
+library (for <code>shlibs</code> files) must be increased to the version at
+which <samp>OP_BAZ</samp> was introduced.  Otherwise, a binary built against
+the new version of the library (having detected at compile-time that the
+library supports <samp>OP_BAZ</samp>) may be installed with a shared library
+that doesn't support <samp>OP_BAZ</samp> and will fail at runtime when it tries
+to pass <samp>OP_BAZ</samp> into this function.
+</p>
+
+<p>
+Dependency versions in either <code>symbols</code> or <code>shlibs</code> files
+normally should not contain the Debian revision of the package, since the
+library behavior is normally fixed for a particular upstream version and any
+Debian packaging of that upstream version will have the same behavior.  In the
+rare case that the library behavior was changed in a particular Debian
+revision, appending <samp>~</samp> to the end of the version that includes the
+Debian revision is recommended, since this allows backports of the shared
+library package using the normal backport versioning convention to satisfy the
+dependency.
+</p>
+
+<hr>
+
+<h3><a name="s-sharedlibs-symbols"></a>8.6.3 The <samp>symbols</samp> system</h3>
+
+<p>
+In the following sections, we will first describe where the various
+<code>symbols</code> files are to be found, then the <code>symbols</code> file
+format, and finally how to create <code>symbols</code> files if your package
+contains a shared library.
+</p>
+
+<hr>
+
+<h4><a name="s-symbols-paths"></a>8.6.3.1 The <code>symbols</code> files present on the system</h4>
+
+<p>
+<code>symbols</code> files for a shared library are normally provided by the
+shared library package as a control file, but there are several override paths
+that are checked first in case that information is wrong or missing.  The
+following list gives them in the order in which they are read by
+<code>dpkg-shlibdeps</code> The first one that contains the required
+information is used.
+</p>
+<ul>
+<li>
+<p>
+<code>debian/*/DEBIAN/symbols</code>
+</p>
+
+<p>
+During the package build, if the package itself contains shared libraries with
+<code>symbols</code> files, they will be generated in these staging directories
+by <code>dpkg-gensymbols</code> (see <a href="ch-sharedlibs.html#s-providing-symbols">Providing a
+<code>symbols</code> file, Section 8.6.3.3</a>).  <code>symbols</code> files
+found in the build tree take precedence over <code>symbols</code> files from
+other binary packages.
+</p>
+
+<p>
+These files must exist before <code>dpkg-shlibdeps</code> is run or the
+dependencies of binaries and libraries from a source package on other libraries
+from that same source package will not be correct.  In practice, this means
+that <code>dpkg-gensymbols</code> must be run before
+<code>dpkg-shlibdeps</code> during the package build.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f72" name="fr72">72</a>]
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<code>/etc/dpkg/symbols/<var>package</var>.symbols.<var>arch</var></code> and
+<code>/etc/dpkg/symbols/<var>package</var>.symbols</code>
+</p>
+
+<p>
+Per-system overrides of shared library dependencies.  These files normally do
+not exist.  They are maintained by the local system administrator and must not
+be created by any Debian package.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<code>symbols</code> control files for packages installed on the system
+</p>
+
+<p>
+The <code>symbols</code> control files for all the packages currently installed
+on the system are searched last.  This will be the most common source of shared
+library dependency information.  These are normally found in
+<code>/var/lib/dpkg/info/*.symbols</code>, but packages should not rely on this
+and instead should use <samp>dpkg-query --control-path <var>package</var>
+symbols</samp> if for some reason these files need to be examined.
+</p>
+</li>
+</ul>
+
+<p>
+Be aware that if a <code>debian/shlibs.local</code> exists in the source
+package, it will override any <code>symbols</code> files.  This is the only
+case where a <code>shlibs</code> is used despite <code>symbols</code> files
+being present.  See <a href="ch-sharedlibs.html#s-shlibs-paths">The <code>shlibs</code> files
+present on the system, Section 8.6.4.1</a> and <a
+href="ch-sharedlibs.html#s-sharedlibs-shlibdeps">The <samp>shlibs</samp> system, Section
+8.6.4</a> for more information.
+</p>
+
+<hr>
+
+<h4><a name="s-symbols"></a>8.6.3.2 The <code>symbols</code> File Format</h4>
+
+<p>
+The following documents the format of the <code>symbols</code> control file as
+included in binary packages.  These files are built from template
+<code>symbols</code> files in the source package by
+<code>dpkg-gensymbols</code>.  The template files support a richer syntax that
+allows <code>dpkg-gensymbols</code> to do some of the tedious work involved in
+maintaining <code>symbols</code> files, such as handling C++ symbols or
+optional symbols that may not exist on particular architectures.  When writing
+<code>symbols</code> files for a shared library package, refer to
+<code>dpkg-gensymbols(1)</code> for the richer syntax.
+</p>
+
+<p>
+A <code>symbols</code> may contain one or more entries, one for each shared
+library contained in the package corresponding to that <code>symbols</code>.
+Each entry has the following format:
+</p>
+
+<pre>
+     		<var>library-soname</var> <var>main-dependency-template</var>
+     		[| <var>alternative-dependency-template</var>]
+     		[...]
+     		[* <var>field-name</var>: <var>field-value</var>]
+     		[...]
+     		<var>symbol</var> <var>minimal-version</var>[ <var>id-of-dependency-template</var> ]
+</pre>
+
+<p>
+To explain this format, we'll use the the <samp>zlib1g</samp> package as an
+example, which (at the time of writing) installs the shared library
+<code>/usr/lib/libz.so.1.2.3.4</code>.  Mandatory lines will be described
+first, followed by optional lines.
+</p>
+
+<p>
+<var>library-soname</var> must contain exactly the value of the ELF
+<samp>SONAME</samp> attribute of the shared library.  In our example, this is
+<samp>libz.so.1</samp>.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f73" name="fr73">73</a>]
+</p>
+
+<p>
+<var>main-dependency-template</var> has the same syntax as a dependency field
+in a binary package control file, except that the string <samp>#MINVER#</samp>
+is replaced by a version restriction like <samp>(&gt;=
+<var>version</var>)</samp> or by nothing if an unversioned dependency is deemed
+sufficient.  The version restriction will be based on which symbols from the
+shared library are referenced and the version at which they were introduced
+(see below).  In nearly all cases, <var>main-dependency-template</var> will be
+<samp><var>package</var> #MINVER#</samp>, where <var>package</var> is the name
+of the binary package containing the shared library.  This adds a simple,
+possibly-versioned dependency on the shared library package.  In some rare
+cases, such as when multiple packages provide the same shared library ABI, the
+dependency template may need to be more complex.
+</p>
+
+<p>
+In our example, the first line of the <samp>zlib1g</samp> <code>symbols</code>
+file would be:
+</p>
+<pre>
+     		libz.so.1 zlib1g #MINVER#
+</pre>
+
+<p>
+Each public symbol exported by the shared library must have a corresponding
+symbol line, indented by one space.  <var>symbol</var> is the exported symbol
+(which, for C++, means the mangled symbol) followed by <samp>@</samp> and the
+symbol version, or the string <samp>Base</samp> if there is no symbol version.
+<var>minimal-version</var> is the most recent version of the shared library
+that changed the behavior of that symbol, whether by adding it, changing its
+function signature (the parameters, their types, or the return type), or
+changing its behavior in a way that is visible to a caller.
+<var>id-of-dependency-template</var> is an optional field that references an
+<var>alternative-dependency-template</var>; see below for a full description.
+</p>
+
+<p>
+For example, <samp>libz.so.1</samp> contains the symbols <samp>compress</samp>
+and <samp>compressBound</samp>.  <samp>compress</samp> has no symbol version
+and last changed its behavior in upstream version <samp>1:1.1.4</samp>.
+<samp>compressBound</samp> has the symbol version <samp>ZLIB_1.2.0</samp>, was
+introduced in upstream version <samp>1:1.2.0</samp>, and has not changed its
+behavior.  Its <code>symbols</code> file therefore contains the lines:
+</p>
+<pre>
+     		compress@Base 1:1.1.4
+     		compressBound@ZLIB_1.2.0 1:1.2.0
+</pre>
+
+<p>
+Packages using only <samp>compress</samp> would then get a dependency on
+<samp>zlib1g (&gt;= 1:1.1.4)</samp>, but packages using
+<samp>compressBound</samp> would get a dependency on <samp>zlib1g (&gt;=
+1:1.2.0)</samp>.
+</p>
+
+<p>
+One or more <var>alternative-dependency-template</var> lines may be provided.
+These are used in cases where some symbols in the shared library should use one
+dependency template while others should use a different template.  The
+alternative dependency templates are used only if a symbol line contains the
+<var>id-of-dependency-template</var> field.  The first alternative dependency
+template is numbered 1, the second 2, and so forth.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f74" name="fr74">74</a>]
+</p>
+
+<p>
+Finally, the entry for the library may contain one or more metadata fields.
+Currently, the only supported <var>field-name</var> is
+<samp>Build-Depends-Package</samp>, whose value lists the <a
+href="ch-sharedlibs.html#s-sharedlibs-dev">library development package</a> on which packages
+using this shared library declare a build dependency.  If this field is
+present, <code>dpkg-shlibdeps</code> uses it to ensure that the resulting
+binary package dependency on the shared library is at least as strict as the
+source package dependency on the shared library development package.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f75" name="fr75">75</a>] For our example, the
+<samp>zlib1g</samp> <code>symbols</code> file would contain:
+</p>
+<pre>
+     		* Build-Depends-Package: zlib1g-dev
+</pre>
+
+<p>
+Also see <code>deb-symbols(5)</code>.
+</p>
+
+<hr>
+
+<h4><a name="s-providing-symbols"></a>8.6.3.3 Providing a <code>symbols</code> file</h4>
+
+<p>
+If your package provides a shared library, you should arrange to include a
+<code>symbols</code> control file following the format described above in that
+package.  You must include either a <code>symbols</code> control file or a
+<code>shlibs</code> control file.
+</p>
+
+<p>
+Normally, this is done by creating a <code>symbols</code> in the source package
+named <code>debian/<var>package</var>.symbols</code> or
+<code>debian/symbols</code>, possibly with <code>.<var>arch</var></code>
+appended if the symbols information varies by architecture.  This file may use
+the extended syntax documented in <code>dpkg-gensymbols(1)</code>.  Then, call
+<code>dpkg-gensymbols</code> as part of the package build process.  It will
+create <code>symbols</code> files in the package staging area based on the
+binaries and libraries in the package staging area and the <code>symbols</code>
+files in the source package.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f76" name="fr76">76</a>]
+</p>
+
+<p>
+Packages that provide <code>symbols</code> files must keep them up-to-date to
+ensure correct dependencies in packages that use the shared libraries.  This
+means updating the <code>symbols</code> file whenever a new public symbol is
+added, changing the <var>minimal-version</var> field whenever a symbol changes
+behavior or signature in a backward-compatible way (see <a
+href="ch-sharedlibs.html#s-sharedlibs-updates">Shared library ABI changes, Section 8.6.2</a>),
+and changing the <var>library-soname</var> and
+<var>main-dependency-template</var>, and probably all of the
+<var>minimal-version</var> fields, when the library changes
+<samp>SONAME</samp>.  Removing a public symbol from the <code>symbols</code>
+file because it's no longer provided by the library normally requires changing
+the <samp>SONAME</samp> of the library.  See <a
+href="ch-sharedlibs.html#s-sharedlibs-runtime">Run-time shared libraries, Section 8.1</a> for
+more information on <samp>SONAME</samp>s.
+</p>
+
+<hr>
+
+<h3><a name="s-sharedlibs-shlibdeps"></a>8.6.4 The <samp>shlibs</samp> system</h3>
+
+<p>
+The <samp>shlibs</samp> system is an simpler alternative to the
+<samp>symbols</samp> system for declaring dependencies for shared libraries.
+It may be more appropriate for C++ libraries and other cases where tracking
+individual symbols is too difficult.  It predated the <samp>symbols</samp>
+system and is therefore frequently seen in older packages.  It is also required
+for udebs, which do not support <samp>symbols</samp>.
+</p>
+
+<p>
+In the following sections, we will first describe where the various
+<code>shlibs</code> files are to be found, then how to use
+<code>dpkg-shlibdeps</code>, and finally the <code>shlibs</code> file format
+and how to create them.
+</p>
+
+<hr>
+
+<h4><a name="s-shlibs-paths"></a>8.6.4.1 The <code>shlibs</code> files present on the system</h4>
+
+<p>
+There are several places where <samp>shlibs</samp> files are found.  The
+following list gives them in the order in which they are read by
+<code>dpkg-shlibdeps</code>.  (The first one which gives the required
+information is used.)
+</p>
+<ul>
+<li>
+<p>
+<code>debian/shlibs.local</code>
+</p>
+
+<p>
+This lists overrides for this package.  This file should normally not be used,
+but may be needed temporarily in unusual situations to work around bugs in
+other packages, or in unusual cases where the normally declared dependency
+information in the installed <code>shlibs</code> file for a library cannot be
+used.  This file overrides information obtained from any other source.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<code>/etc/dpkg/shlibs.override</code>
+</p>
+
+<p>
+This lists global overrides.  This list is normally empty.  It is maintained by
+the local system administrator.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<code>DEBIAN/shlibs</code> files in the &quot;build directory&quot;
+</p>
+
+<p>
+These files are generated as part of the package build process and staged for
+inclusion as control files in the binary packages being built.  They provide
+details of any shared libraries included in the same package.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<code>shlibs</code> control files for packages installed on the system
+</p>
+
+<p>
+The <code>shlibs</code> control files for all the packages currently installed
+on the system.  These are normally found in
+<code>/var/lib/dpkg/info/*.symbols</code>, but packages should not rely on this
+and instead should use <samp>dpkg-query --control-path <var>package</var>
+shlibs</samp> if for some reason these files need to be examined.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<code>/etc/dpkg/shlibs.default</code>
+</p>
+
+<p>
+This file lists any shared libraries whose packages have failed to provide
+correct <code>shlibs</code> files.  It was used when the <code>shlibs</code>
+setup was first introduced, but it is now normally empty.  It is maintained by
+the <samp>dpkg</samp> maintainer.
+</p>
+</li>
+</ul>
+
+<p>
+If a <code>symbols</code> file for a shared library package is available,
+<code>dpkg-shlibdeps</code> will always use it in preference to a
+<code>shlibs</code>, with the exception of <code>debian/shlibs.local</code>.
+The latter overrides any other <code>shlibs</code> or <code>symbols</code>
+files.
+</p>
+
+<hr>
+
+<h4><a name="s-shlibs"></a>8.6.4.2 The <code>shlibs</code> File Format</h4>
+
+<p>
+Each <code>shlibs</code> file has the same format.  Lines beginning with
+<samp>#</samp> are considered to be comments and are ignored.  Each line is of
+the form:
+</p>
+<pre>
+     		[<var>type</var>: ]<var>library-name</var> <var>soname-version</var> <var>dependencies ...</var>
+</pre>
+
+<p>
+We will explain this by reference to the example of the <samp>zlib1g</samp>
+package, which (at the time of writing) installs the shared library
+<code>/usr/lib/libz.so.1.2.3.4</code>.
+</p>
+
+<p>
+<var>type</var> is an optional element that indicates the type of package for
+which the line is valid.  The only type currently in use is <samp>udeb</samp>.
+The colon and space after the type are required.
+</p>
+
+<p>
+<var>library-name</var> is the name of the shared library, in this case
+<samp>libz</samp>.  (This must match the name part of the soname, see below.)
+</p>
+
+<p>
+<var>soname-version</var> is the version part of the ELF <samp>SONAME</samp>
+attribute of the library, determined the same way that the <var>soversion</var>
+component of the recommended shared library package name is determined.  See <a
+href="ch-sharedlibs.html#s-sharedlibs-runtime">Run-time shared libraries, Section 8.1</a> for the
+details.
+</p>
+
+<p>
+<var>dependencies</var> has the same syntax as a dependency field in a binary
+package control file.  It should give details of which packages are required to
+satisfy a binary built against the version of the library contained in the
+package.  See <a href="ch-relationships.html#s-depsyntax">Syntax of
+relationship fields, Section 7.1</a> for details on the syntax, and <a
+href="ch-sharedlibs.html#s-sharedlibs-updates">Shared library ABI changes, Section 8.6.2</a> for
+details on how to maintain the dependency version constraint.
+</p>
+
+<p>
+In our example, if the last change to the <samp>zlib1g</samp> package that
+could change behavior for a client of that library was in version
+<samp>1:1.2.3.3.dfsg-1</samp>, then the <samp>shlibs</samp> entry for this
+library could say:
+</p>
+<pre>
+     		libz 1 zlib1g (&gt;= 1:1.2.3.3.dfsg)
+</pre>
+
+<p>
+This version restriction must be new enough that any binary built against the
+current version of the library will work with any version of the shared library
+that satisfies that dependency.
+</p>
+
+<p>
+As zlib1g also provides a udeb containing the shared library, there would also
+be a second line:
+</p>
+<pre>
+     		udeb: libz 1 zlib1g-udeb (&gt;= 1:1.2.3.3.dfsg)
+</pre>
+
+<hr>
+
+<h4><a name="s8.6.4.3"></a>8.6.4.3 Providing a <code>shlibs</code> file</h4>
+
+<p>
+To provide a <code>shlibs</code> file for a shared library binary package,
+create a <code>shlibs</code> file following the format described above and
+place it in the <code>DEBIAN</code> directory for that package during the
+build.  It will then be included as a control file for that package[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f77" name="fr77">77</a>].
+</p>
+
+<p>
+Since <code>dpkg-shlibdeps</code> reads the <code>DEBIAN/shlibs</code> files in
+all of the binary packages being built from this source package, all of the
+<code>DEBIAN/shlibs</code> files should be installed before
+<code>dpkg-shlibdeps</code> is called on any of the binary packages.
+</p>
+
+<hr>
+
+<p>
+[ <a href="ch-relationships.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ 8 ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-opersys.html">next</a> ]
+</p>
+
+<hr>
+
+<p>
+Debian Policy Manual
+</p>
+
+<address>
+version 3.9.4.0, 2012-09-19<br>
+<br>
+<a href="ch-scope.html#s-authors">The Debian Policy Mailing List</a><br>
+<br>
+</address>
+<hr>
+
+</body>
+
+</html>
+

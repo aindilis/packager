@@ -1,0 +1,52 @@
+Packager.pm:  $self->Config(BOSS::Config->new
+Packager.pm:  my $conf = $self->Config->CLIConfig;
+Packager.pm:  my $conf = $self->Config->CLIConfig;
+Packager.pm:    unless ($self->Config->Conf->{'--guess'}) {
+scripts/deprecated/debaux-build-questoin:	$CPAN::Config->{keep_source} = 1;
+scripts/deprecated/debaux-build-questoin:	my $cpansourcedir = $CPAN::Config->{keep_source_where};
+scripts/deprecated/debaux-build-questoin:	$opts{'source-tree'} = join ('/', $CPAN::Config->{build_dir}, $dir);
+scripts/deprecated/debaux-build:	$CPAN::Config->{keep_source} = 1;
+scripts/deprecated/debaux-build:	my $cpansourcedir = $CPAN::Config->{keep_source_where};
+scripts/deprecated/debaux-build:	$opts{'source-tree'} = join ('/', $CPAN::Config->{build_dir}, $dir);
+scripts/approved-release/approved-release.pl:my $config = BOSS::Config->new
+scripts/alt/debaux-build-questoin:	$CPAN::Config->{keep_source} = 1;
+scripts/alt/debaux-build-questoin:	my $cpansourcedir = $CPAN::Config->{keep_source_where};
+scripts/alt/debaux-build-questoin:	$opts{'source-tree'} = join ('/', $CPAN::Config->{build_dir}, $dir);
+scripts/alt/debaux-build:	$CPAN::Config->{keep_source} = 1;
+scripts/alt/debaux-build:	my $cpansourcedir = $CPAN::Config->{keep_source_where};
+scripts/alt/debaux-build:	$opts{'source-tree'} = join ('/', $CPAN::Config->{build_dir}, $dir);
+scripts/determine-script-dependencies.pl:my $config = BOSS::Config->new
+scripts/package-lookup-by-description-2.pl:  BOSS::Config->new
+doc/20130125/www.debian.org/doc/debian-policy/ap-pkg-alternatives.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-relationships.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-archive.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-customized-programs.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-scope.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-maintainerscripts.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-maintainerscripts.html:&quot;Config-Files&quot; state.
+doc/20130125/www.debian.org/doc/debian-policy/ch-maintainerscripts.html:If this fails, the package remains in a &quot;Config-Files&quot; state.
+doc/20130125/www.debian.org/doc/debian-policy/ap-pkg-diversions.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-controlfields.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-sharedlibs.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ap-pkg-sourcepkg.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/index.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/index.html:    <li><a href="ap-pkg-controlfields.html#s-pkg-f-Config-Version">D.2.4 <samp>Config-Version</samp></a></li>
+doc/20130125/www.debian.org/doc/debian-policy/ch-files.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-opersys.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-docs.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ap-pkg-binarypkg.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-source.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ap-pkg-scope.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ap-pkg-conffiles.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ch-binary.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ap-pkg-controlfields.html:<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+doc/20130125/www.debian.org/doc/debian-policy/ap-pkg-controlfields.html:<h3><a name="s-pkg-f-Config-Version"></a>D.2.4 <samp>Config-Version</samp></h3>
+Packager/CodeBase.pm:  if ($UNIVERSAL::packager->Config->Conf->{'--guess'}) {
+Packager/CodeBases.pm:    unless ($UNIVERSAL::packager->Config->{'--guess'}) {
+Packager/Release.pm:  if ($UNIVERSAL::packager->Config->Conf->{'--guess'}) {
+debaux-build:    $CPAN::Config->{keep_source} = 1;
+debaux-build:    my $cpansourcedir = $CPAN::Config->{keep_source_where};
+debaux-build:    $opts{'source-tree'} = join ('/', $CPAN::Config->{build_dir}, $dir);
+Packager.pm~:  $self->Config(BOSS::Config->new
+Packager.pm~:  my $conf = $self->Config->CLIConfig;
+Packager.pm~:  my $conf = $self->Config->CLIConfig;

@@ -1,0 +1,13 @@
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0$ cd KBP/
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0/KBP$ ls
+bin    build.xml   component.env   conf    dist  evaluation     kbptoolkit.sh~                                 lib      log     props   res      src
+build  build.xml~  component.env~  corpus  docs  kbptoolkit.sh  Knowledge Base Population Manual (V1.5.0).pdf  LICENSE  output  README  scripts  success
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0/KBP$ mv * ..
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0/KBP$ ls -1
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0/KBP$ ls -a
+.  ..  
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0/KBP$ mv .classpath  .nfs00000000106884f000000063  .project  .svn ..
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0/KBP$ ls
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0/KBP$ cd ..
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0$ rmdir KBP
+andrewdo@ai:/var/lib/myfrdcsa/sandbox/kbptoolkit-1.5.0/kbptoolkit-1.5.0$ 

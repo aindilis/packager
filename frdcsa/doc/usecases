@@ -1,0 +1,12 @@
+packager ./weka.jar	# stash (into uncat)
+packager ix		# extract (into sandbox)
+packager -d ix		# create summary
+
+packager index rox-lib2
+packager extract rox-lib2
+packager package rox-lib2
+packager edit rox-lib2
+packager remove rox-lib2
+packager test rox-lib2
+packager install rox-lib2
+packager upload rox-lib2

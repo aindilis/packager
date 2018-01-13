@@ -1,0 +1,1200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+<html>
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+<title>Debian Policy Manual - Source packages</title>
+
+<link href="index.html" rel="start">
+<link href="ch-binary.html" rel="prev">
+<link href="ch-controlfields.html" rel="next">
+<link href="index.html#contents" rel="contents">
+<link href="index.html#copyright" rel="copyright">
+<link href="ch-scope.html" rel="chapter" title="1 About this manual">
+<link href="ch-archive.html" rel="chapter" title="2 The Debian Archive">
+<link href="ch-binary.html" rel="chapter" title="3 Binary packages">
+<link href="ch-source.html" rel="chapter" title="4 Source packages">
+<link href="ch-controlfields.html" rel="chapter" title="5 Control files and their fields">
+<link href="ch-maintainerscripts.html" rel="chapter" title="6 Package maintainer scripts and installation procedure">
+<link href="ch-relationships.html" rel="chapter" title="7 Declaring relationships between packages">
+<link href="ch-sharedlibs.html" rel="chapter" title="8 Shared libraries">
+<link href="ch-opersys.html" rel="chapter" title="9 The Operating System">
+<link href="ch-files.html" rel="chapter" title="10 Files">
+<link href="ch-customized-programs.html" rel="chapter" title="11 Customized programs">
+<link href="ch-docs.html" rel="chapter" title="12 Documentation">
+<link href="ap-pkg-scope.html" rel="appendix" title="A Introduction and scope of these appendices">
+<link href="ap-pkg-binarypkg.html" rel="appendix" title="B Binary packages (from old Packaging Manual)">
+<link href="ap-pkg-sourcepkg.html" rel="appendix" title="C Source packages (from old Packaging Manual)">
+<link href="ap-pkg-controlfields.html" rel="appendix" title="D Control files and their fields (from old Packaging Manual)">
+<link href="ap-pkg-conffiles.html" rel="appendix" title="E Configuration file handling (from old Packaging Manual)">
+<link href="ap-pkg-alternatives.html" rel="appendix" title="F Alternative versions of an interface - update-alternatives (from old Packaging Manual)">
+<link href="ap-pkg-diversions.html" rel="appendix" title="G Diversions - overriding a package's version of a file (from old Packaging Manual)">
+<link href="ch-scope.html#s1.1" rel="section" title="1.1 Scope">
+<link href="ch-scope.html#s1.2" rel="section" title="1.2 New versions of this document">
+<link href="ch-scope.html#s-authors" rel="section" title="1.3 Authors and Maintainers">
+<link href="ch-scope.html#s-related" rel="section" title="1.4 Related documents">
+<link href="ch-scope.html#s-definitions" rel="section" title="1.5 Definitions">
+<link href="ch-archive.html#s-dfsg" rel="section" title="2.1 The Debian Free Software Guidelines">
+<link href="ch-archive.html#s-sections" rel="section" title="2.2 Archive areas">
+<link href="ch-archive.html#s-pkgcopyright" rel="section" title="2.3 Copyright considerations">
+<link href="ch-archive.html#s-subsections" rel="section" title="2.4 Sections">
+<link href="ch-archive.html#s-priorities" rel="section" title="2.5 Priorities">
+<link href="ch-binary.html#s3.1" rel="section" title="3.1 The package name">
+<link href="ch-binary.html#s-versions" rel="section" title="3.2 The version of a package">
+<link href="ch-binary.html#s-maintainer" rel="section" title="3.3 The maintainer of a package">
+<link href="ch-binary.html#s-descriptions" rel="section" title="3.4 The description of a package">
+<link href="ch-binary.html#s-dependencies" rel="section" title="3.5 Dependencies">
+<link href="ch-binary.html#s-virtual_pkg" rel="section" title="3.6 Virtual packages">
+<link href="ch-binary.html#s3.7" rel="section" title="3.7 Base system">
+<link href="ch-binary.html#s3.8" rel="section" title="3.8 Essential packages">
+<link href="ch-binary.html#s-maintscripts" rel="section" title="3.9 Maintainer Scripts">
+<link href="ch-source.html#s-standardsversion" rel="section" title="4.1 Standards conformance">
+<link href="ch-source.html#s-pkg-relations" rel="section" title="4.2 Package relationships">
+<link href="ch-source.html#s4.3" rel="section" title="4.3 Changes to the upstream sources">
+<link href="ch-source.html#s-dpkgchangelog" rel="section" title="4.4 Debian changelog: debian/changelog">
+<link href="ch-source.html#s-dpkgcopyright" rel="section" title="4.5 Copyright: debian/copyright">
+<link href="ch-source.html#s4.6" rel="section" title="4.6 Error trapping in makefiles">
+<link href="ch-source.html#s-timestamps" rel="section" title="4.7 Time Stamps">
+<link href="ch-source.html#s-restrictions" rel="section" title="4.8 Restrictions on objects in source packages">
+<link href="ch-source.html#s-debianrules" rel="section" title="4.9 Main building script: debian/rules">
+<link href="ch-source.html#s-substvars" rel="section" title="4.10 Variable substitutions: debian/substvars">
+<link href="ch-source.html#s-debianwatch" rel="section" title="4.11 Optional upstream source location: debian/watch">
+<link href="ch-source.html#s-debianfiles" rel="section" title="4.12 Generated files list: debian/files">
+<link href="ch-source.html#s-embeddedfiles" rel="section" title="4.13 Convenience copies of code">
+<link href="ch-source.html#s-readmesource" rel="section" title="4.14 Source package handling: debian/README.source">
+<link href="ch-controlfields.html#s-controlsyntax" rel="section" title="5.1 Syntax of control files">
+<link href="ch-controlfields.html#s-sourcecontrolfiles" rel="section" title="5.2 Source package control files -- debian/control">
+<link href="ch-controlfields.html#s-binarycontrolfiles" rel="section" title="5.3 Binary package control files -- DEBIAN/control">
+<link href="ch-controlfields.html#s-debiansourcecontrolfiles" rel="section" title="5.4 Debian source control files -- .dsc">
+<link href="ch-controlfields.html#s-debianchangesfiles" rel="section" title="5.5 Debian changes files -- .changes">
+<link href="ch-controlfields.html#s-controlfieldslist" rel="section" title="5.6 List of fields">
+<link href="ch-controlfields.html#s5.7" rel="section" title="5.7 User-defined fields">
+<link href="ch-maintainerscripts.html#s6.1" rel="section" title="6.1 Introduction to package maintainer scripts">
+<link href="ch-maintainerscripts.html#s-idempotency" rel="section" title="6.2 Maintainer scripts idempotency">
+<link href="ch-maintainerscripts.html#s-controllingterminal" rel="section" title="6.3 Controlling terminal for maintainer scripts">
+<link href="ch-maintainerscripts.html#s-exitstatus" rel="section" title="6.4 Exit status">
+<link href="ch-maintainerscripts.html#s-mscriptsinstact" rel="section" title="6.5 Summary of ways maintainer scripts are called">
+<link href="ch-maintainerscripts.html#s-unpackphase" rel="section" title="6.6 Details of unpack phase of installation or upgrade">
+<link href="ch-maintainerscripts.html#s-configdetails" rel="section" title="6.7 Details of configuration">
+<link href="ch-maintainerscripts.html#s-removedetails" rel="section" title="6.8 Details of removal and/or configuration purging">
+<link href="ch-relationships.html#s-depsyntax" rel="section" title="7.1 Syntax of relationship fields">
+<link href="ch-relationships.html#s-binarydeps" rel="section" title="7.2 Binary Dependencies - Depends, Recommends, Suggests, Enhances, Pre-Depends">
+<link href="ch-relationships.html#s-breaks" rel="section" title="7.3 Packages which break other packages - Breaks">
+<link href="ch-relationships.html#s-conflicts" rel="section" title="7.4 Conflicting binary packages - Conflicts">
+<link href="ch-relationships.html#s-virtual" rel="section" title="7.5 Virtual packages - Provides">
+<link href="ch-relationships.html#s-replaces" rel="section" title="7.6 Overwriting files and replacing packages - Replaces">
+<link href="ch-relationships.html#s-sourcebinarydeps" rel="section" title="7.7 Relationships between source and binary packages - Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep">
+<link href="ch-relationships.html#s-built-using" rel="section" title="7.8 Additional source packages used to build the binary - Built-Using">
+<link href="ch-sharedlibs.html#s-sharedlibs-runtime" rel="section" title="8.1 Run-time shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-support-files" rel="section" title="8.2 Shared library support files">
+<link href="ch-sharedlibs.html#s-sharedlibs-static" rel="section" title="8.3 Static libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-dev" rel="section" title="8.4 Development files">
+<link href="ch-sharedlibs.html#s-sharedlibs-intradeps" rel="section" title="8.5 Dependencies between the packages of the same library">
+<link href="ch-sharedlibs.html#s-sharedlibs-depends" rel="section" title="8.6 Dependencies between the library and other packages">
+<link href="ch-opersys.html#s9.1" rel="section" title="9.1 File system hierarchy">
+<link href="ch-opersys.html#s9.2" rel="section" title="9.2 Users and groups">
+<link href="ch-opersys.html#s-sysvinit" rel="section" title="9.3 System run levels and init.d scripts">
+<link href="ch-opersys.html#s9.4" rel="section" title="9.4 Console messages from init.d scripts">
+<link href="ch-opersys.html#s-cron-jobs" rel="section" title="9.5 Cron jobs">
+<link href="ch-opersys.html#s-menus" rel="section" title="9.6 Menus">
+<link href="ch-opersys.html#s-mime" rel="section" title="9.7 Multimedia handlers">
+<link href="ch-opersys.html#s9.8" rel="section" title="9.8 Keyboard configuration">
+<link href="ch-opersys.html#s9.9" rel="section" title="9.9 Environment variables">
+<link href="ch-opersys.html#s-doc-base" rel="section" title="9.10 Registering Documents using doc-base">
+<link href="ch-opersys.html#s-alternateinit" rel="section" title="9.11 Alternate init systems">
+<link href="ch-files.html#s-binaries" rel="section" title="10.1 Binaries">
+<link href="ch-files.html#s-libraries" rel="section" title="10.2 Libraries">
+<link href="ch-files.html#s10.3" rel="section" title="10.3 Shared libraries">
+<link href="ch-files.html#s-scripts" rel="section" title="10.4 Scripts">
+<link href="ch-files.html#s10.5" rel="section" title="10.5 Symbolic links">
+<link href="ch-files.html#s10.6" rel="section" title="10.6 Device files">
+<link href="ch-files.html#s-config-files" rel="section" title="10.7 Configuration files">
+<link href="ch-files.html#s10.8" rel="section" title="10.8 Log files">
+<link href="ch-files.html#s-permissions-owners" rel="section" title="10.9 Permissions and owners">
+<link href="ch-customized-programs.html#s-arch-spec" rel="section" title="11.1 Architecture specification strings">
+<link href="ch-customized-programs.html#s11.2" rel="section" title="11.2 Daemons">
+<link href="ch-customized-programs.html#s11.3" rel="section" title="11.3 Using pseudo-ttys and modifying wtmp, utmp and lastlog">
+<link href="ch-customized-programs.html#s11.4" rel="section" title="11.4 Editors and pagers">
+<link href="ch-customized-programs.html#s-web-appl" rel="section" title="11.5 Web servers and applications">
+<link href="ch-customized-programs.html#s-mail-transport-agents" rel="section" title="11.6 Mail transport, delivery and user agents">
+<link href="ch-customized-programs.html#s11.7" rel="section" title="11.7 News system configuration">
+<link href="ch-customized-programs.html#s11.8" rel="section" title="11.8 Programs for the X Window System">
+<link href="ch-customized-programs.html#s-perl" rel="section" title="11.9 Perl programs and modules">
+<link href="ch-customized-programs.html#s-emacs" rel="section" title="11.10 Emacs lisp programs">
+<link href="ch-customized-programs.html#s11.11" rel="section" title="11.11 Games">
+<link href="ch-docs.html#s12.1" rel="section" title="12.1 Manual pages">
+<link href="ch-docs.html#s12.2" rel="section" title="12.2 Info documents">
+<link href="ch-docs.html#s12.3" rel="section" title="12.3 Additional documentation">
+<link href="ch-docs.html#s12.4" rel="section" title="12.4 Preferred documentation formats">
+<link href="ch-docs.html#s-copyrightfile" rel="section" title="12.5 Copyright information">
+<link href="ch-docs.html#s12.6" rel="section" title="12.6 Examples">
+<link href="ch-docs.html#s-changelogs" rel="section" title="12.7 Changelog files">
+<link href="ap-pkg-binarypkg.html#s-pkg-bincreating" rel="section" title="B.1 Creating package files - dpkg-deb">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlarea" rel="section" title="B.2 Package control information files">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlfile" rel="section" title="B.3 The main control information file: control">
+<link href="ap-pkg-binarypkg.html#sB.4" rel="section" title="B.4 Time Stamps">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetools" rel="section" title="C.1 Tools for processing source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetree" rel="section" title="C.2 The Debian package source tree">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcearchives" rel="section" title="C.3 Source packages as archives">
+<link href="ap-pkg-sourcepkg.html#sC.4" rel="section" title="C.4 Unpacking a Debian source package without dpkg-source">
+<link href="ap-pkg-controlfields.html#sD.1" rel="section" title="D.1 Syntax of control files">
+<link href="ap-pkg-controlfields.html#sD.2" rel="section" title="D.2 List of fields">
+<link href="ap-pkg-conffiles.html#sE.1" rel="section" title="E.1 Automatic handling of configuration files by dpkg">
+<link href="ap-pkg-conffiles.html#sE.2" rel="section" title="E.2 Fully-featured maintainer script configuration handling">
+<link href="ch-archive.html#s-main" rel="subsection" title="2.2.1 The main archive area">
+<link href="ch-archive.html#s-contrib" rel="subsection" title="2.2.2 The contrib archive area">
+<link href="ch-archive.html#s-non-free" rel="subsection" title="2.2.3 The non-free archive area">
+<link href="ch-binary.html#s3.2.1" rel="subsection" title="3.2.1 Version numbers based on dates">
+<link href="ch-binary.html#s-synopsis" rel="subsection" title="3.4.1 The single line synopsis">
+<link href="ch-binary.html#s-extendeddesc" rel="subsection" title="3.4.2 The extended description">
+<link href="ch-binary.html#s-maintscriptprompt" rel="subsection" title="3.9.1 Prompting in maintainer scripts">
+<link href="ch-source.html#s-debianrules-options" rel="subsection" title="4.9.1 debian/rules and DEB_BUILD_OPTIONS">
+<link href="ch-controlfields.html#s-f-Source" rel="subsection" title="5.6.1 Source">
+<link href="ch-controlfields.html#s-f-Maintainer" rel="subsection" title="5.6.2 Maintainer">
+<link href="ch-controlfields.html#s-f-Uploaders" rel="subsection" title="5.6.3 Uploaders">
+<link href="ch-controlfields.html#s-f-Changed-By" rel="subsection" title="5.6.4 Changed-By">
+<link href="ch-controlfields.html#s-f-Section" rel="subsection" title="5.6.5 Section">
+<link href="ch-controlfields.html#s-f-Priority" rel="subsection" title="5.6.6 Priority">
+<link href="ch-controlfields.html#s-f-Package" rel="subsection" title="5.6.7 Package">
+<link href="ch-controlfields.html#s-f-Architecture" rel="subsection" title="5.6.8 Architecture">
+<link href="ch-controlfields.html#s-f-Essential" rel="subsection" title="5.6.9 Essential">
+<link href="ch-controlfields.html#s5.6.10" rel="subsection" title="5.6.10 Package interrelationship fields: Depends, Pre-Depends, Recommends, Suggests, Breaks, Conflicts, Provides, Replaces, Enhances">
+<link href="ch-controlfields.html#s-f-Standards-Version" rel="subsection" title="5.6.11 Standards-Version">
+<link href="ch-controlfields.html#s-f-Version" rel="subsection" title="5.6.12 Version">
+<link href="ch-controlfields.html#s-f-Description" rel="subsection" title="5.6.13 Description">
+<link href="ch-controlfields.html#s-f-Distribution" rel="subsection" title="5.6.14 Distribution">
+<link href="ch-controlfields.html#s-f-Date" rel="subsection" title="5.6.15 Date">
+<link href="ch-controlfields.html#s-f-Format" rel="subsection" title="5.6.16 Format">
+<link href="ch-controlfields.html#s-f-Urgency" rel="subsection" title="5.6.17 Urgency">
+<link href="ch-controlfields.html#s-f-Changes" rel="subsection" title="5.6.18 Changes">
+<link href="ch-controlfields.html#s-f-Binary" rel="subsection" title="5.6.19 Binary">
+<link href="ch-controlfields.html#s-f-Installed-Size" rel="subsection" title="5.6.20 Installed-Size">
+<link href="ch-controlfields.html#s-f-Files" rel="subsection" title="5.6.21 Files">
+<link href="ch-controlfields.html#s-f-Closes" rel="subsection" title="5.6.22 Closes">
+<link href="ch-controlfields.html#s-f-Homepage" rel="subsection" title="5.6.23 Homepage">
+<link href="ch-controlfields.html#s-f-Checksums" rel="subsection" title="5.6.24 Checksums-Sha1 and Checksums-Sha256">
+<link href="ch-controlfields.html#s-f-DM-Upload-Allowed" rel="subsection" title="5.6.25 DM-Upload-Allowed">
+<link href="ch-controlfields.html#s-f-VCS-fields" rel="subsection" title="5.6.26 Version Control System (VCS) fields">
+<link href="ch-relationships.html#s7.6.1" rel="subsection" title="7.6.1 Overwriting files in other packages">
+<link href="ch-relationships.html#s7.6.2" rel="subsection" title="7.6.2 Replacing whole packages, forcing their removal">
+<link href="ch-sharedlibs.html#s-ldconfig" rel="subsection" title="8.1.1 ldconfig">
+<link href="ch-sharedlibs.html#s-dpkg-shlibdeps" rel="subsection" title="8.6.1 Generating dependencies on shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-updates" rel="subsection" title="8.6.2 Shared library ABI changes">
+<link href="ch-sharedlibs.html#s-sharedlibs-symbols" rel="subsection" title="8.6.3 The symbols system">
+<link href="ch-sharedlibs.html#s-symbols-paths" rel="subsection" title="8.6.3.1 The symbols files present on the system">
+<link href="ch-sharedlibs.html#s-symbols" rel="subsection" title="8.6.3.2 The symbols File Format">
+<link href="ch-sharedlibs.html#s-providing-symbols" rel="subsection" title="8.6.3.3 Providing a symbols file">
+<link href="ch-sharedlibs.html#s-sharedlibs-shlibdeps" rel="subsection" title="8.6.4 The shlibs system">
+<link href="ch-sharedlibs.html#s-shlibs-paths" rel="subsection" title="8.6.4.1 The shlibs files present on the system">
+<link href="ch-sharedlibs.html#s-shlibs" rel="subsection" title="8.6.4.2 The shlibs File Format">
+<link href="ch-sharedlibs.html#s8.6.4.3" rel="subsection" title="8.6.4.3 Providing a shlibs file">
+<link href="ch-opersys.html#s-fhs" rel="subsection" title="9.1.1 File System Structure">
+<link href="ch-opersys.html#s9.1.2" rel="subsection" title="9.1.2 Site-specific programs">
+<link href="ch-opersys.html#s9.1.3" rel="subsection" title="9.1.3 The system-wide mail directory">
+<link href="ch-opersys.html#s-fhs-run" rel="subsection" title="9.1.4 /run and /run/lock">
+<link href="ch-opersys.html#s9.2.1" rel="subsection" title="9.2.1 Introduction">
+<link href="ch-opersys.html#s9.2.2" rel="subsection" title="9.2.2 UID and GID classes">
+<link href="ch-opersys.html#s-/etc/init.d" rel="subsection" title="9.3.1 Introduction">
+<link href="ch-opersys.html#s-writing-init" rel="subsection" title="9.3.2 Writing the scripts">
+<link href="ch-opersys.html#s9.3.3" rel="subsection" title="9.3.3 Interfacing with the initscript system">
+<link href="ch-opersys.html#s9.3.3.1" rel="subsection" title="9.3.3.1 Managing the links">
+<link href="ch-opersys.html#s9.3.3.2" rel="subsection" title="9.3.3.2 Running initscripts">
+<link href="ch-opersys.html#s9.3.4" rel="subsection" title="9.3.4 Boot-time initialization">
+<link href="ch-opersys.html#s9.3.5" rel="subsection" title="9.3.5 Example">
+<link href="ch-opersys.html#s-cron-files" rel="subsection" title="9.5.1 Cron job file names">
+<link href="ch-opersys.html#s-upstart" rel="subsection" title="9.11.1 Event-based boot with upstart">
+<link href="ch-files.html#s10.7.1" rel="subsection" title="10.7.1 Definitions">
+<link href="ch-files.html#s10.7.2" rel="subsection" title="10.7.2 Location">
+<link href="ch-files.html#s10.7.3" rel="subsection" title="10.7.3 Behavior">
+<link href="ch-files.html#s10.7.4" rel="subsection" title="10.7.4 Sharing configuration files">
+<link href="ch-files.html#s10.7.5" rel="subsection" title="10.7.5 User configuration files (&quot;dotfiles&quot;)">
+<link href="ch-files.html#s10.9.1" rel="subsection" title="10.9.1 The use of dpkg-statoverride">
+<link href="ch-customized-programs.html#s-arch-wildcard-spec" rel="subsection" title="11.1.1 Architecture wildcards">
+<link href="ch-customized-programs.html#s11.8.1" rel="subsection" title="11.8.1 Providing X support and package priorities">
+<link href="ch-customized-programs.html#s11.8.2" rel="subsection" title="11.8.2 Packages providing an X server">
+<link href="ch-customized-programs.html#s11.8.3" rel="subsection" title="11.8.3 Packages providing a terminal emulator">
+<link href="ch-customized-programs.html#s11.8.4" rel="subsection" title="11.8.4 Packages providing a window manager">
+<link href="ch-customized-programs.html#s11.8.5" rel="subsection" title="11.8.5 Packages providing fonts">
+<link href="ch-customized-programs.html#s-appdefaults" rel="subsection" title="11.8.6 Application defaults files">
+<link href="ch-customized-programs.html#s11.8.7" rel="subsection" title="11.8.7 Installation directory issues">
+<link href="ch-docs.html#s-copyrightformat" rel="subsection" title="12.5.1 Machine-readable copyright information">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-source" rel="subsection" title="C.1.1 dpkg-source - packs and unpacks Debian source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-buildpackage" rel="subsection" title="C.1.2 dpkg-buildpackage - overall package-building control script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-gencontrol" rel="subsection" title="C.1.3 dpkg-gencontrol - generates binary package control files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-shlibdeps" rel="subsection" title="C.1.4 dpkg-shlibdeps - calculates shared library dependencies">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-distaddfile" rel="subsection" title="C.1.5 dpkg-distaddfile - adds a file to debian/files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-genchanges" rel="subsection" title="C.1.6 dpkg-genchanges - generates a .changes upload control file">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-parsechangelog" rel="subsection" title="C.1.7 dpkg-parsechangelog - produces parsed representation of a changelog">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-architecture" rel="subsection" title="C.1.8 dpkg-architecture - information about the build and host system">
+<link href="ap-pkg-sourcepkg.html#s-pkg-debianrules" rel="subsection" title="C.2.1 debian/rules - the main building script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-srcsubstvars" rel="subsection" title="C.2.2 debian/substvars and variable substitutions">
+<link href="ap-pkg-sourcepkg.html#sC.2.3" rel="subsection" title="C.2.3 debian/files">
+<link href="ap-pkg-sourcepkg.html#sC.2.4" rel="subsection" title="C.2.4 debian/tmp">
+<link href="ap-pkg-sourcepkg.html#sC.4.1" rel="subsection" title="C.4.1 Restrictions on objects in source packages">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Filename" rel="subsection" title="D.2.1 Filename and MSDOS-Filename">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Size" rel="subsection" title="D.2.2 Size and MD5sum">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Status" rel="subsection" title="D.2.3 Status">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Conffiles" rel="subsection" title="D.2.5 Conffiles">
+<link href="ap-pkg-controlfields.html#sD.2.6" rel="subsection" title="D.2.6 Obsolete fields">
+
+</head>
+
+<body>
+
+<p><a name="ch-source"></a></p>
+<hr>
+
+<p>
+[ <a href="ch-binary.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ 4 ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-controlfields.html">next</a> ]
+</p>
+
+<hr>
+
+<h1>
+Debian Policy Manual
+<br>Chapter 4 - Source packages
+</h1>
+
+<hr>
+
+<h2><a name="s-standardsversion"></a>4.1 Standards conformance</h2>
+
+<p>
+Source packages should specify the most recent version number of this policy
+document with which your package complied when it was last updated.
+</p>
+
+<p>
+This information may be used to file bug reports automatically if your package
+becomes too much out of date.
+</p>
+
+<p>
+The version is specified in the <samp>Standards-Version</samp> control field.
+The format of the <samp>Standards-Version</samp> field is described in <a
+href="ch-controlfields.html#s-f-Standards-Version"><samp>Standards-Version</samp>,
+Section 5.6.11</a>.
+</p>
+
+<p>
+You should regularly, and especially if your package has become out of date,
+check for the newest Policy Manual available and update your package, if
+necessary.  When your package complies with the new standards you should update
+the <samp>Standards-Version</samp> source package field and release it.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f12" name="fr12">12</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-pkg-relations"></a>4.2 Package relationships</h2>
+
+<p>
+Source packages should specify which binary packages they require to be
+installed or not to be installed in order to build correctly.  For example, if
+building a package requires a certain compiler, then the compiler should be
+specified as a build-time dependency.
+</p>
+
+<p>
+It is not necessary to explicitly specify build-time relationships on a minimal
+set of packages that are always needed to compile, link and put in a Debian
+package a standard &quot;Hello World!&quot; program written in C or C++.  The
+required packages are called <em>build-essential</em>, and an informational
+list can be found in <code>/usr/share/doc/build-essential/list</code> (which is
+contained in the <samp>build-essential</samp> package).[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f13" name="fr13">13</a>]
+</p>
+
+<p>
+When specifying the set of build-time dependencies, one should list only those
+packages explicitly required by the build.  It is not necessary to list
+packages which are required merely because some other package in the list of
+build-time dependencies depends on them.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f14"
+name="fr14">14</a>]
+</p>
+
+<p>
+If build-time dependencies are specified, it must be possible to build the
+package and produce working binaries on a system with only essential and
+build-essential packages installed and also those required to satisfy the
+build-time relationships (including any implied relationships).  In particular,
+this means that version clauses should be used rigorously in build-time
+relationships so that one cannot produce bad or inconsistently configured
+packages when the relationships are properly satisfied.
+</p>
+
+<p>
+<a href="ch-relationships.html">Declaring relationships between packages,
+Chapter 7</a> explains the technical details.
+</p>
+
+<hr>
+
+<h2><a name="s4.3"></a>4.3 Changes to the upstream sources</h2>
+
+<p>
+If changes to the source code are made that are not specific to the needs of
+the Debian system, they should be sent to the upstream authors in whatever form
+they prefer so as to be included in the upstream version of the package.
+</p>
+
+<p>
+If you need to configure the package differently for Debian or for Linux, and
+the upstream source doesn't provide a way to do so, you should add such
+configuration facilities (for example, a new <code>autoconf</code> test or
+<samp>#define</samp>) and send the patch to the upstream authors, with the
+default set to the way they originally had it.  You can then easily override
+the default in your <code>debian/rules</code> or wherever is appropriate.
+</p>
+
+<p>
+You should make sure that the <code>configure</code> utility detects the
+correct architecture specification string (refer to <a
+href="ch-customized-programs.html#s-arch-spec">Architecture specification
+strings, Section 11.1</a> for details).
+</p>
+
+<p>
+If you need to edit a <code>Makefile</code> where GNU-style
+<code>configure</code> scripts are used, you should edit the <code>.in</code>
+files rather than editing the <code>Makefile</code> directly.  This allows the
+user to reconfigure the package if necessary.  You should <em>not</em>
+configure the package and edit the generated <code>Makefile</code>!  This makes
+it impossible for someone else to later reconfigure the package without losing
+the changes you made.
+</p>
+
+<hr>
+
+<h2><a name="s-dpkgchangelog"></a>4.4 Debian changelog: <code>debian/changelog</code></h2>
+
+<p>
+Changes in the Debian version of the package should be briefly explained in the
+Debian changelog file <code>debian/changelog</code>.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f15" name="fr15">15</a>] This includes modifications made
+in the Debian package compared to the upstream one as well as other changes and
+updates to the package.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f16" name="fr16">16</a>]
+</p>
+
+<p>
+The format of the <code>debian/changelog</code> allows the package building
+tools to discover which version of the package is being built and find out
+other release-specific information.
+</p>
+
+<p>
+That format is a series of entries like this:
+</p>
+<pre>
+     <var>package</var> (<var>version</var>) <var>distribution(s)</var>; urgency=<var>urgency</var>
+     	    <var>[optional blank line(s), stripped]</var>
+       * <var>change details</var>
+         <var>more change details</var>
+     	    <var>[blank line(s), included in output of dpkg-parsechangelog]</var>
+       * <var>even more change details</var>
+     	    <var>[optional blank line(s), stripped]</var>
+      -- <var>maintainer name</var> &lt;<var>email address</var>&gt;<var>[two spaces]</var>  <var>date</var>
+</pre>
+
+<p>
+<var>package</var> and <var>version</var> are the source package name and
+version number.
+</p>
+
+<p>
+<var>distribution(s)</var> lists the distributions where this version should be
+installed when it is uploaded - it is copied to the <samp>Distribution</samp>
+field in the <code>.changes</code> file.  See <a
+href="ch-controlfields.html#s-f-Distribution"><samp>Distribution</samp>,
+Section 5.6.14</a>.
+</p>
+
+<p>
+<var>urgency</var> is the value for the <samp>Urgency</samp> field in the
+<code>.changes</code> file for the upload (see <a
+href="ch-controlfields.html#s-f-Urgency"><samp>Urgency</samp>, Section
+5.6.17</a>).  It is not possible to specify an urgency containing commas;
+commas are used to separate <samp><var>keyword</var>=<var>value</var></samp>
+settings in the <code>dpkg</code> changelog format (though there is currently
+only one useful <var>keyword</var>, <samp>urgency</samp>).
+</p>
+
+<p>
+The change details may in fact be any series of lines starting with at least
+two spaces, but conventionally each change starts with an asterisk and a
+separating space and continuation lines are indented so as to bring them in
+line with the start of the text above.  Blank lines may be used here to
+separate groups of changes, if desired.
+</p>
+
+<p>
+If this upload resolves bugs recorded in the Bug Tracking System (BTS), they
+may be automatically closed on the inclusion of this package into the Debian
+archive by including the string: <samp>closes: Bug#<var>nnnnn</var></samp> in
+the change details.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f17" name="fr17">17</a>] This
+information is conveyed via the <samp>Closes</samp> field in the
+<samp>.changes</samp> file (see <a
+href="ch-controlfields.html#s-f-Closes"><samp>Closes</samp>, Section
+5.6.22</a>).
+</p>
+
+<p>
+The maintainer name and email address used in the changelog should be the
+details of the person uploading <em>this</em> version.  They are <em>not</em>
+necessarily those of the usual package maintainer.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f18"
+name="fr18">18</a>] The information here will be copied to the
+<samp>Changed-By</samp> field in the <samp>.changes</samp> file (see <a
+href="ch-controlfields.html#s-f-Changed-By"><samp>Changed-By</samp>, Section
+5.6.4</a>), and then later used to send an acknowledgement when the upload has
+been installed.
+</p>
+
+<p>
+The <var>date</var> has the following format[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f19"
+name="fr19">19</a>] (compatible and with the same semantics of RFC 2822 and RFC
+5322):
+</p>
+
+<pre>
+     day-of-week, dd month yyyy hh:mm:ss +zzzz
+</pre>
+
+<p>
+where:
+</p>
+<ul>
+<li>
+<p>
+day-of week is one of: Mon, Tue, Wed, Thu, Fri, Sat, Sun
+</p>
+</li>
+<li>
+<p>
+dd is a one- or two-digit day of the month (01-31)
+</p>
+</li>
+<li>
+<p>
+month is one of: Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec
+</p>
+</li>
+<li>
+<p>
+yyyy is the four-digit year (e.g.  2010)
+</p>
+</li>
+<li>
+<p>
+hh is the two-digit hour (00-23)
+</p>
+</li>
+<li>
+<p>
+mm is the two-digit minutes (00-59)
+</p>
+</li>
+<li>
+<p>
+ss is the two-digit seconds (00-60)
+</p>
+</li>
+<li>
+<p>
++zzzz or -zzzz is the the time zone offset from Coordinated Universal Time
+(UTC).  &quot;+&quot; indicates that the time is ahead of (i.e., east of) UTC
+and &quot;-&quot; indicates that the time is behind (i.e., west of) UTC.  The
+first two digits indicate the hour difference from UTC and the last two digits
+indicate the number of additional minutes difference from UTC.  The last two
+digits must be in the range 00-59.
+</p>
+</li>
+</ul>
+
+<p>
+The first &quot;title&quot; line with the package name must start at the left
+hand margin.  The &quot;trailer&quot; line with the maintainer and date details
+must be preceded by exactly one space.  The maintainer details and the date
+must be separated by exactly two spaces.
+</p>
+
+<p>
+The entire changelog must be encoded in UTF-8.
+</p>
+
+<p>
+For more information on placement of the changelog files within binary
+packages, please see <a href="ch-docs.html#s-changelogs">Changelog files,
+Section 12.7</a>.
+</p>
+
+<hr>
+
+<h2><a name="s-dpkgcopyright"></a>4.5 Copyright: <code>debian/copyright</code></h2>
+
+<p>
+Every package must be accompanied by a verbatim copy of its copyright
+information and distribution license in the file
+<code>/usr/share/doc/<var>package</var>/copyright</code> (see <a
+href="ch-docs.html#s-copyrightfile">Copyright information, Section 12.5</a> for
+further details).  Also see <a href="ch-archive.html#s-pkgcopyright">Copyright
+considerations, Section 2.3</a> for further considerations related to
+copyrights for packages.
+</p>
+
+<hr>
+
+<h2><a name="s4.6"></a>4.6 Error trapping in makefiles</h2>
+
+<p>
+When <code>make</code> invokes a command in a makefile (including your
+package's upstream makefiles and <code>debian/rules</code>), it does so using
+<code>sh</code>.  This means that <code>sh</code>'s usual bad error handling
+properties apply: if you include a miniature script as one of the commands in
+your makefile you'll find that if you don't do anything about it then errors
+are not detected and <code>make</code> will blithely continue after problems.
+</p>
+
+<p>
+Every time you put more than one shell command (this includes using a loop) in
+a makefile command you must make sure that errors are trapped.  For simple
+compound commands, such as changing directory and then running a program, using
+<samp>&amp;&amp;</samp> rather than semicolon as a command separator is
+sufficient.  For more complex commands including most loops and conditionals
+you should include a separate <samp>set -e</samp> command at the start of every
+makefile command that's actually one of these miniature shell scripts.
+</p>
+
+<hr>
+
+<h2><a name="s-timestamps"></a>4.7 Time Stamps</h2>
+
+<p>
+Maintainers should preserve the modification times of the upstream source files
+in a package, as far as is reasonably possible.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f20"
+name="fr20">20</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-restrictions"></a>4.8 Restrictions on objects in source packages</h2>
+
+<p>
+The source package may not contain any hard links[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f21"
+name="fr21">21</a>], device special files, sockets or setuid or setgid
+files.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f22" name="fr22">22</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-debianrules"></a>4.9 Main building script: <code>debian/rules</code></h2>
+
+<p>
+This file must be an executable makefile, and contains the package-specific
+recipes for compiling the package and building binary package(s) from the
+source.
+</p>
+
+<p>
+It must start with the line <samp>#!/usr/bin/make -f</samp>, so that it can be
+invoked by saying its name rather than invoking <code>make</code> explicitly.
+That is, invoking either of <samp>make -f debian/rules <em>args...</em></samp>
+or <samp>./debian/rules <em>args...</em></samp> must result in identical
+behavior.
+</p>
+
+<p>
+The following targets are required and must be implemented by
+<code>debian/rules</code>: <samp>clean</samp>, <samp>binary</samp>,
+<samp>binary-arch</samp>, <samp>binary-indep</samp>, and <samp>build</samp>.
+These are the targets called by <code>dpkg-buildpackage</code>.
+</p>
+
+<p>
+Since an interactive <code>debian/rules</code> script makes it impossible to
+auto-compile that package and also makes it hard for other people to reproduce
+the same binary package, all required targets must be non-interactive.  It also
+follows that any target that these targets depend on must also be
+non-interactive.
+</p>
+
+<p>
+The targets are as follows:
+</p>
+<dl>
+<dt><samp>build</samp> (required)</dt>
+<dd>
+<p>
+The <samp>build</samp> target should perform all the configuration and
+compilation of the package.  If a package has an interactive pre-build
+configuration routine, the Debian source package must either be built after
+this has taken place (so that the binary package can be built without rerunning
+the configuration) or the configuration routine modified to become
+non-interactive.  (The latter is preferable if there are architecture-specific
+features detected by the configuration routine.)
+</p>
+
+<p>
+For some packages, notably ones where the same source tree is compiled in
+different ways to produce two binary packages, the <samp>build</samp> target
+does not make much sense.  For these packages it is good enough to provide two
+(or more) targets (<samp>build-a</samp> and <samp>build-b</samp> or whatever)
+for each of the ways of building the package, and a <samp>build</samp> target
+that does nothing.  The <samp>binary</samp> target will have to build the
+package in each of the possible ways and make the binary package out of each.
+</p>
+
+<p>
+The <samp>build</samp> target must not do anything that might require root
+privilege.
+</p>
+
+<p>
+The <samp>build</samp> target may need to run the <samp>clean</samp> target
+first - see below.
+</p>
+
+<p>
+When a package has a configuration and build routine which takes a long time,
+or when the makefiles are poorly designed, or when <samp>build</samp> needs to
+run <samp>clean</samp> first, it is a good idea to <samp>touch build</samp>
+when the build process is complete.  This will ensure that if
+<samp>debian/rules build</samp> is run again it will not rebuild the whole
+program.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f23" name="fr23">23</a>]
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>build-arch</samp> (required), <samp>build-indep</samp> (required)</dt>
+<dd>
+<p>
+The <samp>build-arch</samp> target must perform all the configuration and
+compilation required for producing all architecture-dependant binary packages
+(those packages for which the body of the <samp>Architecture</samp> field in
+<samp>debian/control</samp> is not <samp>all</samp>).  Similarly, the
+<samp>build-indep</samp> target must perform all the configuration and
+compilation required for producing all architecture-independent binary packages
+(those packages for which the body of the <samp>Architecture</samp> field in
+<samp>debian/control</samp> is <samp>all</samp>).  The <samp>build</samp>
+target should either depend on those targets or take the same actions as
+invoking those targets would perform.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f24"
+name="fr24">24</a>]
+</p>
+
+<p>
+The <samp>build-arch</samp> and <samp>build-indep</samp> targets must not do
+anything that might require root privilege.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>binary</samp> (required), <samp>binary-arch</samp> (required), <samp>binary-indep</samp> (required)</dt>
+<dd>
+<p>
+The <samp>binary</samp> target must be all that is necessary for the user to
+build the binary package(s) produced from this source package.  It is split
+into two parts: <code>binary-arch</code> builds the binary packages which are
+specific to a particular architecture, and <samp>binary-indep</samp> builds
+those which are not.
+</p>
+
+<p>
+<samp>binary</samp> may be (and commonly is) a target with no commands which
+simply depends on <samp>binary-arch</samp> and <samp>binary-indep</samp>.
+</p>
+
+<p>
+Both <samp>binary-*</samp> targets should depend on the <samp>build</samp>
+target, or on the appropriate <samp>build-arch</samp> or
+<samp>build-indep</samp> target, if provided, so that the package is built if
+it has not been already.  It should then create the relevant binary package(s),
+using <code>dpkg-gencontrol</code> to make their control files and
+<code>dpkg-deb</code> to build them and place them in the parent of the top
+level directory.
+</p>
+
+<p>
+Both the <samp>binary-arch</samp> and <samp>binary-indep</samp> targets
+<em>must</em> exist.  If one of them has nothing to do (which will always be
+the case if the source generates only a single binary package, whether
+architecture-dependent or not), it must still exist and must always succeed.
+</p>
+
+<p>
+The <samp>binary</samp> targets must be invoked as root.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f25" name="fr25">25</a>]
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>clean</samp> (required)</dt>
+<dd>
+<p>
+This must undo any effects that the <samp>build</samp> and <samp>binary</samp>
+targets may have had, except that it should leave alone any output files
+created in the parent directory by a run of a <samp>binary</samp> target.
+</p>
+
+<p>
+If a <samp>build</samp> file is touched at the end of the <samp>build</samp>
+target, as suggested above, it should be removed as the first action that
+<samp>clean</samp> performs, so that running <samp>build</samp> again after an
+interrupted <samp>clean</samp> doesn't think that everything is already done.
+</p>
+
+<p>
+The <samp>clean</samp> target may need to be invoked as root if
+<samp>binary</samp> has been invoked since the last <samp>clean</samp>, or if
+<samp>build</samp> has been invoked as root (since <samp>build</samp> may
+create directories, for example).
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>get-orig-source</samp> (optional)</dt>
+<dd>
+<p>
+This target fetches the most recent version of the original source package from
+a canonical archive site (via FTP or WWW, for example), does any necessary
+rearrangement to turn it into the original source tar file format described
+below, and leaves it in the current directory.
+</p>
+
+<p>
+This target may be invoked in any directory, and should take care to clean up
+any temporary files it may have left.
+</p>
+
+<p>
+This target is optional, but providing it if possible is a good idea.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>patch</samp> (optional)</dt>
+<dd>
+<p>
+This target performs whatever additional actions are required to make the
+source ready for editing (unpacking additional upstream archives, applying
+patches, etc.).  It is recommended to be implemented for any package where
+<samp>dpkg-source -x</samp> does not result in source ready for additional
+modification.  See <a href="ch-source.html#s-readmesource">Source package handling:
+<code>debian/README.source</code>, Section 4.14</a>.
+</p>
+</dd>
+</dl>
+
+<p>
+The <samp>build</samp>, <samp>binary</samp> and <samp>clean</samp> targets must
+be invoked with the current directory being the package's top-level directory.
+</p>
+
+<p>
+Additional targets may exist in <code>debian/rules</code>, either as published
+or undocumented interfaces or for the package's internal use.
+</p>
+
+<p>
+The architectures we build on and build for are determined by <code>make</code>
+variables using the utility <a
+href="ap-pkg-sourcepkg.html#s-pkg-dpkg-architecture"><code>dpkg-architecture</code></a>.
+You can determine the Debian architecture and the GNU style architecture
+specification string for the build architecture as well as for the host
+architecture.  The build architecture is the architecture on which
+<code>debian/rules</code> is run and the package build is performed.  The host
+architecture is the architecture on which the resulting package will be
+installed and run.  These are normally the same, but may be different in the
+case of cross-compilation (building packages for one architecture on machines
+of a different architecture).
+</p>
+
+<p>
+Here is a list of supported <code>make</code> variables:
+</p>
+<ul>
+<li>
+<p>
+<samp>DEB_*_ARCH</samp> (the Debian architecture)
+</p>
+</li>
+<li>
+<p>
+<samp>DEB_*_ARCH_CPU</samp> (the Debian CPU name)
+</p>
+</li>
+<li>
+<p>
+<samp>DEB_*_ARCH_OS</samp> (the Debian System name)
+</p>
+</li>
+<li>
+<p>
+<samp>DEB_*_GNU_TYPE</samp> (the GNU style architecture specification string)
+</p>
+</li>
+<li>
+<p>
+<samp>DEB_*_GNU_CPU</samp> (the CPU part of <samp>DEB_*_GNU_TYPE</samp>)
+</p>
+</li>
+<li>
+<p>
+<samp>DEB_*_GNU_SYSTEM</samp> (the System part of <samp>DEB_*_GNU_TYPE</samp>)
+</p>
+</li>
+</ul>
+
+<p>
+where <samp>*</samp> is either <samp>BUILD</samp> for specification of the
+build architecture or <samp>HOST</samp> for specification of the host
+architecture.
+</p>
+
+<p>
+Backward compatibility can be provided in the rules file by setting the needed
+variables to suitable default values; please refer to the documentation of
+<code>dpkg-architecture</code> for details.
+</p>
+
+<p>
+It is important to understand that the <samp>DEB_*_ARCH</samp> string only
+determines which Debian architecture we are building on or for.  It should not
+be used to get the CPU or system information; the <samp>DEB_*_ARCH_CPU</samp>
+and <samp>DEB_*_ARCH_OS</samp> variables should be used for that.  GNU style
+variables should generally only be used with upstream build systems.
+</p>
+
+<hr>
+
+<h3><a name="s-debianrules-options"></a>4.9.1 <code>debian/rules</code> and <samp>DEB_BUILD_OPTIONS</samp></h3>
+
+<p>
+Supporting the standardized environment variable <samp>DEB_BUILD_OPTIONS</samp>
+is recommended.  This variable can contain several flags to change how a
+package is compiled and built.  Each flag must be in the form <var>flag</var>
+or <var>flag</var>=<var>options</var>.  If multiple flags are given, they must
+be separated by whitespace.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f26" name="fr26">26</a>]
+<var>flag</var> must start with a lowercase letter (<samp>a-z</samp>) and
+consist only of lowercase letters, numbers (<samp>0-9</samp>), and the
+characters <samp>-</samp> and <samp>_</samp> (hyphen and underscore).
+<var>options</var> must not contain whitespace.  The same tag should not be
+given multiple times with conflicting values.  Package maintainers may assume
+that <samp>DEB_BUILD_OPTIONS</samp> will not contain conflicting tags.
+</p>
+
+<p>
+The meaning of the following tags has been standardized:
+</p>
+<dl>
+<dt>nocheck</dt>
+<dd>
+<p>
+This tag says to not run any build-time test suite provided by the package.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>noopt</dt>
+<dd>
+<p>
+The presence of this tag means that the package should be compiled with a
+minimum of optimization.  For C programs, it is best to add <samp>-O0</samp> to
+<samp>CFLAGS</samp> (although this is usually the default).  Some programs
+might fail to build or run at this level of optimization; it may be necessary
+to use <samp>-O1</samp>, for example.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>nostrip</dt>
+<dd>
+<p>
+This tag means that the debugging symbols should not be stripped from the
+binary during installation, so that debugging information may be included in
+the package.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>parallel=n</dt>
+<dd>
+<p>
+This tag means that the package should be built using up to <samp>n</samp>
+parallel processes if the package build system supports this.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f27" name="fr27">27</a>] If the package build system does
+not support parallel builds, this string must be ignored.  If the package build
+system only supports a lower level of concurrency than <var>n</var>, the
+package should be built using as many parallel processes as the package build
+system supports.  It is up to the package maintainer to decide whether the
+package build times are long enough and the package build system is robust
+enough to make supporting parallel builds worthwhile.
+</p>
+</dd>
+</dl>
+
+<p>
+Unknown flags must be ignored by <code>debian/rules</code>.
+</p>
+
+<p>
+The following makefile snippet is an example of how one may implement the build
+options; you will probably have to massage this example in order to make it
+work for your package.
+</p>
+<pre>
+     CFLAGS = -Wall -g
+     INSTALL = install
+     INSTALL_FILE    = $(INSTALL) -p    -o root -g root  -m  644
+     INSTALL_PROGRAM = $(INSTALL) -p    -o root -g root  -m  755
+     INSTALL_SCRIPT  = $(INSTALL) -p    -o root -g root  -m  755
+     INSTALL_DIR     = $(INSTALL) -p -d -o root -g root  -m  755
+     
+     ifneq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
+         CFLAGS += -O0
+     else
+         CFLAGS += -O2
+     endif
+     ifeq (,$(filter nostrip,$(DEB_BUILD_OPTIONS)))
+         INSTALL_PROGRAM += -s
+     endif
+     ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+         NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+         MAKEFLAGS += -j$(NUMJOBS)
+     endif
+     
+     build:
+     	# ...
+     ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+     	# Code to run the package test suite.
+     endif
+</pre>
+
+<hr>
+
+<h2><a name="s-substvars"></a>4.10 Variable substitutions: <code>debian/substvars</code></h2>
+
+<p>
+When <code>dpkg-gencontrol</code> generates <a
+href="ch-controlfields.html#s-binarycontrolfiles">binary package control
+files</a> (<code>DEBIAN/control</code>), it performs variable substitutions on
+its output just before writing it.  Variable substitutions have the form
+<samp>${<var>variable</var>}</samp>.  The optional file
+<code>debian/substvars</code> contains variable substitutions to be used;
+variables can also be set directly from <code>debian/rules</code> using the
+<samp>-V</samp> option to the source packaging commands, and certain predefined
+variables are also available.
+</p>
+
+<p>
+The <code>debian/substvars</code> file is usually generated and modified
+dynamically by <code>debian/rules</code> targets, in which case it must be
+removed by the <samp>clean</samp> target.
+</p>
+
+<p>
+See <code>deb-substvars(5)</code> for full details about source variable
+substitutions, including the format of <code>debian/substvars</code>.
+</p>
+
+<hr>
+
+<h2><a name="s-debianwatch"></a>4.11 Optional upstream source location: <code>debian/watch</code></h2>
+
+<p>
+This is an optional, recommended configuration file for the <samp>uscan</samp>
+utility which defines how to automatically scan ftp or http sites for newly
+available updates of the package.  This is used by <code><a
+href="http://dehs.alioth.debian.org/">http://dehs.alioth.debian.org/</a></code>
+and other Debian QA tools to help with quality control and maintenance of the
+distribution as a whole.
+</p>
+
+<hr>
+
+<h2><a name="s-debianfiles"></a>4.12 Generated files list: <code>debian/files</code></h2>
+
+<p>
+This file is not a permanent part of the source tree; it is used while building
+packages to record which files are being generated.
+<code>dpkg-genchanges</code> uses it when it generates a <code>.changes</code>
+file.
+</p>
+
+<p>
+It should not exist in a shipped source package, and so it (and any backup
+files or temporary files such as <code>files.new</code>[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f28" name="fr28">28</a>]) should be removed by the
+<samp>clean</samp> target.  It may also be wise to ensure a fresh start by
+emptying or removing it at the start of the <samp>binary</samp> target.
+</p>
+
+<p>
+When <code>dpkg-gencontrol</code> is run for a binary package, it adds an entry
+to <code>debian/files</code> for the <code>.deb</code> file that will be
+created when <samp>dpkg-deb --build</samp> is run for that binary package.  So
+for most packages all that needs to be done with this file is to delete it in
+the <samp>clean</samp> target.
+</p>
+
+<p>
+If a package upload includes files besides the source package and any binary
+packages whose control files were made with <code>dpkg-gencontrol</code> then
+they should be placed in the parent of the package's top-level directory and
+<code>dpkg-distaddfile</code> should be called to add the file to the list in
+<code>debian/files</code>.
+</p>
+
+<hr>
+
+<h2><a name="s-embeddedfiles"></a>4.13 Convenience copies of code</h2>
+
+<p>
+Some software packages include in their distribution convenience copies of code
+from other software packages, generally so that users compiling from source
+don't have to download multiple packages.  Debian packages should not make use
+of these convenience copies unless the included package is explicitly intended
+to be used in this way.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f29" name="fr29">29</a>] If the
+included code is already in the Debian archive in the form of a library, the
+Debian packaging should ensure that binary packages reference the libraries
+already in Debian and the convenience copy is not used.  If the included code
+is not already in Debian, it should be packaged separately as a prerequisite if
+possible.  [<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f30" name="fr30">30</a>]
+</p>
+
+<hr>
+
+<h2><a name="s-readmesource"></a>4.14 Source package handling: <code>debian/README.source</code></h2>
+
+<p>
+If running <code>dpkg-source -x</code> on a source package doesn't produce the
+source of the package, ready for editing, and allow one to make changes and run
+<code>dpkg-buildpackage</code> to produce a modified package without taking any
+additional steps, creating a <code>debian/README.source</code> documentation
+file is recommended.  This file should explain how to do all of the following:
+</p>
+<ol type="1" start="1" >
+<li>
+<p>
+Generate the fully patched source, in a form ready for editing, that would be
+built to create Debian packages.  Doing this with a <samp>patch</samp> target
+in <code>debian/rules</code> is recommended; see <a href="ch-source.html#s-debianrules">Main
+building script: <code>debian/rules</code>, Section 4.9</a>.
+</p>
+</li>
+</ol>
+<ol type="1" start="2" >
+<li>
+<p>
+Modify the source and save those modifications so that they will be applied
+when building the package.
+</p>
+</li>
+</ol>
+<ol type="1" start="3" >
+<li>
+<p>
+Remove source modifications that are currently being applied when building the
+package.
+</p>
+</li>
+</ol>
+<ol type="1" start="4" >
+<li>
+<p>
+Optionally, document what steps are necessary to upgrade the Debian source
+package to a new upstream version, if applicable.
+</p>
+</li>
+</ol>
+
+<p>
+This explanation should include specific commands and mention any additional
+required Debian packages.  It should not assume familiarity with any specific
+Debian packaging system or patch management tools.
+</p>
+
+<p>
+This explanation may refer to a documentation file installed by one of the
+package's build dependencies provided that the referenced documentation clearly
+explains these tasks and is not a general reference manual.
+</p>
+
+<p>
+<code>debian/README.source</code> may also include any other information that
+would be helpful to someone modifying the source package.  Even if the package
+doesn't fit the above description, maintainers are encouraged to document in a
+<code>debian/README.source</code> file any source package with a particularly
+complex or unintuitive source layout or build system (for example, a package
+that builds the same source multiple times to generate different binary
+packages).
+</p>
+
+<hr>
+
+<p>
+[ <a href="ch-binary.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ 4 ]
+[ <a href="ch-controlfields.html">5</a> ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-controlfields.html">next</a> ]
+</p>
+
+<hr>
+
+<p>
+Debian Policy Manual
+</p>
+
+<address>
+version 3.9.4.0, 2012-09-19<br>
+<br>
+<a href="ch-scope.html#s-authors">The Debian Policy Mailing List</a><br>
+<br>
+</address>
+<hr>
+
+</body>
+
+</html>
+

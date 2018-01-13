@@ -1,0 +1,108 @@
+SPARK Documentation
+
+Module Name: SPARK
+Organization(s): SRI International
+Author/Contact(s): David Morley
+
+This document applies to SPARK version 0.8.x
+SPARK documentation > Using SPARK with OAA
+
+Using SPARK with OAA
+
+NOTE: This documentation is out of date and requires revision
+
+For any OAA solvable named oaax(Arg1, Arg2, ...) that you want to be handled as a spark action [do: (sparkx $arg1 $arg2 ...)] you need to have a fact stating the correspondence
+between the OAA name and the SPARK symbol:
+
+    (spark.io.oaa.Solvable "oaax" sparkx)
+
+If you want to translate compound structures between OAA and SPARK, for instance, if you want OAA's oaaperson("Bill", 42) to correspond to SPARK's (sparkperson "Bill" 42) you
+define the mapping using the predicate OAAName:
+
+    (spark.io.oaa.OAAName "oaaperson" sparkperson)
+
+To connect SPARK to OAA, you need to perform the action oaastart:
+
+    [do: (spark.io.oaa.oaastart "facilitator.machine.com" 3378 "NameIWantToBeKnownBy")]
+
+Note: all the Solvable facts should be in the knowledge base before performing oaastart (since oaastart has to tell OAA all the solvables that SPARK can handle).
+
+To make outgoing requests to OAA, you call execute the action oaasolve<n> or oaapsolve<n> where <n> is the number of arguments. The oaapsolve<n> version allows you to supply
+parameter arguments to the OAA solve request. For example, to get a solution for the OAA solvable dosomething("arg1", 2, Result), you would perform the action:
+
+    [do: (oaasolve3 "dosomething" "arg1" 2 $Result)]
+
+What follows is a log of a session (edited for readability) starting up a facilitator, starting the SPARK interpreter, connecting to OAA, and then running a simple test goal.
+
+    [Flinders:spark/spark/] morley% ~/aic/oaa2.3.0A/runtime/facilitator/mac-os-x/fac
+    Loading setup file:
+      /Users/morley/setup.pl
+    
+    -----------------------------------------------
+    Open Agent Architecture (OAA) Facilitator Agent
+    This facilitator is named: root
+    
+    Copyright (c) 1999-2002, SRI International.
+    http://www.ai.sri.com/~oaa
+    
+    Current time: 2003/9/3 10:55:53
+    Facilitator version info: v. 2.3.0A
+    Compiled with:
+       OAA library: v. [2,3]
+       Compound queries: NO
+       Backward compatibility mode: YES
+    -----------------------------------------------
+    
+    WARNING (com_ListenAt): The specified host, 192.168.123.11, (from commandline,
+      environment, or setup file), isn't the machine
+      on which I am running (Flinders.AI.SRI.COM)
+    Listening at tcp(Flinders.AI.SRI.COM,3378)
+    
+    addr(tcp(130.107.66.195,3378)) (root) can solve: 
+      [solvable(agent_data(_31,_32,_33,_34,_35,_36),[type(data)]),
+    solvable(agent_host(_52,_53,_54),[type(data)]),
+    agent_version(_66,_67,_68),
+    solvable(facilitator_data(_76,_77,_78,_79,_80),[type(data)]),
+    can_solve(_96,_97),
+    solvable(agent_location(_105,_106,_107,_108),[type(data)]),
+    solvable(data(_124,_125),[type(data)]),
+    solvable(icl_type(_141,_142),[type(data)])]
+    
+    Ready.
+
+    ^Z
+    Suspended
+    [Flinders:spark/spark/] morley% bg
+    [1]    /Users/morley/aic/oaa2.3.0A/runtime/facilitator/mac-os-x/fac &
+    [Flinders:spark/spark/] morley% bin/spark spark.io.oaa_test
+    
+    ...
+    
+    Setting the default module to @spark.io.oaa_test
+    spark>>> [do: (oaastart "Flinders.AI.SRI.COM" 3378 "ME")]
+    running command
+    spark>>> OAA2 Java library Release : [2,3,0]
+    Registering callback
+    Registering solvables [mysolvable(_0,_1),myprint(_0,_1)]
+    
+    2003/9/3 10:56:49
+    Accepting handshake from 2 (ME)
+    Calling oaaReady
+    addr(tcp(130.107.66.195,3378),2) (ME) can solve: 
+      [mysolvable(_6659,_6681),myprint(_6659,_6681)]
+    
+    Ready.
+    [do: (test 27 $y)]
+    running command
+    spark>>> The result was (test 27 27)
+    exit
+    exiting SPARK interpreter
+    [Flinders:spark/spark/] morley% 
+    
+    2003/9/3 10:57:9
+    Client disconnected: 2 (ME)
+    fg
+    /Users/morley/aic/oaa2.3.0A/runtime/facilitator/mac-os-x/fac
+    ^C
+    [Flinders:spark/spark/] morley% 
+

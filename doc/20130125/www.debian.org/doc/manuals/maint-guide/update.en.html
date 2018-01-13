@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 9. Updating the package</title><link rel="stylesheet" href="maint-guide.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /><link rel="home" href="index.en.html" title="Debian New Maintainers' Guide" /><link rel="up" href="index.en.html" title="Debian New Maintainers' Guide" /><link rel="prev" href="upload.en.html" title="Chapter 8. Uploading the package" /><link rel="next" href="advanced.en.html" title="Appendix A. Advanced packaging" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 9. Updating the package</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="upload.en.html"><img src="http://www.debian.org/doc/manuals/maint-guide/images/prev.gif" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="advanced.en.html"><img src="images/next.gif" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="update"></a>Chapter 9. Updating the package</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="update.en.html#newrevision">9.1. New Debian revision</a></span></dt><dt><span class="section"><a href="update.en.html#inspectnewupstream">9.2. Inspection of the new upstream release</a></span></dt><dt><span class="section"><a href="update.en.html#newupstream">9.3. New upstream release</a></span></dt><dt><span class="section"><a href="update.en.html#packagestyle">9.4. Updating the packaging style</a></span></dt><dt><span class="section"><a href="update.en.html#utf8">9.5. UTF-8 conversion</a></span></dt><dt><span class="section"><a href="update.en.html#reminders">9.6. Reminders for updating packages</a></span></dt></dl></div><p>
+After you release a package, you will soon need to update it.
+</p><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="newrevision"></a>9.1. New Debian revision</h2></div></div></div><p>
+Let's say that a bug report was filed against your package as
+<code class="literal">#654321</code>, and it describes a problem that you can solve.
+Here's what you need to do to create a new Debian revision of the package.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+If this is to be recorded as a new patch, do the following.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>
+<code class="literal">dquilt new <em class="replaceable"><code>bugname.patch</code></em></code> to set
+the patch name;
+</p></li><li class="listitem"><p>
+<code class="literal">dquilt add <em class="replaceable"><code>buggy-file</code></em></code> to declare
+the file to be modified;
+</p></li><li class="listitem"><p>
+Correct the problem in the package source for the upstream bug;
+</p></li><li class="listitem"><p>
+<code class="literal">dquilt refresh</code> to record it to
+<code class="filename"><em class="replaceable"><code>bugname.patch</code></em></code>;
+</p></li><li class="listitem"><p>
+<code class="literal">dquilt header -e</code> to add its description;
+</p></li></ul></div></li><li class="listitem"><p>
+If this is to update an existing patch, do the following.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>
+<code class="literal">dquilt pop <em class="replaceable"><code>foo.patch</code></em></code> to recall
+the existing <code class="filename"><em class="replaceable"><code>foo.patch</code></em></code>;
+</p></li><li class="listitem"><p>
+Correct the problem in the old
+<code class="filename"><em class="replaceable"><code>foo.patch</code></em></code>;
+</p></li><li class="listitem"><p>
+<code class="literal">dquilt refresh</code> to update
+<code class="filename"><em class="replaceable"><code>foo.patch</code></em></code>;
+</p></li><li class="listitem"><p>
+<code class="literal">dquilt header -e</code> to update its description;
+</p></li><li class="listitem"><p>
+<code class="literal">while dquilt push; do dquilt refresh; done</code> to apply all
+patches while removing <span class="emphasis"><em>fuzz</em></span>;
+</p></li></ul></div></li><li class="listitem"><p>
+Add a new revision at the top of the Debian <code class="filename">changelog</code>
+file, for example with <code class="literal">dch -i</code>, or explicitly with
+<code class="literal">dch -v
+<em class="replaceable"><code>version</code></em>-<em class="replaceable"><code>revision</code></em></code>
+and then insert the comments using your preferred editor.  <sup>[<a id="idp1692512" href="update.en.html#ftn.idp1692512" class="footnote">83</a>]</sup>
+</p></li><li class="listitem"><p>
+Include a short description of the bug and the solution in the changelog entry,
+followed by <code class="literal">Closes: #654321</code>.  That way, the bug report will
+be <span class="emphasis"><em>automagically</em></span> closed by the archive maintenance
+software the moment your package gets accepted into the Debian archive.
+</p></li><li class="listitem"><p>
+Repeat what you did in the above to fix more bugs while updating the Debian
+<code class="filename">changelog</code> file with <code class="literal">dch</code> as needed.
+</p></li><li class="listitem"><p>
+Repeat what you did in <a class="xref" href="build.en.html#completebuild" title="6.1. Complete (re)build">Section 6.1, “Complete (re)build”</a> and <a class="xref" href="checkit.en.html" title="Chapter 7. Checking the package for errors">Chapter 7, <i>Checking the package for errors</i></a>.
+</p></li><li class="listitem"><p>
+Once you are satisfied, you should change the distribution value in <code class="filename">changelog</code> from
+<code class="literal">UNRELEASED</code> to the target distribution value
+<code class="literal">unstable</code> (or even <code class="literal">experimental</code>).<sup>[<a id="idp1701776" href="update.en.html#ftn.idp1701776" class="footnote">84</a>]</sup>
+</p></li><li class="listitem"><p>
+Upload the package as <a class="xref" href="upload.en.html" title="Chapter 8. Uploading the package">Chapter 8, <i>Uploading the package</i></a>.  The difference is that
+this time, the original source archive won't be included, as it hasn't been
+changed and it already exists in the Debian archive.
+</p></li></ul></div><p>
+One tricky case can occur when you make a local package to experiment with
+the packaging before uploading  the normal version to the official archive,
+e.g.,
+<code class="literal"><em class="replaceable"><code>1.0.1</code></em>-<em class="replaceable"><code>1</code></em></code>.
+For smoother upgrades, it is a good idea to create a
+<code class="filename">changelog</code> entry with a version string as
+<code class="literal"><em class="replaceable"><code>1.0.1</code></em>-<em class="replaceable"><code>1~rc1</code></em></code>.
+You may unclutter <code class="filename">changelog</code>
+by consolidating such local change entries into a single entry for the official package.
+See <a class="xref" href="first.en.html#namever" title="2.6. Package name and version">Section 2.6, “Package name and version”</a> for the order of version strings.
+</p><p>
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="inspectnewupstream"></a>9.2. Inspection of the new upstream release</h2></div></div></div><p>
+When preparing packages of a new upstream release for the Debian archive, you
+must check the new upstream release, first.
+</p><p>
+Start by reading the upstream <code class="filename">changelog</code>,
+<code class="filename">NEWS</code>, and whatever other documentation they may have
+released with the new version.
+</p><p>
+You can then inspect changes between the old and new upstream sources as follows,
+watching out for anything suspicious.
+</p><pre class="screen">
+$ diff -urN <em class="replaceable"><code>foo</code></em>-<em class="replaceable"><code>oldversion</code></em> <em class="replaceable"><code>foo</code></em>-<em class="replaceable"><code>newversion</code></em>
+</pre><p>
+Changes to some auto-generated files by Autotools such as
+<code class="filename">missing</code>, <code class="filename">aclocal.m4</code>,
+<code class="filename">config.guess</code>, <code class="filename">config.h.in</code>,
+<code class="filename">config.sub</code>, <code class="filename">configure</code>,
+<code class="filename">depcomp</code>, <code class="filename">install-sh</code>,
+<code class="filename">ltmain.sh</code>, and <code class="filename">Makefile.in</code> may be
+ignored.  You may delete them before running <span class="command"><strong>diff</strong></span> on the
+source for inspection.
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="newupstream"></a>9.3. New upstream release</h2></div></div></div><p>
+If a package <code class="systemitem"><em class="replaceable"><code>foo</code></em></code> is properly packaged
+in the newer <code class="literal">3.0 (native)</code> or <code class="literal">3.0 (quilt)</code>
+formats, packaging a new upstream version is essentially moving the old
+<code class="filename">debian</code> directory to the new source.  This can be done by
+running <code class="literal">tar xvzf
+/<em class="replaceable"><code>path</code></em>/<em class="replaceable"><code>to</code></em>/<em class="replaceable"><code>foo</code></em>_<em class="replaceable"><code>oldversion</code></em>.debian.tar.gz</code>
+in the new extracted source.  <sup>[<a id="idp1725904" href="update.en.html#ftn.idp1725904" class="footnote">85</a>]</sup> Of
+course, you need to do some obvious chores.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+Create a copy of the upstream source as the
+<code class="filename">foo_<em class="replaceable"><code>newversion</code></em>.orig.tar.gz</code> file.
+</p></li><li class="listitem"><p>
+Update the Debian <code class="filename">changelog</code> file with <code class="literal">dch -v
+<em class="replaceable"><code>newversion</code></em>-<em class="replaceable"><code>1</code></em></code>.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>
+Add an entry with <code class="literal">New upstream release</code>.
+</p></li><li class="listitem"><p>
+Describe concisely the changes <span class="emphasis"><em>in the new upstream release</em></span>
+that fix reported bugs and close those bugs by adding <code class="literal">Closes: #<em class="replaceable"><code>bug_number</code></em></code>.
+</p></li><li class="listitem"><p>
+Describe concisely the changes <span class="emphasis"><em>to the new upstream release</em></span>
+by the maintainer that fix reported bugs and close those bugs by adding <code class="literal">Closes: #<em class="replaceable"><code>bug_number</code></em></code>.
+</p></li></ul></div></li><li class="listitem"><p>
+<code class="literal">while dquilt push; do dquilt refresh; done</code> to apply all
+patches while removing <span class="emphasis"><em>fuzz</em></span>.
+</p></li></ul></div><p>
+If the patch/merge did not apply cleanly, inspect the situation (clues are left
+in <code class="filename">.rej</code> files).
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+If a patch you applied to the source was integrated into the upstream source,
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>
+<code class="literal">dquilt delete</code> to remove it.
+</p></li></ul></div></li><li class="listitem"><p>
+If a patch you applied to the source conflicted with new changes in the
+upstream source,
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>
+<code class="literal">dquilt push -f</code> to apply old patches while forcing rejects as
+<code class="filename"><em class="replaceable"><code>baz</code></em>.rej</code>.
+</p></li><li class="listitem"><p>
+Edit the <code class="filename"><em class="replaceable"><code>baz</code></em></code> file manually to
+bring about the intended effect of
+<code class="filename"><em class="replaceable"><code>baz</code></em>.rej</code>.
+</p></li><li class="listitem"><p>
+<code class="literal">dquilt refresh</code> to update the patch.
+</p></li></ul></div></li><li class="listitem"><p>
+Continue as usual with <code class="literal">while dquilt push; do dquilt refresh; done</code>.
+</p></li></ul></div><p>
+This process can be automated using the <span class="citerefentry"><span class="refentrytitle">uupdate</span>(1)</span>
+command as follows:
+</p><pre class="screen">
+$ apt-get source <em class="replaceable"><code>foo</code></em>
+...
+dpkg-source: info: extracting <em class="replaceable"><code>foo</code></em> in <em class="replaceable"><code>foo</code></em>-<em class="replaceable"><code>oldversion</code></em>
+dpkg-source: info: unpacking <em class="replaceable"><code>foo</code></em>_<em class="replaceable"><code>oldversion</code></em>.orig.tar.gz
+dpkg-source: info: applying <em class="replaceable"><code>foo</code></em>_<em class="replaceable"><code>oldversion</code></em>-1.debian.tar.gz
+$ ls -F
+<em class="replaceable"><code>foo</code></em>-<em class="replaceable"><code>oldversion</code></em>/
+<em class="replaceable"><code>foo</code></em>_<em class="replaceable"><code>oldversion</code></em>-1.debian.tar.gz
+<em class="replaceable"><code>foo</code></em>_<em class="replaceable"><code>oldversion</code></em>-1.dsc
+<em class="replaceable"><code>foo</code></em>_<em class="replaceable"><code>oldversion</code></em>.orig.tar.gz
+$ wget http://example.org/<em class="replaceable"><code>foo</code></em>/<em class="replaceable"><code>foo</code></em>-<em class="replaceable"><code>newversion</code></em>.tar.gz
+$ cd <em class="replaceable"><code>foo</code></em>-<em class="replaceable"><code>oldversion</code></em>
+$ uupdate -v <em class="replaceable"><code>newversion</code></em> ../<em class="replaceable"><code>foo</code></em>-<em class="replaceable"><code>newversion</code></em>.tar.gz
+$ cd ../<em class="replaceable"><code>foo</code></em>-<em class="replaceable"><code>newversion</code></em>
+$ while dquilt push; do dquilt refresh; done
+$ dch
+... document changes made
+</pre><p>
+If you set up a <code class="filename">debian/watch</code> file as described in <a class="xref" href="dother.en.html#watch" title="5.22. watch">Section 5.22, “<code class="filename">watch</code>”</a>, you can skip the <span class="command"><strong>wget</strong></span> command.  You
+simply run <span class="citerefentry"><span class="refentrytitle">uscan</span>(1)</span> in the
+<code class="filename"><em class="replaceable"><code>foo</code></em>-<em class="replaceable"><code>oldversion</code></em></code>
+directory instead of the <span class="command"><strong>uupdate</strong></span> command.  This will
+<span class="emphasis"><em>automagically</em></span> look for the updated source, download it,
+and run the <span class="command"><strong>uupdate</strong></span> command.  <sup>[<a id="idp1771824" href="update.en.html#ftn.idp1771824" class="footnote">86</a>]</sup>
+</p><p>
+You can release this updated source by repeating what you did in <a class="xref" href="build.en.html#completebuild" title="6.1. Complete (re)build">Section 6.1, “Complete (re)build”</a>, <a class="xref" href="checkit.en.html" title="Chapter 7. Checking the package for errors">Chapter 7, <i>Checking the package for errors</i></a>, and <a class="xref" href="upload.en.html" title="Chapter 8. Uploading the package">Chapter 8, <i>Uploading the package</i></a>.
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="packagestyle"></a>9.4. Updating the packaging style</h2></div></div></div><p>
+Updating the package style is not a required activity for the update of a
+package.  However, doing so lets you use the full capabilities of the modern
+<code class="systemitem">debhelper</code> system and the <code class="literal">3.0</code>
+source format.  <sup>[<a id="idp1779104" href="update.en.html#ftn.idp1779104" class="footnote">87</a>]</sup>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+If you need to recreate deleted template files for any reason, you can run
+<span class="command"><strong>dh_make</strong></span> again in the same Debian package source tree with
+the <code class="literal">--addmissing</code> option.  Then edit them appropriately.
+</p></li><li class="listitem"><p>
+If the package has not been updated to use the <code class="systemitem">debhelper</code> v7 <span class="command"><strong>dh</strong></span> syntax for the
+<code class="filename">debian/rules</code> file, update it to use <span class="command"><strong>dh</strong></span>.
+Update the <code class="filename">debian/control</code> file accordingly.
+</p></li><li class="listitem"><p>
+If you want to update the <code class="filename">rules</code> file created with the
+<code class="filename">Makefile</code> inclusion mechanism of the Common Debian Build
+System (<code class="systemitem">cdbs</code>) to the
+<span class="command"><strong>dh</strong></span> syntax, see the following to understand its
+<code class="literal">DEB_*</code> configuration variables.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p>local copy of <code class="filename">/usr/share/doc/cdbs/cdbs-doc.pdf.gz</code></p></li><li class="listitem"><p><a class="ulink" href="http://meetings-archive.debian.net/pub/debian-meetings/2009/fosdem/slides/The_Common_Debian_Build_System_CDBS/" target="_top">The Common Debian Build System (CDBS), FOSDEM 2009</a></p></li></ul></div></li><li class="listitem"><p>
+If you have a <code class="literal">1.0</code> source package without the
+<code class="filename"><em class="replaceable"><code>foo</code></em>.diff.gz</code> file, you can
+update it to the newer <code class="literal">3.0 (native)</code> source format by
+creating <code class="filename">debian/source/format</code> with <code class="literal">3.0
+(native)</code>.  The rest of the <code class="filename">debian/*</code> files can just be
+copied.
+</p></li><li class="listitem"><p>
+If you have a <code class="literal">1.0</code> source package with the
+<code class="filename"><em class="replaceable"><code>foo</code></em>.diff.gz</code> file, you can
+update it to the newer <code class="literal">3.0 (quilt)</code> source format by creating
+<code class="filename">debian/source/format</code> with <code class="literal">3.0 (quilt)</code>.
+The rest of the <code class="filename">debian/*</code> files can just be copied.  Import the
+<code class="filename">big.diff</code> file generated by the command <code class="literal">filterdiff -z -x
+'*/debian/*' <em class="replaceable"><code>foo</code></em>.diff.gz &gt; big.diff</code>
+to your <span class="command"><strong>quilt</strong></span> system, if needed.  <sup>[<a id="idp1801424" href="update.en.html#ftn.idp1801424" class="footnote">88</a>]</sup>
+</p></li><li class="listitem"><p>
+If it was packaged using another patch system such as <code class="systemitem">dpatch</code>, <code class="systemitem">dbs</code>, or <code class="systemitem">cdbs</code> with <code class="literal">-p0</code>,
+<code class="literal">-p1</code>, or <code class="literal">-p2</code>, convert it to the
+<code class="systemitem">quilt</code> command using
+<code class="filename">deb3</code> at <a class="ulink" href="http://bugs.debian.org/581186" target="_top">http://bugs.debian.org/581186</a>.
+</p></li><li class="listitem"><p>
+If it was packaged with the <span class="command"><strong>dh</strong></span> command with the
+<code class="literal">--with quilt</code> option or with the
+<span class="command"><strong>dh_quilt_patch</strong></span> and <span class="command"><strong>dh_quilt_unpatch</strong></span>
+commands, remove these and make it use the newer <code class="literal">3.0
+(native)</code> source format.
+</p></li></ul></div><p>
+You should check <a class="ulink" href="http://dep.debian.net/" target="_top">DEP - Debian Enhancement Proposals</a> and adopt ACCEPTED proposals.
+</p><p>
+You need to do the other tasks described in <a class="xref" href="update.en.html#newupstream" title="9.3. New upstream release">Section 9.3, “New upstream release”</a>, too.
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="utf8"></a>9.5. UTF-8 conversion</h2></div></div></div><p>
+If upstream documents are encoded in old encoding schemes, converting them to <a class="ulink" href="http://en.wikipedia.org/wiki/UTF-8" target="_top">UTF-8</a> is a good idea.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+Use <span class="citerefentry"><span class="refentrytitle">iconv</span>(1)</span> to convert encodings of plain text files.
+</p><pre class="screen">
+iconv -f latin1 -t utf8 <em class="replaceable"><code>foo_in.txt</code></em> &gt; <em class="replaceable"><code>foo_out.txt</code></em>
+</pre></li><li class="listitem"><p>
+Use <span class="citerefentry"><span class="refentrytitle">w3m</span>(1)</span> to convert from HTML files to UTF-8 plain text files.  When you do this, make sure to execute it under UTF-8 locale.
+</p><pre class="screen">
+LC_ALL=C.UTF-8 w3m -o display_charset=UTF-8 \
+        -cols 70 -dump -no-graph -T text/html \
+        &lt; <em class="replaceable"><code>foo_in.html</code></em> &gt; <em class="replaceable"><code>foo_out.txt</code></em>
+</pre></li></ul></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="reminders"></a>9.6. Reminders for updating packages</h2></div></div></div><p>
+Here are few reminders for updating packages.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+Preserve old <code class="filename">changelog</code> entries (sounds obvious, but there
+have been cases of people typing <code class="literal">dch</code> when they should have typed
+<code class="literal">dch -i</code>.)
+</p></li><li class="listitem"><p>
+Existing Debian changes need to be reevaluated; throw away stuff that upstream
+has incorporated (in one form or another) and remember to keep stuff that
+hasn't been incorporated by upstream, unless there is a compelling reason not
+to.
+</p></li><li class="listitem"><p>
+If any changes were made to the build system (hopefully you'd know from
+inspecting upstream changes) then update the <code class="filename">debian/rules</code>
+and <code class="filename">debian/control</code> build dependencies if necessary.
+</p></li><li class="listitem"><p>
+Check the <a class="ulink" href="http://www.debian.org/Bugs/" target="_top">Debian Bug Tracking
+System (BTS)</a> to see if someone has provided patches to bugs that are
+currently open.
+</p></li><li class="listitem"><p>
+Check the contents of the <code class="filename">.changes</code> file to make sure you
+are uploading to the correct distribution, the proper bug closures are listed
+in the <code class="literal">Closes</code> field, the <code class="literal">Maintainer</code> and
+<code class="literal">Changed-By</code> fields match, the file is GPG-signed, etc.
+</p></li></ul></div></div><div class="footnotes"><br /><hr width="100" align="left" /><div class="footnote"><p><sup>[<a id="ftn.idp1692512" href="update.en.html#idp1692512" class="para">83</a>] </sup>To
+get the date in the required format, use <code class="literal">LANG=C date -R</code>.
+</p></div><div class="footnote"><p><sup>[<a id="ftn.idp1701776" href="update.en.html#idp1701776" class="para">84</a>] </sup>If you
+use the <code class="literal">dch -r</code> command to make this last change,  please
+make sure to save the <code class="filename">changelog</code> file explicitly by the
+editor.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp1725904" href="update.en.html#idp1725904" class="para">85</a>] </sup> If a package <code class="systemitem"><em class="replaceable"><code>foo</code></em></code> is packaged in the
+old <code class="literal">1.0</code> format, this can be done by running <code class="literal">zcat
+/<em class="replaceable"><code>path</code></em>/<em class="replaceable"><code>to</code></em>/<em class="replaceable"><code>foo</code></em>_<em class="replaceable"><code>oldversion</code></em>.diff.gz|patch
+-p1</code> in the new extracted source, instead.  </p></div><div class="footnote"><p><sup>[<a id="ftn.idp1771824" href="update.en.html#idp1771824" class="para">86</a>] </sup> If the
+<span class="command"><strong>uscan</strong></span> command downloads the updated source but it does not
+run the <span class="command"><strong>uupdate</strong></span> command, you should correct the
+<code class="filename">debian/watch</code> file to have <code class="literal">debian
+uupdate</code> at the end of the URL.  </p></div><div class="footnote"><p><sup>[<a id="ftn.idp1779104" href="update.en.html#idp1779104" class="para">87</a>] </sup> If your sponsor or other
+maintainers object to updating the existing packaging style, don't bother
+arguing.  There are more important things to do.  </p></div><div class="footnote"><p><sup>[<a id="ftn.idp1801424" href="update.en.html#idp1801424" class="para">88</a>] </sup>
+You can split <code class="filename">big.diff</code> into many small incremental patches
+using the <span class="command"><strong>splitdiff</strong></span> command.  </p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="upload.en.html"><img src="http://www.debian.org/doc/manuals/maint-guide/images/prev.gif" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="advanced.en.html"><img src="images/next.gif" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 8. Uploading the package </td><td width="20%" align="center"><a accesskey="h" href="index.en.html"><img src="http://www.debian.org/doc/manuals/maint-guide/images/home.gif" alt="Home" /></a></td><td width="40%" align="right" valign="top"> Appendix A. Advanced packaging</td></tr></table></div></body></html>

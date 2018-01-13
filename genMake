@@ -1,0 +1,77 @@
+#!/usr/bin/make -f
+
+configure: configure-stamp
+
+configure-stamp:
+	touch configure-stamp
+
+build: build-stamp
+
+build-stamp: configure-stamp 
+	touch build-stamp
+
+
+# aquisition
+
+acquire:
+	alien
+
+
+
+# packaging
+
+clean:
+	rm -f build-stamp configure-stamp *~
+
+extract:
+	ls
+
+package: extract
+	dpkg-buildpackage
+	cvs-buildpackage
+	debootstrap
+	pbuilder
+	sbuild
+
+check: package
+	lintian
+	linda
+
+
+# porting
+
+
+
+
+# uploading
+
+upload: check
+	dput
+	dupload
+
+
+# installation
+
+install-dpkg: check
+	dpkg
+
+update: upload
+	apt-get update
+
+install-apt: update:
+	apt-get install
+
+install: install-apt || install-dpkg
+
+remove: install
+	sudo apt-get remove
+
+
+# maitainence
+
+maintain: 
+
+
+# misc
+
+.PHONY: build clean install configure

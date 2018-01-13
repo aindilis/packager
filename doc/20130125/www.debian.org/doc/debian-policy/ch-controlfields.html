@@ -1,0 +1,1795 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+<html>
+
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+
+<title>Debian Policy Manual - Control files and their fields</title>
+
+<link href="index.html" rel="start">
+<link href="ch-source.html" rel="prev">
+<link href="ch-maintainerscripts.html" rel="next">
+<link href="index.html#contents" rel="contents">
+<link href="index.html#copyright" rel="copyright">
+<link href="ch-scope.html" rel="chapter" title="1 About this manual">
+<link href="ch-archive.html" rel="chapter" title="2 The Debian Archive">
+<link href="ch-binary.html" rel="chapter" title="3 Binary packages">
+<link href="ch-source.html" rel="chapter" title="4 Source packages">
+<link href="ch-controlfields.html" rel="chapter" title="5 Control files and their fields">
+<link href="ch-maintainerscripts.html" rel="chapter" title="6 Package maintainer scripts and installation procedure">
+<link href="ch-relationships.html" rel="chapter" title="7 Declaring relationships between packages">
+<link href="ch-sharedlibs.html" rel="chapter" title="8 Shared libraries">
+<link href="ch-opersys.html" rel="chapter" title="9 The Operating System">
+<link href="ch-files.html" rel="chapter" title="10 Files">
+<link href="ch-customized-programs.html" rel="chapter" title="11 Customized programs">
+<link href="ch-docs.html" rel="chapter" title="12 Documentation">
+<link href="ap-pkg-scope.html" rel="appendix" title="A Introduction and scope of these appendices">
+<link href="ap-pkg-binarypkg.html" rel="appendix" title="B Binary packages (from old Packaging Manual)">
+<link href="ap-pkg-sourcepkg.html" rel="appendix" title="C Source packages (from old Packaging Manual)">
+<link href="ap-pkg-controlfields.html" rel="appendix" title="D Control files and their fields (from old Packaging Manual)">
+<link href="ap-pkg-conffiles.html" rel="appendix" title="E Configuration file handling (from old Packaging Manual)">
+<link href="ap-pkg-alternatives.html" rel="appendix" title="F Alternative versions of an interface - update-alternatives (from old Packaging Manual)">
+<link href="ap-pkg-diversions.html" rel="appendix" title="G Diversions - overriding a package's version of a file (from old Packaging Manual)">
+<link href="ch-scope.html#s1.1" rel="section" title="1.1 Scope">
+<link href="ch-scope.html#s1.2" rel="section" title="1.2 New versions of this document">
+<link href="ch-scope.html#s-authors" rel="section" title="1.3 Authors and Maintainers">
+<link href="ch-scope.html#s-related" rel="section" title="1.4 Related documents">
+<link href="ch-scope.html#s-definitions" rel="section" title="1.5 Definitions">
+<link href="ch-archive.html#s-dfsg" rel="section" title="2.1 The Debian Free Software Guidelines">
+<link href="ch-archive.html#s-sections" rel="section" title="2.2 Archive areas">
+<link href="ch-archive.html#s-pkgcopyright" rel="section" title="2.3 Copyright considerations">
+<link href="ch-archive.html#s-subsections" rel="section" title="2.4 Sections">
+<link href="ch-archive.html#s-priorities" rel="section" title="2.5 Priorities">
+<link href="ch-binary.html#s3.1" rel="section" title="3.1 The package name">
+<link href="ch-binary.html#s-versions" rel="section" title="3.2 The version of a package">
+<link href="ch-binary.html#s-maintainer" rel="section" title="3.3 The maintainer of a package">
+<link href="ch-binary.html#s-descriptions" rel="section" title="3.4 The description of a package">
+<link href="ch-binary.html#s-dependencies" rel="section" title="3.5 Dependencies">
+<link href="ch-binary.html#s-virtual_pkg" rel="section" title="3.6 Virtual packages">
+<link href="ch-binary.html#s3.7" rel="section" title="3.7 Base system">
+<link href="ch-binary.html#s3.8" rel="section" title="3.8 Essential packages">
+<link href="ch-binary.html#s-maintscripts" rel="section" title="3.9 Maintainer Scripts">
+<link href="ch-source.html#s-standardsversion" rel="section" title="4.1 Standards conformance">
+<link href="ch-source.html#s-pkg-relations" rel="section" title="4.2 Package relationships">
+<link href="ch-source.html#s4.3" rel="section" title="4.3 Changes to the upstream sources">
+<link href="ch-source.html#s-dpkgchangelog" rel="section" title="4.4 Debian changelog: debian/changelog">
+<link href="ch-source.html#s-dpkgcopyright" rel="section" title="4.5 Copyright: debian/copyright">
+<link href="ch-source.html#s4.6" rel="section" title="4.6 Error trapping in makefiles">
+<link href="ch-source.html#s-timestamps" rel="section" title="4.7 Time Stamps">
+<link href="ch-source.html#s-restrictions" rel="section" title="4.8 Restrictions on objects in source packages">
+<link href="ch-source.html#s-debianrules" rel="section" title="4.9 Main building script: debian/rules">
+<link href="ch-source.html#s-substvars" rel="section" title="4.10 Variable substitutions: debian/substvars">
+<link href="ch-source.html#s-debianwatch" rel="section" title="4.11 Optional upstream source location: debian/watch">
+<link href="ch-source.html#s-debianfiles" rel="section" title="4.12 Generated files list: debian/files">
+<link href="ch-source.html#s-embeddedfiles" rel="section" title="4.13 Convenience copies of code">
+<link href="ch-source.html#s-readmesource" rel="section" title="4.14 Source package handling: debian/README.source">
+<link href="ch-controlfields.html#s-controlsyntax" rel="section" title="5.1 Syntax of control files">
+<link href="ch-controlfields.html#s-sourcecontrolfiles" rel="section" title="5.2 Source package control files -- debian/control">
+<link href="ch-controlfields.html#s-binarycontrolfiles" rel="section" title="5.3 Binary package control files -- DEBIAN/control">
+<link href="ch-controlfields.html#s-debiansourcecontrolfiles" rel="section" title="5.4 Debian source control files -- .dsc">
+<link href="ch-controlfields.html#s-debianchangesfiles" rel="section" title="5.5 Debian changes files -- .changes">
+<link href="ch-controlfields.html#s-controlfieldslist" rel="section" title="5.6 List of fields">
+<link href="ch-controlfields.html#s5.7" rel="section" title="5.7 User-defined fields">
+<link href="ch-maintainerscripts.html#s6.1" rel="section" title="6.1 Introduction to package maintainer scripts">
+<link href="ch-maintainerscripts.html#s-idempotency" rel="section" title="6.2 Maintainer scripts idempotency">
+<link href="ch-maintainerscripts.html#s-controllingterminal" rel="section" title="6.3 Controlling terminal for maintainer scripts">
+<link href="ch-maintainerscripts.html#s-exitstatus" rel="section" title="6.4 Exit status">
+<link href="ch-maintainerscripts.html#s-mscriptsinstact" rel="section" title="6.5 Summary of ways maintainer scripts are called">
+<link href="ch-maintainerscripts.html#s-unpackphase" rel="section" title="6.6 Details of unpack phase of installation or upgrade">
+<link href="ch-maintainerscripts.html#s-configdetails" rel="section" title="6.7 Details of configuration">
+<link href="ch-maintainerscripts.html#s-removedetails" rel="section" title="6.8 Details of removal and/or configuration purging">
+<link href="ch-relationships.html#s-depsyntax" rel="section" title="7.1 Syntax of relationship fields">
+<link href="ch-relationships.html#s-binarydeps" rel="section" title="7.2 Binary Dependencies - Depends, Recommends, Suggests, Enhances, Pre-Depends">
+<link href="ch-relationships.html#s-breaks" rel="section" title="7.3 Packages which break other packages - Breaks">
+<link href="ch-relationships.html#s-conflicts" rel="section" title="7.4 Conflicting binary packages - Conflicts">
+<link href="ch-relationships.html#s-virtual" rel="section" title="7.5 Virtual packages - Provides">
+<link href="ch-relationships.html#s-replaces" rel="section" title="7.6 Overwriting files and replacing packages - Replaces">
+<link href="ch-relationships.html#s-sourcebinarydeps" rel="section" title="7.7 Relationships between source and binary packages - Build-Depends, Build-Depends-Indep, Build-Conflicts, Build-Conflicts-Indep">
+<link href="ch-relationships.html#s-built-using" rel="section" title="7.8 Additional source packages used to build the binary - Built-Using">
+<link href="ch-sharedlibs.html#s-sharedlibs-runtime" rel="section" title="8.1 Run-time shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-support-files" rel="section" title="8.2 Shared library support files">
+<link href="ch-sharedlibs.html#s-sharedlibs-static" rel="section" title="8.3 Static libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-dev" rel="section" title="8.4 Development files">
+<link href="ch-sharedlibs.html#s-sharedlibs-intradeps" rel="section" title="8.5 Dependencies between the packages of the same library">
+<link href="ch-sharedlibs.html#s-sharedlibs-depends" rel="section" title="8.6 Dependencies between the library and other packages">
+<link href="ch-opersys.html#s9.1" rel="section" title="9.1 File system hierarchy">
+<link href="ch-opersys.html#s9.2" rel="section" title="9.2 Users and groups">
+<link href="ch-opersys.html#s-sysvinit" rel="section" title="9.3 System run levels and init.d scripts">
+<link href="ch-opersys.html#s9.4" rel="section" title="9.4 Console messages from init.d scripts">
+<link href="ch-opersys.html#s-cron-jobs" rel="section" title="9.5 Cron jobs">
+<link href="ch-opersys.html#s-menus" rel="section" title="9.6 Menus">
+<link href="ch-opersys.html#s-mime" rel="section" title="9.7 Multimedia handlers">
+<link href="ch-opersys.html#s9.8" rel="section" title="9.8 Keyboard configuration">
+<link href="ch-opersys.html#s9.9" rel="section" title="9.9 Environment variables">
+<link href="ch-opersys.html#s-doc-base" rel="section" title="9.10 Registering Documents using doc-base">
+<link href="ch-opersys.html#s-alternateinit" rel="section" title="9.11 Alternate init systems">
+<link href="ch-files.html#s-binaries" rel="section" title="10.1 Binaries">
+<link href="ch-files.html#s-libraries" rel="section" title="10.2 Libraries">
+<link href="ch-files.html#s10.3" rel="section" title="10.3 Shared libraries">
+<link href="ch-files.html#s-scripts" rel="section" title="10.4 Scripts">
+<link href="ch-files.html#s10.5" rel="section" title="10.5 Symbolic links">
+<link href="ch-files.html#s10.6" rel="section" title="10.6 Device files">
+<link href="ch-files.html#s-config-files" rel="section" title="10.7 Configuration files">
+<link href="ch-files.html#s10.8" rel="section" title="10.8 Log files">
+<link href="ch-files.html#s-permissions-owners" rel="section" title="10.9 Permissions and owners">
+<link href="ch-customized-programs.html#s-arch-spec" rel="section" title="11.1 Architecture specification strings">
+<link href="ch-customized-programs.html#s11.2" rel="section" title="11.2 Daemons">
+<link href="ch-customized-programs.html#s11.3" rel="section" title="11.3 Using pseudo-ttys and modifying wtmp, utmp and lastlog">
+<link href="ch-customized-programs.html#s11.4" rel="section" title="11.4 Editors and pagers">
+<link href="ch-customized-programs.html#s-web-appl" rel="section" title="11.5 Web servers and applications">
+<link href="ch-customized-programs.html#s-mail-transport-agents" rel="section" title="11.6 Mail transport, delivery and user agents">
+<link href="ch-customized-programs.html#s11.7" rel="section" title="11.7 News system configuration">
+<link href="ch-customized-programs.html#s11.8" rel="section" title="11.8 Programs for the X Window System">
+<link href="ch-customized-programs.html#s-perl" rel="section" title="11.9 Perl programs and modules">
+<link href="ch-customized-programs.html#s-emacs" rel="section" title="11.10 Emacs lisp programs">
+<link href="ch-customized-programs.html#s11.11" rel="section" title="11.11 Games">
+<link href="ch-docs.html#s12.1" rel="section" title="12.1 Manual pages">
+<link href="ch-docs.html#s12.2" rel="section" title="12.2 Info documents">
+<link href="ch-docs.html#s12.3" rel="section" title="12.3 Additional documentation">
+<link href="ch-docs.html#s12.4" rel="section" title="12.4 Preferred documentation formats">
+<link href="ch-docs.html#s-copyrightfile" rel="section" title="12.5 Copyright information">
+<link href="ch-docs.html#s12.6" rel="section" title="12.6 Examples">
+<link href="ch-docs.html#s-changelogs" rel="section" title="12.7 Changelog files">
+<link href="ap-pkg-binarypkg.html#s-pkg-bincreating" rel="section" title="B.1 Creating package files - dpkg-deb">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlarea" rel="section" title="B.2 Package control information files">
+<link href="ap-pkg-binarypkg.html#s-pkg-controlfile" rel="section" title="B.3 The main control information file: control">
+<link href="ap-pkg-binarypkg.html#sB.4" rel="section" title="B.4 Time Stamps">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetools" rel="section" title="C.1 Tools for processing source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcetree" rel="section" title="C.2 The Debian package source tree">
+<link href="ap-pkg-sourcepkg.html#s-pkg-sourcearchives" rel="section" title="C.3 Source packages as archives">
+<link href="ap-pkg-sourcepkg.html#sC.4" rel="section" title="C.4 Unpacking a Debian source package without dpkg-source">
+<link href="ap-pkg-controlfields.html#sD.1" rel="section" title="D.1 Syntax of control files">
+<link href="ap-pkg-controlfields.html#sD.2" rel="section" title="D.2 List of fields">
+<link href="ap-pkg-conffiles.html#sE.1" rel="section" title="E.1 Automatic handling of configuration files by dpkg">
+<link href="ap-pkg-conffiles.html#sE.2" rel="section" title="E.2 Fully-featured maintainer script configuration handling">
+<link href="ch-archive.html#s-main" rel="subsection" title="2.2.1 The main archive area">
+<link href="ch-archive.html#s-contrib" rel="subsection" title="2.2.2 The contrib archive area">
+<link href="ch-archive.html#s-non-free" rel="subsection" title="2.2.3 The non-free archive area">
+<link href="ch-binary.html#s3.2.1" rel="subsection" title="3.2.1 Version numbers based on dates">
+<link href="ch-binary.html#s-synopsis" rel="subsection" title="3.4.1 The single line synopsis">
+<link href="ch-binary.html#s-extendeddesc" rel="subsection" title="3.4.2 The extended description">
+<link href="ch-binary.html#s-maintscriptprompt" rel="subsection" title="3.9.1 Prompting in maintainer scripts">
+<link href="ch-source.html#s-debianrules-options" rel="subsection" title="4.9.1 debian/rules and DEB_BUILD_OPTIONS">
+<link href="ch-controlfields.html#s-f-Source" rel="subsection" title="5.6.1 Source">
+<link href="ch-controlfields.html#s-f-Maintainer" rel="subsection" title="5.6.2 Maintainer">
+<link href="ch-controlfields.html#s-f-Uploaders" rel="subsection" title="5.6.3 Uploaders">
+<link href="ch-controlfields.html#s-f-Changed-By" rel="subsection" title="5.6.4 Changed-By">
+<link href="ch-controlfields.html#s-f-Section" rel="subsection" title="5.6.5 Section">
+<link href="ch-controlfields.html#s-f-Priority" rel="subsection" title="5.6.6 Priority">
+<link href="ch-controlfields.html#s-f-Package" rel="subsection" title="5.6.7 Package">
+<link href="ch-controlfields.html#s-f-Architecture" rel="subsection" title="5.6.8 Architecture">
+<link href="ch-controlfields.html#s-f-Essential" rel="subsection" title="5.6.9 Essential">
+<link href="ch-controlfields.html#s5.6.10" rel="subsection" title="5.6.10 Package interrelationship fields: Depends, Pre-Depends, Recommends, Suggests, Breaks, Conflicts, Provides, Replaces, Enhances">
+<link href="ch-controlfields.html#s-f-Standards-Version" rel="subsection" title="5.6.11 Standards-Version">
+<link href="ch-controlfields.html#s-f-Version" rel="subsection" title="5.6.12 Version">
+<link href="ch-controlfields.html#s-f-Description" rel="subsection" title="5.6.13 Description">
+<link href="ch-controlfields.html#s-f-Distribution" rel="subsection" title="5.6.14 Distribution">
+<link href="ch-controlfields.html#s-f-Date" rel="subsection" title="5.6.15 Date">
+<link href="ch-controlfields.html#s-f-Format" rel="subsection" title="5.6.16 Format">
+<link href="ch-controlfields.html#s-f-Urgency" rel="subsection" title="5.6.17 Urgency">
+<link href="ch-controlfields.html#s-f-Changes" rel="subsection" title="5.6.18 Changes">
+<link href="ch-controlfields.html#s-f-Binary" rel="subsection" title="5.6.19 Binary">
+<link href="ch-controlfields.html#s-f-Installed-Size" rel="subsection" title="5.6.20 Installed-Size">
+<link href="ch-controlfields.html#s-f-Files" rel="subsection" title="5.6.21 Files">
+<link href="ch-controlfields.html#s-f-Closes" rel="subsection" title="5.6.22 Closes">
+<link href="ch-controlfields.html#s-f-Homepage" rel="subsection" title="5.6.23 Homepage">
+<link href="ch-controlfields.html#s-f-Checksums" rel="subsection" title="5.6.24 Checksums-Sha1 and Checksums-Sha256">
+<link href="ch-controlfields.html#s-f-DM-Upload-Allowed" rel="subsection" title="5.6.25 DM-Upload-Allowed">
+<link href="ch-controlfields.html#s-f-VCS-fields" rel="subsection" title="5.6.26 Version Control System (VCS) fields">
+<link href="ch-relationships.html#s7.6.1" rel="subsection" title="7.6.1 Overwriting files in other packages">
+<link href="ch-relationships.html#s7.6.2" rel="subsection" title="7.6.2 Replacing whole packages, forcing their removal">
+<link href="ch-sharedlibs.html#s-ldconfig" rel="subsection" title="8.1.1 ldconfig">
+<link href="ch-sharedlibs.html#s-dpkg-shlibdeps" rel="subsection" title="8.6.1 Generating dependencies on shared libraries">
+<link href="ch-sharedlibs.html#s-sharedlibs-updates" rel="subsection" title="8.6.2 Shared library ABI changes">
+<link href="ch-sharedlibs.html#s-sharedlibs-symbols" rel="subsection" title="8.6.3 The symbols system">
+<link href="ch-sharedlibs.html#s-symbols-paths" rel="subsection" title="8.6.3.1 The symbols files present on the system">
+<link href="ch-sharedlibs.html#s-symbols" rel="subsection" title="8.6.3.2 The symbols File Format">
+<link href="ch-sharedlibs.html#s-providing-symbols" rel="subsection" title="8.6.3.3 Providing a symbols file">
+<link href="ch-sharedlibs.html#s-sharedlibs-shlibdeps" rel="subsection" title="8.6.4 The shlibs system">
+<link href="ch-sharedlibs.html#s-shlibs-paths" rel="subsection" title="8.6.4.1 The shlibs files present on the system">
+<link href="ch-sharedlibs.html#s-shlibs" rel="subsection" title="8.6.4.2 The shlibs File Format">
+<link href="ch-sharedlibs.html#s8.6.4.3" rel="subsection" title="8.6.4.3 Providing a shlibs file">
+<link href="ch-opersys.html#s-fhs" rel="subsection" title="9.1.1 File System Structure">
+<link href="ch-opersys.html#s9.1.2" rel="subsection" title="9.1.2 Site-specific programs">
+<link href="ch-opersys.html#s9.1.3" rel="subsection" title="9.1.3 The system-wide mail directory">
+<link href="ch-opersys.html#s-fhs-run" rel="subsection" title="9.1.4 /run and /run/lock">
+<link href="ch-opersys.html#s9.2.1" rel="subsection" title="9.2.1 Introduction">
+<link href="ch-opersys.html#s9.2.2" rel="subsection" title="9.2.2 UID and GID classes">
+<link href="ch-opersys.html#s-/etc/init.d" rel="subsection" title="9.3.1 Introduction">
+<link href="ch-opersys.html#s-writing-init" rel="subsection" title="9.3.2 Writing the scripts">
+<link href="ch-opersys.html#s9.3.3" rel="subsection" title="9.3.3 Interfacing with the initscript system">
+<link href="ch-opersys.html#s9.3.3.1" rel="subsection" title="9.3.3.1 Managing the links">
+<link href="ch-opersys.html#s9.3.3.2" rel="subsection" title="9.3.3.2 Running initscripts">
+<link href="ch-opersys.html#s9.3.4" rel="subsection" title="9.3.4 Boot-time initialization">
+<link href="ch-opersys.html#s9.3.5" rel="subsection" title="9.3.5 Example">
+<link href="ch-opersys.html#s-cron-files" rel="subsection" title="9.5.1 Cron job file names">
+<link href="ch-opersys.html#s-upstart" rel="subsection" title="9.11.1 Event-based boot with upstart">
+<link href="ch-files.html#s10.7.1" rel="subsection" title="10.7.1 Definitions">
+<link href="ch-files.html#s10.7.2" rel="subsection" title="10.7.2 Location">
+<link href="ch-files.html#s10.7.3" rel="subsection" title="10.7.3 Behavior">
+<link href="ch-files.html#s10.7.4" rel="subsection" title="10.7.4 Sharing configuration files">
+<link href="ch-files.html#s10.7.5" rel="subsection" title="10.7.5 User configuration files (&quot;dotfiles&quot;)">
+<link href="ch-files.html#s10.9.1" rel="subsection" title="10.9.1 The use of dpkg-statoverride">
+<link href="ch-customized-programs.html#s-arch-wildcard-spec" rel="subsection" title="11.1.1 Architecture wildcards">
+<link href="ch-customized-programs.html#s11.8.1" rel="subsection" title="11.8.1 Providing X support and package priorities">
+<link href="ch-customized-programs.html#s11.8.2" rel="subsection" title="11.8.2 Packages providing an X server">
+<link href="ch-customized-programs.html#s11.8.3" rel="subsection" title="11.8.3 Packages providing a terminal emulator">
+<link href="ch-customized-programs.html#s11.8.4" rel="subsection" title="11.8.4 Packages providing a window manager">
+<link href="ch-customized-programs.html#s11.8.5" rel="subsection" title="11.8.5 Packages providing fonts">
+<link href="ch-customized-programs.html#s-appdefaults" rel="subsection" title="11.8.6 Application defaults files">
+<link href="ch-customized-programs.html#s11.8.7" rel="subsection" title="11.8.7 Installation directory issues">
+<link href="ch-docs.html#s-copyrightformat" rel="subsection" title="12.5.1 Machine-readable copyright information">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-source" rel="subsection" title="C.1.1 dpkg-source - packs and unpacks Debian source packages">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-buildpackage" rel="subsection" title="C.1.2 dpkg-buildpackage - overall package-building control script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-gencontrol" rel="subsection" title="C.1.3 dpkg-gencontrol - generates binary package control files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-shlibdeps" rel="subsection" title="C.1.4 dpkg-shlibdeps - calculates shared library dependencies">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-distaddfile" rel="subsection" title="C.1.5 dpkg-distaddfile - adds a file to debian/files">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-genchanges" rel="subsection" title="C.1.6 dpkg-genchanges - generates a .changes upload control file">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-parsechangelog" rel="subsection" title="C.1.7 dpkg-parsechangelog - produces parsed representation of a changelog">
+<link href="ap-pkg-sourcepkg.html#s-pkg-dpkg-architecture" rel="subsection" title="C.1.8 dpkg-architecture - information about the build and host system">
+<link href="ap-pkg-sourcepkg.html#s-pkg-debianrules" rel="subsection" title="C.2.1 debian/rules - the main building script">
+<link href="ap-pkg-sourcepkg.html#s-pkg-srcsubstvars" rel="subsection" title="C.2.2 debian/substvars and variable substitutions">
+<link href="ap-pkg-sourcepkg.html#sC.2.3" rel="subsection" title="C.2.3 debian/files">
+<link href="ap-pkg-sourcepkg.html#sC.2.4" rel="subsection" title="C.2.4 debian/tmp">
+<link href="ap-pkg-sourcepkg.html#sC.4.1" rel="subsection" title="C.4.1 Restrictions on objects in source packages">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Filename" rel="subsection" title="D.2.1 Filename and MSDOS-Filename">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Size" rel="subsection" title="D.2.2 Size and MD5sum">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Status" rel="subsection" title="D.2.3 Status">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Config-Version" rel="subsection" title="D.2.4 Config-Version">
+<link href="ap-pkg-controlfields.html#s-pkg-f-Conffiles" rel="subsection" title="D.2.5 Conffiles">
+<link href="ap-pkg-controlfields.html#sD.2.6" rel="subsection" title="D.2.6 Obsolete fields">
+
+</head>
+
+<body>
+
+<p><a name="ch-controlfields"></a></p>
+<hr>
+
+<p>
+[ <a href="ch-source.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ 5 ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-maintainerscripts.html">next</a> ]
+</p>
+
+<hr>
+
+<h1>
+Debian Policy Manual
+<br>Chapter 5 - Control files and their fields
+</h1>
+
+<p>
+The package management system manipulates data represented in a common format,
+known as <em>control data</em>, stored in <em>control files</em>.  Control
+files are used for source packages, binary packages and the
+<code>.changes</code> files which control the installation of uploaded files[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f31" name="fr31">31</a>].
+</p>
+
+<hr>
+
+<h2><a name="s-controlsyntax"></a>5.1 Syntax of control files</h2>
+
+<p>
+A control file consists of one or more paragraphs of fields[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f32" name="fr32">32</a>].  The paragraphs are separated by
+empty lines.  Parsers may accept lines consisting solely of spaces and tabs as
+paragraph separators, but control files should use empty lines.  Some control
+files allow only one paragraph; others allow several, in which case each
+paragraph usually refers to a different package.  (For example, in source
+packages, the first paragraph refers to the source package, and later
+paragraphs refer to binary packages generated from the source.) The ordering of
+the paragraphs in control files is significant.
+</p>
+
+<p>
+Each paragraph consists of a series of data fields.  Each field consists of the
+field name followed by a colon and then the data/value associated with that
+field.  The field name is composed of US-ASCII characters excluding control
+characters, space, and colon (i.e., characters in the ranges 33-57 and 59-126,
+inclusive).  Field names must not begin with the comment character,
+<samp>#</samp>.
+</p>
+
+<p>
+The field ends at the end of the line or at the end of the last continuation
+line (see below).  Horizontal whitespace (spaces and tabs) may occur
+immediately before or after the value and is ignored there; it is conventional
+to put a single space after the colon.  For example, a field might be:
+</p>
+<pre>
+     Package: libc6
+</pre>
+
+<p>
+the field name is <samp>Package</samp> and the field value <samp>libc6</samp>.
+</p>
+
+<p>
+A paragraph must not contain more than one instance of a particular field name.
+</p>
+
+<p>
+There are three types of fields:
+</p>
+<dl>
+<dt>simple</dt>
+<dd>
+<p>
+The field, including its value, must be a single line.  Folding of the field is
+not permitted.  This is the default field type if the definition of the field
+does not specify a different type.
+</p>
+</dd>
+</dl>
+<dl>
+<dt>folded</dt>
+<dd>
+<p>
+The value of a folded field is a logical line that may span several lines.  The
+lines after the first are called continuation lines and must start with a space
+or a tab.  Whitespace, including any newlines, is not significant in the field
+values of folded fields.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f33" name="fr33">33</a>]
+</p>
+</dd>
+</dl>
+<dl>
+<dt>multiline</dt>
+<dd>
+<p>
+The value of a multiline field may comprise multiple continuation lines.  The
+first line of the value, the part on the same line as the field name, often has
+special significance or may have to be empty.  Other lines are added following
+the same syntax as the continuation lines of the folded fields.  Whitespace,
+including newlines, is significant in the values of multiline fields.
+</p>
+</dd>
+</dl>
+
+<p>
+Whitespace must not appear inside names (of packages, architectures, files or
+anything else) or version numbers, or between the characters of multi-character
+version relationships.
+</p>
+
+<p>
+The presence and purpose of a field, and the syntax of its value may differ
+between types of control files.
+</p>
+
+<p>
+Field names are not case-sensitive, but it is usual to capitalize the field
+names using mixed case as shown below.  Field values are case-sensitive unless
+the description of the field says otherwise.
+</p>
+
+<p>
+Paragraph separators (empty lines) and lines consisting only of spaces and tabs
+are not allowed within field values or between fields.  Empty lines in field
+values are usually escaped by representing them by a space followed by a dot.
+</p>
+
+<p>
+Lines starting with # without any preceding whitespace are comments lines that
+are only permitted in source package control files
+(<code>debian/control</code>).  These comment lines are ignored, even between
+two continuation lines.  They do not end logical lines.
+</p>
+
+<p>
+All control files must be encoded in UTF-8.
+</p>
+
+<hr>
+
+<h2><a name="s-sourcecontrolfiles"></a>5.2 Source package control files -- <code>debian/control</code></h2>
+
+<p>
+The <code>debian/control</code> file contains the most vital (and
+version-independent) information about the source package and about the binary
+packages it creates.
+</p>
+
+<p>
+The first paragraph of the control file contains information about the source
+package in general.  The subsequent sets each describe a binary package that
+the source tree builds.
+</p>
+
+<p>
+The fields in the general paragraph (the first one, for the source package)
+are:
+</p>
+<ul>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Source"><samp>Source</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Maintainer"><samp>Maintainer</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Uploaders"><samp>Uploaders</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-DM-Upload-Allowed"><samp>DM-Upload-Allowed</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Section"><samp>Section</samp></a> (recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Priority"><samp>Priority</samp></a> (recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-relationships.html#s-sourcebinarydeps"><samp>Build-Depends</samp>
+et al</a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Standards-Version"><samp>Standards-Version</samp></a>
+(recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Homepage"><samp>Homepage</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-VCS-fields"><samp>Vcs-Browser</samp>, <samp>Vcs-Git</samp>, et
+al.</a>
+</p>
+</li>
+</ul>
+
+<p>
+The fields in the binary package paragraphs are:
+</p>
+<ul>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Package"><samp>Package</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Architecture"><samp>Architecture</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Section"><samp>Section</samp></a> (recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Priority"><samp>Priority</samp></a> (recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Essential"><samp>Essential</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-relationships.html#s-binarydeps"><samp>Depends</samp> et al</a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Description"><samp>Description</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Homepage"><samp>Homepage</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-relationships.html#s-built-using"><samp>Built-Using</samp></a>
+</p>
+</li>
+</ul>
+
+<p>
+The syntax and semantics of the fields are described below.
+</p>
+
+<p>
+These fields are used by <code>dpkg-gencontrol</code> to generate control files
+for binary packages (see below), by <code>dpkg-genchanges</code> to generate
+the <code>.changes</code> file to accompany the upload, and by
+<code>dpkg-source</code> when it creates the <code>.dsc</code> source control
+file as part of a source archive.  Some fields are folded in
+<code>debian/control</code>, but not in any other control file.  These tools
+are responsible for removing the line breaks from such fields when using fields
+from <code>debian/control</code> to generate other control files.
+</p>
+
+<p>
+The fields here may contain variable references - their values will be
+substituted by <code>dpkg-gencontrol</code>, <code>dpkg-genchanges</code> or
+<code>dpkg-source</code> when they generate output control files.  See <a
+href="ch-source.html#s-substvars">Variable substitutions:
+<code>debian/substvars</code>, Section 4.10</a> for details.
+</p>
+
+<hr>
+
+<h2><a name="s-binarycontrolfiles"></a>5.3 Binary package control files -- <code>DEBIAN/control</code></h2>
+
+<p>
+The <code>DEBIAN/control</code> file contains the most vital (and
+version-dependent) information about a binary package.  It consists of a single
+paragraph.
+</p>
+
+<p>
+The fields in this file are:
+</p>
+<ul>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Package"><samp>Package</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Source"><samp>Source</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Version"><samp>Version</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Section"><samp>Section</samp></a> (recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Priority"><samp>Priority</samp></a> (recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Architecture"><samp>Architecture</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Essential"><samp>Essential</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-relationships.html#s-binarydeps"><samp>Depends</samp> et al</a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Installed-Size"><samp>Installed-Size</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Maintainer"><samp>Maintainer</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Description"><samp>Description</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Homepage"><samp>Homepage</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-relationships.html#s-built-using"><samp>Built-Using</samp></a>
+</p>
+</li>
+</ul>
+
+<hr>
+
+<h2><a name="s-debiansourcecontrolfiles"></a>5.4 Debian source control files -- <samp>.dsc</samp></h2>
+
+<p>
+This file consists of a single paragraph, possibly surrounded by a PGP
+signature.  The fields of that paragraph are listed below.  Their syntax is
+described above, in <a href="ch-controlfields.html#s-controlsyntax">Syntax of control files, Section
+5.1</a>.
+</p>
+<ul>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Format"><samp>Format</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Source"><samp>Source</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Binary"><samp>Binary</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Architecture"><samp>Architecture</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Version"><samp>Version</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Maintainer"><samp>Maintainer</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Uploaders"><samp>Uploaders</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-DM-Upload-Allowed"><samp>DM-Upload-Allowed</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Homepage"><samp>Homepage</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-VCS-fields"><samp>Vcs-Browser</samp>, <samp>Vcs-Git</samp>, et
+al.</a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Standards-Version"><samp>Standards-Version</samp></a>
+(recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-relationships.html#s-sourcebinarydeps"><samp>Build-Depends</samp>
+et al</a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Checksums"><samp>Checksums-Sha1</samp> and
+<samp>Checksums-Sha256</samp></a> (recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Files"><samp>Files</samp></a> (mandatory)
+</p>
+</li>
+</ul>
+
+<p>
+The Debian source control file is generated by <code>dpkg-source</code> when it
+builds the source archive, from other files in the source package, described
+above.  When unpacking, it is checked against the files and directories in the
+other parts of the source package.
+</p>
+
+<hr>
+
+<h2><a name="s-debianchangesfiles"></a>5.5 Debian changes files -- <code>.changes</code></h2>
+
+<p>
+The <code>.changes</code> files are used by the Debian archive maintenance
+software to process updates to packages.  They consist of a single paragraph,
+possibly surrounded by a PGP signature.  That paragraph contains information
+from the <code>debian/control</code> file and other data about the source
+package gathered via <code>debian/changelog</code> and
+<code>debian/rules</code>.
+</p>
+
+<p>
+<code>.changes</code> files have a format version that is incremented whenever
+the documented fields or their meaning change.  This document describes format
+1.8.
+</p>
+
+<p>
+The fields in this file are:
+</p>
+<ul>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Format"><samp>Format</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Date"><samp>Date</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Source"><samp>Source</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Binary"><samp>Binary</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Architecture"><samp>Architecture</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Version"><samp>Version</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Distribution"><samp>Distribution</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Urgency"><samp>Urgency</samp></a> (recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Maintainer"><samp>Maintainer</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Changed-By"><samp>Changed-By</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Description"><samp>Description</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Closes"><samp>Closes</samp></a>
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Changes"><samp>Changes</samp></a> (mandatory)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Checksums"><samp>Checksums-Sha1</samp> and
+<samp>Checksums-Sha256</samp></a> (recommended)
+</p>
+</li>
+<li>
+<p>
+<a href="ch-controlfields.html#s-f-Files"><samp>Files</samp></a> (mandatory)
+</p>
+</li>
+</ul>
+
+<hr>
+
+<h2><a name="s-controlfieldslist"></a>5.6 List of fields</h2>
+
+<hr>
+
+<h3><a name="s-f-Source"></a>5.6.1 <samp>Source</samp></h3>
+
+<p>
+This field identifies the source package name.
+</p>
+
+<p>
+In <code>debian/control</code> or a <code>.dsc</code> file, this field must
+contain only the name of the source package.
+</p>
+
+<p>
+In a binary package control file or a <code>.changes</code> file, the source
+package name may be followed by a version number in parentheses[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f34" name="fr34">34</a>].  This version number may be
+omitted (and is, by <code>dpkg-gencontrol</code>) if it has the same value as
+the <samp>Version</samp> field of the binary package in question.  The field
+itself may be omitted from a binary package control file when the source
+package has the same name and version as the binary package.
+</p>
+
+<p>
+Package names (both source and binary, see <a
+href="ch-controlfields.html#s-f-Package"><samp>Package</samp>, Section 5.6.7</a>) must consist only
+of lower case letters (<samp>a-z</samp>), digits (<samp>0-9</samp>), plus
+(<samp>+</samp>) and minus (<samp>-</samp>) signs, and periods
+(<samp>.</samp>).  They must be at least two characters long and must start
+with an alphanumeric character.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Maintainer"></a>5.6.2 <samp>Maintainer</samp></h3>
+
+<p>
+The package maintainer's name and email address.  The name must come first,
+then the email address inside angle brackets <samp>&lt;&gt;</samp> (in RFC822
+format).
+</p>
+
+<p>
+If the maintainer's name contains a full stop then the whole field will not
+work directly as an email address due to a misfeature in the syntax specified
+in RFC822; a program using this field as an address must check for this and
+correct the problem if necessary (for example by putting the name in round
+brackets and moving it to the end, and bringing the email address forward).
+</p>
+
+<p>
+See <a href="ch-binary.html#s-maintainer">The maintainer of a package, Section
+3.3</a> for additional requirements and information about package maintainers.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Uploaders"></a>5.6.3 <samp>Uploaders</samp></h3>
+
+<p>
+List of the names and email addresses of co-maintainers of the package, if any.
+If the package has other maintainers besides the one named in the <a
+href="ch-controlfields.html#s-f-Maintainer">Maintainer field</a>, their names and email addresses
+should be listed here.  The format of each entry is the same as that of the
+Maintainer field, and multiple entries must be comma separated.
+</p>
+
+<p>
+This is normally an optional field, but if the <samp>Maintainer</samp> control
+field names a group of people and a shared email address, the
+<samp>Uploaders</samp> field must be present and must contain at least one
+human with their personal email address.
+</p>
+
+<p>
+The Uploaders field in <code>debian/control</code> can be folded.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Changed-By"></a>5.6.4 <samp>Changed-By</samp></h3>
+
+<p>
+The name and email address of the person who prepared this version of the
+package, usually a maintainer.  The syntax is the same as for the <a
+href="ch-controlfields.html#s-f-Maintainer">Maintainer field</a>.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Section"></a>5.6.5 <samp>Section</samp></h3>
+
+<p>
+This field specifies an application area into which the package has been
+classified.  See <a href="ch-archive.html#s-subsections">Sections, Section
+2.4</a>.
+</p>
+
+<p>
+When it appears in the <code>debian/control</code> file, it gives the value for
+the subfield of the same name in the <samp>Files</samp> field of the
+<code>.changes</code> file.  It also gives the default for the same field in
+the binary packages.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Priority"></a>5.6.6 <samp>Priority</samp></h3>
+
+<p>
+This field represents how important it is that the user have the package
+installed.  See <a href="ch-archive.html#s-priorities">Priorities, Section
+2.5</a>.
+</p>
+
+<p>
+When it appears in the <code>debian/control</code> file, it gives the value for
+the subfield of the same name in the <samp>Files</samp> field of the
+<code>.changes</code> file.  It also gives the default for the same field in
+the binary packages.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Package"></a>5.6.7 <samp>Package</samp></h3>
+
+<p>
+The name of the binary package.
+</p>
+
+<p>
+Binary package names must follow the same syntax and restrictions as source
+package names.  See <a href="ch-controlfields.html#s-f-Source"><samp>Source</samp>, Section
+5.6.1</a> for the details.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Architecture"></a>5.6.8 <samp>Architecture</samp></h3>
+
+<p>
+Depending on context and the control file used, the <samp>Architecture</samp>
+field can include the following sets of values:
+</p>
+<ul>
+<li>
+<p>
+A unique single word identifying a Debian machine architecture as described in
+<a href="ch-customized-programs.html#s-arch-spec">Architecture specification
+strings, Section 11.1</a>.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+An architecture wildcard identifying a set of Debian machine architectures, see
+<a href="ch-customized-programs.html#s-arch-wildcard-spec">Architecture
+wildcards, Section 11.1.1</a>.  <samp>any</samp> matches all Debian machine
+architectures and is the most frequently used.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<samp>all</samp>, which indicates an architecture-independent package.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+<samp>source</samp>, which indicates a source package.
+</p>
+</li>
+</ul>
+
+<p>
+In the main <code>debian/control</code> file in the source package, this field
+may contain the special value <samp>all</samp>, the special architecture
+wildcard <samp>any</samp>, or a list of specific and wildcard architectures
+separated by spaces.  If <samp>all</samp> or <samp>any</samp> appears, that
+value must be the entire contents of the field.  Most packages will use either
+<samp>all</samp> or <samp>any</samp>.
+</p>
+
+<p>
+Specifying a specific list of architectures indicates that the source will
+build an architecture-dependent package only on architectures included in the
+list.  Specifying a list of architecture wildcards indicates that the source
+will build an architecture-dependent package on only those architectures that
+match any of the specified architecture wildcards.  Specifying a list of
+architectures or architecture wildcards other than <samp>any</samp> is for the
+minority of cases where a program is not portable or is not useful on some
+architectures.  Where possible, the program should be made portable instead.
+</p>
+
+<p>
+In the Debian source control file <code>.dsc</code>, this field contains a list
+of architectures and architecture wildcards separated by spaces.  When the list
+contains the architecture wildcard <samp>any</samp>, the only other value
+allowed in the list is <samp>all</samp>.
+</p>
+
+<p>
+The list may include (or consist solely of) the special value <samp>all</samp>.
+In other words, in <code>.dsc</code> files unlike the
+<code>debian/control</code>, <samp>all</samp> may occur in combination with
+specific architectures.  The <samp>Architecture</samp> field in the Debian
+source control file <code>.dsc</code> is generally constructed from the
+<samp>Architecture</samp> fields in the <code>debian/control</code> in the
+source package.
+</p>
+
+<p>
+Specifying only <samp>any</samp> indicates that the source package isn't
+dependent on any particular architecture and should compile fine on any one.
+The produced binary package(s) will be specific to whatever the current build
+architecture is.
+</p>
+
+<p>
+Specifying only <samp>all</samp> indicates that the source package will only
+build architecture-independent packages.
+</p>
+
+<p>
+Specifying <samp>any all</samp> indicates that the source package isn't
+dependent on any particular architecture.  The set of produced binary packages
+will include at least one architecture-dependant package and one
+architecture-independent package.
+</p>
+
+<p>
+Specifying a list of architectures or architecture wildcards indicates that the
+source will build an architecture-dependent package, and will only work
+correctly on the listed or matching architectures.  If the source package also
+builds at least one architecture-independent package, <samp>all</samp> will
+also be included in the list.
+</p>
+
+<p>
+In a <code>.changes</code> file, the <samp>Architecture</samp> field lists the
+architecture(s) of the package(s) currently being uploaded.  This will be a
+list; if the source for the package is also being uploaded, the special entry
+<samp>source</samp> is also present.  <samp>all</samp> will be present if any
+architecture-independent packages are being uploaded.  Architecture wildcards
+such as <samp>any</samp> must never occur in the <samp>Architecture</samp>
+field in the <code>.changes</code> file.
+</p>
+
+<p>
+See <a href="ch-source.html#s-debianrules">Main building script:
+<code>debian/rules</code>, Section 4.9</a> for information on how to get the
+architecture for the build process.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Essential"></a>5.6.9 <samp>Essential</samp></h3>
+
+<p>
+This is a boolean field which may occur only in the control file of a binary
+package or in a per-package fields paragraph of a source package control file.
+</p>
+
+<p>
+If set to <samp>yes</samp> then the package management system will refuse to
+remove the package (upgrading and replacing it is still possible).  The other
+possible value is <samp>no</samp>, which is the same as not having the field at
+all.
+</p>
+
+<hr>
+
+<h3><a name="s5.6.10"></a>5.6.10 Package interrelationship fields: <samp>Depends</samp>, <samp>Pre-Depends</samp>, <samp>Recommends</samp>, <samp>Suggests</samp>, <samp>Breaks</samp>, <samp>Conflicts</samp>, <samp>Provides</samp>, <samp>Replaces</samp>, <samp>Enhances</samp></h3>
+
+<p>
+These fields describe the package's relationships with other packages.  Their
+syntax and semantics are described in <a href="ch-relationships.html">Declaring
+relationships between packages, Chapter 7</a>.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Standards-Version"></a>5.6.11 <samp>Standards-Version</samp></h3>
+
+<p>
+The most recent version of the standards (the policy manual and associated
+texts) with which the package complies.
+</p>
+
+<p>
+The version number has four components: major and minor version number and
+major and minor patch level.  When the standards change in a way that requires
+every package to change the major number will be changed.  Significant changes
+that will require work in many packages will be signaled by a change to the
+minor number.  The major patch level will be changed for any change to the
+meaning of the standards, however small; the minor patch level will be changed
+when only cosmetic, typographical or other edits are made which neither change
+the meaning of the document nor affect the contents of packages.
+</p>
+
+<p>
+Thus only the first three components of the policy version are significant in
+the <em>Standards-Version</em> control field, and so either these three
+components or all four components may be specified.[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f35" name="fr35">35</a>]
+</p>
+
+<hr>
+
+<h3><a name="s-f-Version"></a>5.6.12 <samp>Version</samp></h3>
+
+<p>
+The version number of a package.  The format is:
+[<var>epoch</var><samp>:</samp>]<var>upstream_version</var>[<samp>-</samp><var>debian_revision</var>]
+</p>
+
+<p>
+The three components here are:
+</p>
+<dl>
+<dt><var>epoch</var></dt>
+<dd>
+<p>
+This is a single (generally small) unsigned integer.  It may be omitted, in
+which case zero is assumed.  If it is omitted then the
+<var>upstream_version</var> may not contain any colons.
+</p>
+
+<p>
+It is provided to allow mistakes in the version numbers of older versions of a
+package, and also a package's previous version numbering schemes, to be left
+behind.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><var>upstream_version</var></dt>
+<dd>
+<p>
+This is the main part of the version number.  It is usually the version number
+of the original (&quot;upstream&quot;) package from which the <code>.deb</code>
+file has been made, if this is applicable.  Usually this will be in the same
+format as that specified by the upstream author(s); however, it may need to be
+reformatted to fit into the package management system's format and comparison
+scheme.
+</p>
+
+<p>
+The comparison behavior of the package management system with respect to the
+<var>upstream_version</var> is described below.  The
+<var>upstream_version</var> portion of the version number is mandatory.
+</p>
+
+<p>
+The <var>upstream_version</var> may contain only alphanumerics[<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f36" name="fr36">36</a>] and the characters <samp>.</samp>
+<samp>+</samp> <samp>-</samp> <samp>:</samp> <samp>~</samp> (full stop, plus,
+hyphen, colon, tilde) and should start with a digit.  If there is no
+<var>debian_revision</var> then hyphens are not allowed; if there is no
+<var>epoch</var> then colons are not allowed.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><var>debian_revision</var></dt>
+<dd>
+<p>
+This part of the version number specifies the version of the Debian package
+based on the upstream version.  It may contain only alphanumerics and the
+characters <samp>+</samp> <samp>.</samp> <samp>~</samp> (plus, full stop,
+tilde) and is compared in the same way as the <var>upstream_version</var> is.
+</p>
+
+<p>
+It is optional; if it isn't present then the <var>upstream_version</var> may
+not contain a hyphen.  This format represents the case where a piece of
+software was written specifically to be a Debian package, where the Debian
+package source must always be identical to the pristine source and therefore no
+revision indication is required.
+</p>
+
+<p>
+It is conventional to restart the <var>debian_revision</var> at <samp>1</samp>
+each time the <var>upstream_version</var> is increased.
+</p>
+
+<p>
+The package management system will break the version number apart at the last
+hyphen in the string (if there is one) to determine the
+<var>upstream_version</var> and <var>debian_revision</var>.  The absence of a
+<var>debian_revision</var> is equivalent to a <var>debian_revision</var> of
+<samp>0</samp>.
+</p>
+</dd>
+</dl>
+
+<p>
+When comparing two version numbers, first the <var>epoch</var> of each are
+compared, then the <var>upstream_version</var> if <var>epoch</var> is equal,
+and then <var>debian_revision</var> if <var>upstream_version</var> is also
+equal.  <var>epoch</var> is compared numerically.  The
+<var>upstream_version</var> and <var>debian_revision</var> parts are compared
+by the package management system using the following algorithm:
+</p>
+
+<p>
+The strings are compared from left to right.
+</p>
+
+<p>
+First the initial part of each string consisting entirely of non-digit
+characters is determined.  These two parts (one of which may be empty) are
+compared lexically.  If a difference is found it is returned.  The lexical
+comparison is a comparison of ASCII values modified so that all the letters
+sort earlier than all the non-letters and so that a tilde sorts before
+anything, even the end of a part.  For example, the following parts are in
+sorted order from earliest to latest: <samp>~~</samp>, <samp>~~a</samp>,
+<samp>~</samp>, the empty part, <samp>a</samp>.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f37"
+name="fr37">37</a>]
+</p>
+
+<p>
+Then the initial part of the remainder of each string which consists entirely
+of digit characters is determined.  The numerical values of these two parts are
+compared, and any difference found is returned as the result of the comparison.
+For these purposes an empty string (which can only occur at the end of one or
+both version strings being compared) counts as zero.
+</p>
+
+<p>
+These two steps (comparing and removing initial non-digit strings and initial
+digit strings) are repeated until a difference is found or both strings are
+exhausted.
+</p>
+
+<p>
+Note that the purpose of epochs is to allow us to leave behind mistakes in
+version numbering, and to cope with situations where the version numbering
+scheme changes.  It is <em>not</em> intended to cope with version numbers
+containing strings of letters which the package management system cannot
+interpret (such as <samp>ALPHA</samp> or <samp>pre-</samp>), or with silly
+orderings.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f38" name="fr38">38</a>]
+</p>
+
+<hr>
+
+<h3><a name="s-f-Description"></a>5.6.13 <samp>Description</samp></h3>
+
+<p>
+In a source or binary control file, the <samp>Description</samp> field contains
+a description of the binary package, consisting of two parts, the synopsis or
+the short description, and the long description.  It is a multiline field with
+the following format:
+</p>
+
+<pre>
+     	Description: &lt;single line synopsis&gt;
+     	 &lt;extended description over several lines&gt;
+</pre>
+
+<p>
+The lines in the extended description can have these formats:
+</p>
+<ul>
+<li>
+<p>
+Those starting with a single space are part of a paragraph.  Successive lines
+of this form will be word-wrapped when displayed.  The leading space will
+usually be stripped off.  The line must contain at least one non-whitespace
+character.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+Those starting with two or more spaces.  These will be displayed verbatim.  If
+the display cannot be panned horizontally, the displaying program will line
+wrap them &quot;hard&quot; (i.e., without taking account of word breaks).  If
+it can they will be allowed to trail off to the right.  None, one or two
+initial spaces may be deleted, but the number of spaces deleted from each line
+will be the same (so that you can have indenting work correctly, for example).
+The line must contain at least one non-whitespace character.
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+Those containing a single space followed by a single full stop character.
+These are rendered as blank lines.  This is the <em>only</em> way to get a
+blank line[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f39" name="fr39">39</a>].
+</p>
+</li>
+</ul>
+<ul>
+<li>
+<p>
+Those containing a space, a full stop and some more characters.  These are for
+future expansion.  Do not use them.
+</p>
+</li>
+</ul>
+
+<p>
+Do not use tab characters.  Their effect is not predictable.
+</p>
+
+<p>
+See <a href="ch-binary.html#s-descriptions">The description of a package,
+Section 3.4</a> for further information on this.
+</p>
+
+<p>
+In a <code>.changes</code> file, the <samp>Description</samp> field contains a
+summary of the descriptions for the packages being uploaded.  For this case,
+the first line of the field value (the part on the same line as
+<samp>Description:</samp>) is always empty.  It is a multiline field, with one
+line per package.  Each line is indented by one space and contains the name of
+a binary package, a space, a hyphen (<samp>-</samp>), a space, and the short
+description line from that package.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Distribution"></a>5.6.14 <samp>Distribution</samp></h3>
+
+<p>
+In a <code>.changes</code> file or parsed changelog output this contains the
+(space-separated) name(s) of the distribution(s) where this version of the
+package should be installed.  Valid distributions are determined by the archive
+maintainers.[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f40" name="fr40">40</a>] The Debian
+archive software only supports listing a single distribution.  Migration of
+packages to other distributions is handled outside of the upload process.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Date"></a>5.6.15 <samp>Date</samp></h3>
+
+<p>
+This field includes the date the package was built or last edited.  It must be
+in the same format as the <var>date</var> in a <code>debian/changelog</code>
+entry.
+</p>
+
+<p>
+The value of this field is usually extracted from the
+<code>debian/changelog</code> file - see <a
+href="ch-source.html#s-dpkgchangelog">Debian changelog:
+<code>debian/changelog</code>, Section 4.4</a>).
+</p>
+
+<hr>
+
+<h3><a name="s-f-Format"></a>5.6.16 <samp>Format</samp></h3>
+
+<p>
+In <a href="ch-controlfields.html#s-debianchangesfiles"><code>.changes</code></a> files, this field
+declares the format version of that file.  The syntax of the field value is the
+same as that of a <a href="ch-controlfields.html#s-f-Version">package version number</a> except that
+no epoch or Debian revision is allowed.  The format described in this document
+is <samp>1.8</samp>.
+</p>
+
+<p>
+In <a href="ch-controlfields.html#s-debiansourcecontrolfiles"><code>.dsc</code> Debian source
+control</a> files, this field declares the format of the source package.  The
+field value is used by programs acting on a source package to interpret the
+list of files in the source package and determine how to unpack it.  The syntax
+of the field value is a numeric major revision, a period, a numeric minor
+revision, and then an optional subtype after whitespace, which if specified is
+an alphanumeric word in parentheses.  The subtype is optional in the syntax but
+may be mandatory for particular source format revisions.  [<a
+href="http://www.debian.org/doc/debian-policy/footnotes.html#f41" name="fr41">41</a>]
+</p>
+
+<hr>
+
+<h3><a name="s-f-Urgency"></a>5.6.17 <samp>Urgency</samp></h3>
+
+<p>
+This is a description of how important it is to upgrade to this version from
+previous ones.  It consists of a single keyword taking one of the values
+<samp>low</samp>, <samp>medium</samp>, <samp>high</samp>,
+<samp>emergency</samp>, or <samp>critical</samp>[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f42"
+name="fr42">42</a>] (not case-sensitive) followed by an optional commentary
+(separated by a space) which is usually in parentheses.  For example:
+</p>
+
+<pre>
+       Urgency: low (HIGH for users of diversions)
+</pre>
+
+<p>
+The value of this field is usually extracted from the
+<code>debian/changelog</code> file - see <a
+href="ch-source.html#s-dpkgchangelog">Debian changelog:
+<code>debian/changelog</code>, Section 4.4</a>.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Changes"></a>5.6.18 <samp>Changes</samp></h3>
+
+<p>
+This multiline field contains the human-readable changes data, describing the
+differences between the last version and the current one.
+</p>
+
+<p>
+The first line of the field value (the part on the same line as
+<samp>Changes:</samp>) is always empty.  The content of the field is expressed
+as continuation lines, with each line indented by at least one space.  Blank
+lines must be represented by a line consisting only of a space and a full stop
+(<samp>.</samp>).
+</p>
+
+<p>
+The value of this field is usually extracted from the
+<code>debian/changelog</code> file - see <a
+href="ch-source.html#s-dpkgchangelog">Debian changelog:
+<code>debian/changelog</code>, Section 4.4</a>).
+</p>
+
+<p>
+Each version's change information should be preceded by a &quot;title&quot;
+line giving at least the version, distribution(s) and urgency, in a
+human-readable way.
+</p>
+
+<p>
+If data from several versions is being returned the entry for the most recent
+version should be returned first, and entries should be separated by the
+representation of a blank line (the &quot;title&quot; line may also be followed
+by the representation of a blank line).
+</p>
+
+<hr>
+
+<h3><a name="s-f-Binary"></a>5.6.19 <samp>Binary</samp></h3>
+
+<p>
+This folded field is a list of binary packages.  Its syntax and meaning varies
+depending on the control file in which it appears.
+</p>
+
+<p>
+When it appears in the <code>.dsc</code> file, it lists binary packages which a
+source package can produce, separated by commas[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f43"
+name="fr43">43</a>].  The source package does not necessarily produce all of
+these binary packages for every architecture.  The source control file doesn't
+contain details of which architectures are appropriate for which of the binary
+packages.
+</p>
+
+<p>
+When it appears in a <code>.changes</code> file, it lists the names of the
+binary packages being uploaded, separated by whitespace (not commas).
+</p>
+
+<hr>
+
+<h3><a name="s-f-Installed-Size"></a>5.6.20 <samp>Installed-Size</samp></h3>
+
+<p>
+This field appears in the control files of binary packages, and in the
+<code>Packages</code> files.  It gives an estimate of the total amount of disk
+space required to install the named package.  Actual installed size may vary
+based on block size, file system properties, or actions taken by package
+maintainer scripts.
+</p>
+
+<p>
+The disk space is given as the integer value of the estimated installed size in
+bytes, divided by 1024 and rounded up.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Files"></a>5.6.21 <samp>Files</samp></h3>
+
+<p>
+This field contains a list of files with information about each one.  The exact
+information and syntax varies with the context.
+</p>
+
+<p>
+In all cases, Files is a multiline field.  The first line of the field value
+(the part on the same line as <samp>Files:</samp>) is always empty.  The
+content of the field is expressed as continuation lines, one line per file.
+Each line must be indented by one space and contain a number of sub-fields,
+separated by spaces, as described below.
+</p>
+
+<p>
+In the <code>.dsc</code> file, each line contains the MD5 checksum, size and
+filename of the tar file and (if applicable) diff file which make up the
+remainder of the source package[<a href="http://www.debian.org/doc/debian-policy/footnotes.html#f44"
+name="fr44">44</a>].  For example:
+</p>
+
+<pre>
+     Files:
+      c6f698f19f2a2aa07dbb9bbda90a2754 571925 example_1.2.orig.tar.gz
+      938512f08422f3509ff36f125f5873ba 6220 example_1.2-1.diff.gz
+</pre>
+
+<p>
+The exact forms of the filenames are described in <a
+href="ap-pkg-sourcepkg.html#s-pkg-sourcearchives">Source packages as archives,
+Section C.3</a>.
+</p>
+
+<p>
+In the <code>.changes</code> file this contains one line per file being
+uploaded.  Each line contains the MD5 checksum, size, section and priority and
+the filename.  For example:
+</p>
+
+<pre>
+     Files:
+      4c31ab7bfc40d3cf49d7811987390357 1428 text extra example_1.2-1.dsc
+      c6f698f19f2a2aa07dbb9bbda90a2754 571925 text extra example_1.2.orig.tar.gz
+      938512f08422f3509ff36f125f5873ba 6220 text extra example_1.2-1.diff.gz
+      7c98fe853b3bbb47a00e5cd129b6cb56 703542 text extra example_1.2-1_i386.deb
+</pre>
+
+<p>
+The <a href="ch-controlfields.html#s-f-Section">section</a> and <a href="ch-controlfields.html#s-f-Priority">priority</a>
+are the values of the corresponding fields in the main source control file.  If
+no section or priority is specified then <samp>-</samp> should be used, though
+section and priority values must be specified for new packages to be installed
+properly.
+</p>
+
+<p>
+The special value <samp>byhand</samp> for the section in a
+<samp>.changes</samp> file indicates that the file in question is not an
+ordinary package file and must by installed by hand by the distribution
+maintainers.  If the section is <samp>byhand</samp> the priority should be
+<samp>-</samp>.
+</p>
+
+<p>
+If a new Debian revision of a package is being shipped and no new original
+source archive is being distributed the <samp>.dsc</samp> must still contain
+the <samp>Files</samp> field entry for the original source archive
+<code><var>package</var>_<var>upstream-version</var>.orig.tar.gz</code>, but
+the <code>.changes</code> file should leave it out.  In this case the original
+source archive on the distribution site must match exactly, byte-for-byte, the
+original source archive which was used to generate the <code>.dsc</code> file
+and diff which are being uploaded.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Closes"></a>5.6.22 <samp>Closes</samp></h3>
+
+<p>
+A space-separated list of bug report numbers that the upload governed by the
+.changes file closes.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Homepage"></a>5.6.23 <samp>Homepage</samp></h3>
+
+<p>
+The URL of the web site for this package, preferably (when applicable) the site
+from which the original source can be obtained and any additional upstream
+documentation or information may be found.  The content of this field is a
+simple URL without any surrounding characters such as <samp>&lt;&gt;</samp>.
+</p>
+
+<hr>
+
+<h3><a name="s-f-Checksums"></a>5.6.24 <samp>Checksums-Sha1</samp> and <samp>Checksums-Sha256</samp></h3>
+
+<p>
+These multiline fields contain a list of files with a checksum and size for
+each one.  Both <samp>Checksums-Sha1</samp> and <samp>Checksums-Sha256</samp>
+have the same syntax and differ only in the checksum algorithm used: SHA-1 for
+<samp>Checksums-Sha1</samp> and SHA-256 for <samp>Checksums-Sha256</samp>.
+</p>
+
+<p>
+<samp>Checksums-Sha1</samp> and <samp>Checksums-Sha256</samp> are multiline
+fields.  The first line of the field value (the part on the same line as
+<samp>Checksums-Sha1:</samp> or <samp>Checksums-Sha256:</samp>) is always
+empty.  The content of the field is expressed as continuation lines, one line
+per file.  Each line consists of the checksum, a space, the file size, a space,
+and the file name.  For example (from a <code>.changes</code> file):
+</p>
+
+<pre>
+     Checksums-Sha1:
+      1f418afaa01464e63cc1ee8a66a05f0848bd155c 1276 example_1.0-1.dsc
+      a0ed1456fad61116f868b1855530dbe948e20f06 171602 example_1.0.orig.tar.gz
+      5e86ecf0671e113b63388dac81dd8d00e00ef298 6137 example_1.0-1.debian.tar.gz
+      71a0ff7da0faaf608481195f9cf30974b142c183 548402 example_1.0-1_i386.deb
+     Checksums-Sha256:
+      ac9d57254f7e835bed299926fd51bf6f534597cc3fcc52db01c4bffedae81272 1276 example_1.0-1.dsc
+      0d123be7f51e61c4bf15e5c492b484054be7e90f3081608a5517007bfb1fd128 171602 example_1.0.orig.tar.gz
+      f54ae966a5f580571ae7d9ef5e1df0bd42d63e27cb505b27957351a495bc6288 6137 example_1.0-1.debian.tar.gz
+      3bec05c03974fdecd11d020fc2e8250de8404867a8a2ce865160c250eb723664 548402 example_1.0-1_i386.deb
+</pre>
+
+<p>
+In the <code>.dsc</code> file, these fields should list all files that make up
+the source package.  In the <code>.changes</code> file, these fields should
+list all files being uploaded.  The list of files in these fields must match
+the list of files in the <samp>Files</samp> field.
+</p>
+
+<hr>
+
+<h3><a name="s-f-DM-Upload-Allowed"></a>5.6.25 <samp>DM-Upload-Allowed</samp></h3>
+
+<p>
+Indicates that Debian Maintainers may upload this package to the Debian
+archive.  The only valid value is <samp>yes</samp>.  If the field
+<samp>DM-Upload-Allowed: yes</samp> is present in the source section of the
+source control file of the most recent version of a package in unstable or
+experimental, the Debian archive will accept uploads of this package signed
+with a key in the Debian Maintainer keyring.  See the General Resolution
+<code><a href="http://www.debian.org/vote/2007/vote_003">Endorse the concept of
+Debian Maintainers</a></code> for more details.
+</p>
+
+<hr>
+
+<h3><a name="s-f-VCS-fields"></a>5.6.26 Version Control System (VCS) fields</h3>
+
+<p>
+Debian source packages are increasingly developed using VCSs.  The purpose of
+the following fields is to indicate a publicly accessible repository where the
+Debian source package is developed.
+</p>
+<dl>
+<dt><samp>Vcs-Browser</samp></dt>
+<dd>
+<p>
+URL of a web interface for browsing the repository.
+</p>
+</dd>
+</dl>
+<dl>
+<dt><samp>Vcs-Arch</samp>, <samp>Vcs-Bzr</samp> (Bazaar), <samp>Vcs-Cvs</samp>, <samp>Vcs-Darcs</samp>, <samp>Vcs-Git</samp>, <samp>Vcs-Hg</samp> (Mercurial), <samp>Vcs-Mtn</samp> (Monotone), <samp>Vcs-Svn</samp> (Subversion)</dt>
+<dd>
+<p>
+The field name identifies the VCS.  The field's value uses the version control
+system's conventional syntax for describing repository locations and should be
+sufficient to locate the repository used for packaging.  Ideally, it also
+locates the branch used for development of new versions of the Debian package.
+</p>
+
+<p>
+In the case of Git, the value consists of a URL, optionally followed by the
+word <samp>-b</samp> and the name of a branch in the indicated repository,
+following the syntax of the <samp>git clone</samp> command.  If no branch is
+specified, the packaging should be on the default branch.
+</p>
+
+<p>
+More than one different VCS may be specified for the same package.
+</p>
+</dd>
+</dl>
+
+<hr>
+
+<h2><a name="s5.7"></a>5.7 User-defined fields</h2>
+
+<p>
+Additional user-defined fields may be added to the source package control file.
+Such fields will be ignored, and not copied to (for example) binary or Debian
+source control files or upload control files.
+</p>
+
+<p>
+If you wish to add additional unsupported fields to these output files you
+should use the mechanism described here.
+</p>
+
+<p>
+Fields in the main source control information file with names starting
+<samp>X</samp>, followed by one or more of the letters <samp>BCS</samp> and a
+hyphen <samp>-</samp>, will be copied to the output files.  Only the part of
+the field name after the hyphen will be used in the output file.  Where the
+letter <samp>B</samp> is used the field will appear in binary package control
+files, where the letter <samp>S</samp> is used in Debian source control files
+and where <samp>C</samp> is used in upload control (<samp>.changes</samp>)
+files.
+</p>
+
+<p>
+For example, if the main source information control file contains the field
+</p>
+
+<pre>
+       XBS-Comment: I stand between the candle and the star.
+</pre>
+
+<p>
+then the binary and Debian source control files will contain the field
+</p>
+
+<pre>
+       Comment: I stand between the candle and the star.
+</pre>
+
+<hr>
+
+<p>
+[ <a href="ch-source.html">previous</a> ]
+[ <a href="index.html#contents">Contents</a> ]
+[ <a href="ch-scope.html">1</a> ]
+[ <a href="ch-archive.html">2</a> ]
+[ <a href="ch-binary.html">3</a> ]
+[ <a href="ch-source.html">4</a> ]
+[ 5 ]
+[ <a href="ch-maintainerscripts.html">6</a> ]
+[ <a href="ch-relationships.html">7</a> ]
+[ <a href="ch-sharedlibs.html">8</a> ]
+[ <a href="ch-opersys.html">9</a> ]
+[ <a href="ch-files.html">10</a> ]
+[ <a href="ch-customized-programs.html">11</a> ]
+[ <a href="ch-docs.html">12</a> ]
+[ <a href="ap-pkg-scope.html">A</a> ]
+[ <a href="ap-pkg-binarypkg.html">B</a> ]
+[ <a href="ap-pkg-sourcepkg.html">C</a> ]
+[ <a href="ap-pkg-controlfields.html">D</a> ]
+[ <a href="ap-pkg-conffiles.html">E</a> ]
+[ <a href="ap-pkg-alternatives.html">F</a> ]
+[ <a href="ap-pkg-diversions.html">G</a> ]
+[ <a href="ch-maintainerscripts.html">next</a> ]
+</p>
+
+<hr>
+
+<p>
+Debian Policy Manual
+</p>
+
+<address>
+version 3.9.4.0, 2012-09-19<br>
+<br>
+<a href="ch-scope.html#s-authors">The Debian Policy Mailing List</a><br>
+<br>
+</address>
+<hr>
+
+</body>
+
+</html>
+

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 8. Uploading the package</title><link rel="stylesheet" href="maint-guide.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /><link rel="home" href="index.en.html" title="Debian New Maintainers' Guide" /><link rel="up" href="index.en.html" title="Debian New Maintainers' Guide" /><link rel="prev" href="checkit.en.html" title="Chapter 7. Checking the package for errors" /><link rel="next" href="update.en.html" title="Chapter 9. Updating the package" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 8. Uploading the package</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="checkit.en.html"><img src="http://www.debian.org/doc/manuals/maint-guide/images/prev.gif" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="update.en.html"><img src="images/next.gif" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="upload"></a>Chapter 8. Uploading the package</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="upload.en.html#upload-debian">8.1. Uploading to the Debian archive</a></span></dt><dt><span class="section"><a href="upload.en.html#option-sa">8.2. Including <code class="filename">orig.tar.gz</code> for upload</a></span></dt><dt><span class="section"><a href="upload.en.html#skipped-uploads">8.3. Skipped uploads</a></span></dt></dl></div><p>
+Now that you have tested your new package thoroughly, you want to release it to
+a public archive to share it.
+</p><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="upload-debian"></a>8.1. Uploading to the Debian archive</h2></div></div></div><p>
+Once you become an official developer,
+<sup>[<a id="idp1625808" href="upload.en.html#ftn.idp1625808" class="footnote">78</a>]</sup>
+you can upload the package to the Debian archive.
+<sup>[<a id="idp1626944" href="upload.en.html#ftn.idp1626944" class="footnote">79</a>]</sup>
+You can do this manually, but it's easier to use the existing
+automated tools, like <span class="citerefentry"><span class="refentrytitle">dupload</span>(1)</span> or <span class="citerefentry"><span class="refentrytitle">dput</span>(1)</span>.
+We'll describe how it's done with <span class="command"><strong>dupload</strong></span>.  <sup>[<a id="idp1631952" href="upload.en.html#ftn.idp1631952" class="footnote">80</a>]</sup>
+</p><p>
+First you have to set up <span class="command"><strong>dupload</strong></span>'s config file.  You can
+either edit the system-wide <code class="filename">/etc/dupload.conf</code> file, or
+have your own <code class="filename">~/.dupload.conf</code> file override the few things
+you want to change.
+</p><p>
+You can read the <span class="citerefentry"><span class="refentrytitle">dupload.conf</span>(5)</span> manual page to understand what each of
+these options means.
+</p><p>
+The <code class="literal">$default_host</code> option determines which of the upload
+queues will be used by default.  <code class="literal">anonymous-ftp-master</code> is the
+primary one, but it's possible that you will want to use another one.
+<sup>[<a id="idp1640016" href="upload.en.html#ftn.idp1640016" class="footnote">81</a>]</sup>
+</p><p>
+While connected to the Internet, you can upload your package as follows:
+</p><pre class="screen">
+$ dupload gentoo_0.9.12-1_i386.changes
+</pre><p>
+<span class="command"><strong>dupload</strong></span> checks that the SHA1/SHA256 file checksums
+match those listed in the <code class="filename">.changes</code> file.  If they do not
+match, it will warn you to rebuild it as described in <a class="xref" href="build.en.html#completebuild" title="6.1. Complete (re)build">Section 6.1, “Complete (re)build”</a> so it can be properly uploaded.
+</p><p>
+If you encounter an upload problem at <a class="ulink" href="ftp://ftp.upload.debian.org/pub/UploadQueue/" target="_top">ftp://ftp.upload.debian.org/pub/UploadQueue/</a>, you can fix this
+by manually uploading a GPG-signed <code class="filename">*.commands</code> file to there
+with <span class="command"><strong>ftp</strong></span>.  <sup>[<a id="idp1646752" href="upload.en.html#ftn.idp1646752" class="footnote">82</a>]</sup> For example, using
+<code class="filename">hello.commands</code>:
+</p><pre class="screen">
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+Uploader: Foo Bar &lt;Foo.Bar@example.org&gt;
+Commands: 
+ rm hello_1.0-1_i386.deb
+ mv hello_1.0-1.dsx hello_1.0-1.dsc
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+[...]
+-----END PGP SIGNATURE-----
+</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="option-sa"></a>8.2. Including <code class="filename">orig.tar.gz</code> for upload</h2></div></div></div><p>
+When you first upload the package to the archive, you need to include the
+original <code class="filename">orig.tar.gz</code> source, too.  If the Debian revision
+number of this package is neither <code class="literal">1</code> nor
+<code class="literal">0</code>, you must provide the <span class="command"><strong>dpkg-buildpackage</strong></span>
+option <code class="literal">-sa</code>.
+</p><p>
+For the <span class="command"><strong>dpkg-buildpackage</strong></span> command:
+</p><pre class="screen">
+$ dpkg-buildpackage -sa
+</pre><p>
+For the <span class="command"><strong>debuild</strong></span> command:
+</p><pre class="screen">
+$ debuild -sa
+</pre><p>
+For the <span class="command"><strong>pdebuild</strong></span> command:
+</p><pre class="screen">
+$ pdebuild --debbuildopts -sa
+</pre><p>
+On the other hand, the <code class="literal">-sd</code> option will force the exclusion
+of the original <code class="filename">orig.tar.gz</code> source.
+</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="skipped-uploads"></a>8.3. Skipped uploads</h2></div></div></div><p>
+If you created multiple entries in <code class="filename">debian/changelog</code> by
+skipping uploads, you must create a proper <code class="filename">*_.changes</code> file
+which includes all changes from the last upload.
+This can be done by specifying the <span class="command"><strong>dpkg-buildpackage</strong></span> option
+<code class="literal">-v</code> with the version, e.g.,
+<code class="literal"><em class="replaceable"><code>1.2</code></em></code>.
+</p><p>
+For the <span class="command"><strong>dpkg-buildpackage</strong></span> command:
+</p><pre class="screen">
+$ dpkg-buildpackage -v<em class="replaceable"><code>1.2</code></em>
+</pre><p>
+For the <span class="command"><strong>debuild</strong></span> command:
+</p><pre class="screen">
+$ debuild -v<em class="replaceable"><code>1.2</code></em>
+</pre><p>
+For the <span class="command"><strong>pdebuild</strong></span> command:
+</p><pre class="screen">
+$ pdebuild --debbuildopts "-v<em class="replaceable"><code>1.2</code></em>"
+</pre></div><div class="footnotes"><br /><hr width="100" align="left" /><div class="footnote"><p><sup>[<a id="ftn.idp1625808" href="upload.en.html#idp1625808" class="para">78</a>] </sup>
+See <a class="xref" href="start.en.html#socialdynamics" title="1.1. Social dynamics of Debian">Section 1.1, “Social dynamics of Debian”</a>.
+</p></div><div class="footnote"><p><sup>[<a id="ftn.idp1626944" href="upload.en.html#idp1626944" class="para">79</a>] </sup>
+There are publicly accessible archives such as <a class="ulink" href="http://mentors.debian.net/" target="_top">http://mentors.debian.net/</a>
+which work almost the same way as the Debian archive and provide an upload area for
+non-DDs.  You can set up an equivalent archive by yourself using the tools
+listed at <a class="ulink" href="http://wiki.debian.org/HowToSetupADebianRepository" target="_top">http://wiki.debian.org/HowToSetupADebianRepository</a>.  So this section is useful for
+non-DDs, too.
+</p></div><div class="footnote"><p><sup>[<a id="ftn.idp1631952" href="upload.en.html#idp1631952" class="para">80</a>] </sup>
+The <code class="systemitem">dput</code> package seems to come with
+more features and to be becoming more popular than the <code class="systemitem">dupload</code> package.  It uses the
+file <code class="filename">/etc/dput</code> for its global configuration and the
+file <code class="filename">~/.dput.cf</code> for per-user configuration.  It supports
+Ubuntu-related services out-of-the-box, too.  </p></div><div class="footnote"><p><sup>[<a id="ftn.idp1640016" href="upload.en.html#idp1640016" class="para">81</a>] </sup>See <a class="ulink" href="http://www.debian.org/doc/manuals/developers-reference/pkgs.html#upload" target="_top">Debian Developer's Reference 5.6. "Uploading a package"</a>.</p></div><div class="footnote"><p><sup>[<a id="ftn.idp1646752" href="upload.en.html#idp1646752" class="para">82</a>] </sup> See <a class="ulink" href="ftp://ftp.upload.debian.org/pub/UploadQueue/README" target="_top">ftp://ftp.upload.debian.org/pub/UploadQueue/README</a>.  Alternatively, you can
+use the <span class="command"><strong>dcut</strong></span> command from the <code class="systemitem">dput</code> package.  </p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="checkit.en.html"><img src="http://www.debian.org/doc/manuals/maint-guide/images/prev.gif" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="update.en.html"><img src="images/next.gif" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 7. Checking the package for errors </td><td width="20%" align="center"><a accesskey="h" href="index.en.html"><img src="http://www.debian.org/doc/manuals/maint-guide/images/home.gif" alt="Home" /></a></td><td width="40%" align="right" valign="top"> Chapter 9. Updating the package</td></tr></table></div></body></html>
